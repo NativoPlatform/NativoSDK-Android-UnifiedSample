@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Nativo-Android-UnifiedSample</string>
+    <string name="grid_tab">Grid</string>
+    <string name="table_tab">Table</string>
+    <string name="recycle_list_tab">Recycle List</string>
+    <string name="recycle_tab">Recycle</string>
+    <string name="recycle_grid_tab">Recycle Grid</string>
+    <string name="multiple_section_tab">Multiple Section</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment one</string>
+    <string name="hello_blank_fragment_two">Hello blank fragment two</string>
+    <string name="sponsored_content">Sponsored Content</string>
+    <string name="load_ad">Load Ad</string>
+    <string name="hide_ad">Hide Ad</string>
+    <string name="show_ad">Show Ad</string>
+    <string name="sample_title">Sample Title</string>
+    <string name="sample_author">Sample Author</string>
+</resources>

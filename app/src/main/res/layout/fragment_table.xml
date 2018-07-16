@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_centerInParent="true"
+    android:gravity="center"
+    android:layout_gravity="center">
+    <!--When a LinearLayout is vertical, then the layout_weight will effect the height of the child Views (ListView). Setting the layout_height to 0dp will cause this attribute to be ignored.-->
+    <ListView
+        android:id="@+id/list_table"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/load_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/load_ad" />
+
+    <Button
+        android:id="@+id/hide_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hide_ad" />
+
+    <Button
+        android:id="@+id/show_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_ad" />
+
+</LinearLayout>
