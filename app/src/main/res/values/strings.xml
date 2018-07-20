@@ -6,6 +6,7 @@
     <string name="recycle_tab">Recycle</string>
     <string name="recycle_grid_tab">Recycle Grid</string>
     <string name="multiple_section_tab">Multiple Section</string>
+    <string name="single_view">Single View</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment one</string>
