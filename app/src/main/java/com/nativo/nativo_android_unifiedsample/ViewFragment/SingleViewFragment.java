@@ -1,8 +1,10 @@
 package com.nativo.nativo_android_unifiedsample.ViewFragment;
 
-
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,29 +13,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nativo.nativo_android_unifiedsample.R;
+import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
 
     private static String SECTION_URL = "http://www.nativo.net/test/";
     private View convertView;
+
     public SingleViewFragment() {
-        // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_single_view, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         convertView = view.findViewById(R.id.article_container);
         if (!getAd()) {
             bindView(view, 0);
@@ -41,11 +46,10 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
         view.findViewById(R.id.load_ad).setOnClickListener(loadAd);
         view.findViewById(R.id.show_ad).setOnClickListener(showAd);
         view.findViewById(R.id.hide_ad).setOnClickListener(hideAd);
-        return view;
     }
 
-    private boolean getAd(){
-        return NativoSDK.getInstance().placeAdInView(convertView,(ViewGroup) getView(), SECTION_URL,0,this, null);
+    private boolean getAd() {
+        return NativoSDK.getInstance().placeAdInView(convertView, (ViewGroup) getView(), SECTION_URL, 0, this, null);
     }
 
     private void bindView(View view, int i) {
@@ -78,7 +82,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
         public void onClick(View view) {
             NativoSDK.getInstance().clearAdsInSection(SECTION_URL);
             if (!getAd()) {
-                bindView(view, 0);
+                bindView(getView(), 0);
             }
         }
     };
@@ -114,7 +118,9 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
 
     @Override
     public void needsDisplayLandingPage(String s, int i) {
-
+        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
+                .putExtra(SponsoredContentActivity.SECTION_URL, s)
+                .putExtra(SponsoredContentActivity.CAMPAIGN_ID, i));
     }
 
     @Override

@@ -55,12 +55,12 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         }
         boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
         if (!ad) {
-            bindView(view);
+            bindView(view, i);
         }
         return view;
     }
 
-    private void bindView(View view) {
+    private void bindView(View view, int i) {
         if (view != null) {
             if (((ImageView) view.findViewById(R.id.article_image)) != null) {
                 ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
@@ -77,7 +77,11 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             if (((TextView) view.findViewById(R.id.sponsored_tag)) != null) {
                 ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
             }
-            view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
+            if (shouldPlaceAdAtIndex("sample", i)) {
+                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.RED);
+            } else {
+                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
+            }
         }
     }
 
