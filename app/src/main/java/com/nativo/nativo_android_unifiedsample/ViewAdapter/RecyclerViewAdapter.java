@@ -64,11 +64,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull ListViewHolder listViewHolder, int i) {
         boolean ad = NativoSDK.getInstance().placeAdInView(listViewHolder.container, recyclerView, SECTION_URL, i, this, null);
         if (!ad) {
-            bindView(listViewHolder.container);
+            bindView(listViewHolder.container, i);
         }
     }
 
-    private void bindView(View view) {
+    private void bindView(View view, int i) {
         if (view != null) {
             if (((ImageView) view.findViewById(R.id.article_image)) != null) {
                 ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
@@ -85,7 +85,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             if (((TextView) view.findViewById(R.id.sponsored_tag)) != null) {
                 ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
             }
-            view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
+            if (shouldPlaceAdAtIndex("sample", i)) {
+                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.RED);
+            } else {
+                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
+            }
         }
     }
 

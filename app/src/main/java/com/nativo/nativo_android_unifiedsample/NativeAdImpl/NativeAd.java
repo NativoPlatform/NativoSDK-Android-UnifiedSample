@@ -63,7 +63,11 @@ public class NativeAd implements NtvNativeAdInterface {
 
     @Override
     public void displaySponsoredIndicators(boolean b) {
-        cardView.setBackgroundColor(Color.LTGRAY);
+        if (cardView != null) {
+            cardView.setBackgroundColor(Color.LTGRAY);
+        } else if (view != null){
+            view.setBackgroundColor(Color.LTGRAY);
+        }
         sponsoredIndicator.setVisibility(View.VISIBLE);
         sponsoredTag.setVisibility(View.VISIBLE);
     }
@@ -83,10 +87,10 @@ public class NativeAd implements NtvNativeAdInterface {
         view = v;
         layout = v.findViewById(R.id.article_layout);
         cardView = v.findViewById(R.id.article_constraint_layout);
-        titleLabel = layout.findViewById(R.id.article_title);
-        authorLabel = layout.findViewById(R.id.article_author);
-        image = layout.findViewById(R.id.article_image);
-        sponsoredIndicator = layout.findViewById(R.id.sponsored_indicator);
-        sponsoredTag = layout.findViewById(R.id.sponsored_tag);
+        titleLabel = v.findViewById(R.id.article_title);
+        authorLabel = v.findViewById(R.id.article_author);
+        image = v.findViewById(R.id.article_image);
+        sponsoredIndicator = v.findViewById(R.id.sponsored_indicator);
+        sponsoredTag = v.findViewById(R.id.sponsored_tag);
     }
 }

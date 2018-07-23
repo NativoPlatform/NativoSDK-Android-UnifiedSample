@@ -13,6 +13,7 @@ import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdLandingImpl.NativeLandingPage;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.GridFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.RecyclerViewFragment;
+import com.nativo.nativo_android_unifiedsample.ViewFragment.SingleViewFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.TableFragment;
 
 import net.nativo.sdk.NativoSDK;
@@ -56,13 +57,15 @@ public class MainActivity extends AppCompatActivity {
                     return new GridFragment();
                 case 2:
                     return new RecyclerViewFragment();
+                case 3:
+                    return new SingleViewFragment();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Nullable
@@ -75,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
                     return getResources().getText(R.string.grid_tab);
                 case 2:
                     return getResources().getText(R.string.recycle_list_tab);
+                case 3:
+                    return getResources().getText(R.string.single_view);
             }
             return null;
         }

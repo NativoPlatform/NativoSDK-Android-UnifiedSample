@@ -2,7 +2,6 @@ package com.nativo.nativo_android_unifiedsample.ViewAdapter;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,12 +48,12 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         }
         boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
         if (!ad) {
-            bindView(view);
+            bindView(view, i);
         }
         return view;
     }
 
-    private void bindView(View view) {
+    private void bindView(View view, int i) {
         if (view != null) {
             if (((ImageView) view.findViewById(R.id.article_image)) != null) {
                 ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
@@ -71,13 +70,16 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             if (((TextView) view.findViewById(R.id.sponsored_tag)) != null) {
                 ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
             }
-            view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
+            if (shouldPlaceAdAtIndex("sample", i)) {
+                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.RED);
+            } else {
+                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
+            }
         }
     }
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        Log.d(getClass().getName(), "View Drawn shouldPlaceAd " + i + " value " + (i == 2));
         return i == 2;
     }
 

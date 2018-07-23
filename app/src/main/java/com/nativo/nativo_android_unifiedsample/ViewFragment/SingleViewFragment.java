@@ -1,16 +1,14 @@
-package com.nativo.nativo_android_unifiedsample.ViewAdapter;
+package com.nativo.nativo_android_unifiedsample.ViewFragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
-import android.os.Looper;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,42 +20,36 @@ import net.nativo.sdk.ntvadtype.NtvBaseInterface;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
-
-public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
+public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
 
     private static String SECTION_URL = "http://www.nativo.net/test/";
-    private static String RSS_URL = "http://www.engadget.com/rss.xml";
-    Context context;
+    private View convertView;
 
-    public GridViewAdapter(Context context) {
-        this.context = context;
+    public SingleViewFragment() {
     }
 
-    @Override
-    public int getCount() {
-        return 4;
-    }
 
     @Override
-    public Object getItem(int i) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
-        }
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
-        if (!ad) {
-            bindView(view, i);
-        }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_single_view, container, false);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        convertView = view.findViewById(R.id.article_container);
+        if (!getAd()) {
+            bindView(view, 0);
+        }
+        view.findViewById(R.id.load_ad).setOnClickListener(loadAd);
+        view.findViewById(R.id.show_ad).setOnClickListener(showAd);
+        view.findViewById(R.id.hide_ad).setOnClickListener(hideAd);
+    }
+
+    private boolean getAd() {
+        return NativoSDK.getInstance().placeAdInView(convertView, (ViewGroup) getView(), SECTION_URL, 0, this, null);
     }
 
     private void bindView(View view, int i) {
@@ -78,12 +70,36 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
                 ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
             }
             if (shouldPlaceAdAtIndex("sample", i)) {
-                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.RED);
+                view.findViewById(R.id.article_container).setBackgroundColor(Color.RED);
             } else {
-                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
+                view.findViewById(R.id.article_container).setBackgroundColor(Color.WHITE);
             }
         }
     }
+
+    View.OnClickListener loadAd = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            NativoSDK.getInstance().clearAdsInSection(SECTION_URL);
+            if (!getAd()) {
+                bindView(getView(), 0);
+            }
+        }
+    };
+
+    View.OnClickListener hideAd = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            convertView.setVisibility(View.INVISIBLE);
+        }
+    };
+
+    View.OnClickListener showAd = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            convertView.setVisibility(View.VISIBLE);
+        }
+    };
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
@@ -102,7 +118,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void needsDisplayLandingPage(String s, int i) {
-        context.startActivity(new Intent(context, SponsoredContentActivity.class)
+        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
                 .putExtra(SponsoredContentActivity.SECTION_URL, s)
                 .putExtra(SponsoredContentActivity.CAMPAIGN_ID, i));
     }
@@ -119,33 +135,11 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void onReceiveAd(String s, NtvAdData ntvAdData) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
 
     }
 
     @Override
     public void onFail(String s, Exception e) {
 
-    }
-
-    class ViewHolder {
-        View container;
-        ImageView articleImage;
-        TextView articleTitle;
-        TextView articleAuthor;
-        ImageView articleSponsor;
-
-        ViewHolder(@NonNull View container) {
-            this.container = container;
-            articleImage = container.findViewById(R.id.article_image);
-            articleTitle = container.findViewById(R.id.article_title);
-            articleAuthor = container.findViewById(R.id.article_author);
-            articleSponsor = container.findViewById(R.id.sponsored_indicator);
-        }
     }
 }
