@@ -2,6 +2,7 @@ package com.nativo.nativo_android_unifiedsample.ViewAdapter;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +103,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void needsDisplayClickOutURL(String s, String s1) {
-
+        parent.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
     }
 
     @Override
