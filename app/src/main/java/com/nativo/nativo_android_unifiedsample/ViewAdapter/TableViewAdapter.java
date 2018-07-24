@@ -2,6 +2,7 @@ package com.nativo.nativo_android_unifiedsample.ViewAdapter;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public int getCount() {
-        return 10;
+        return 1;
     }
 
     @Override
@@ -43,13 +44,15 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
-        }
+//        if (view == null) {
+//            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
+//        }
         boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
-        if (!ad) {
-            bindView(view, i);
-        }
+//        if (!ad) {
+//            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
+//            bindView(view, i);
+//        }
         return view;
     }
 
@@ -58,8 +61,8 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             if (((ImageView) view.findViewById(R.id.article_image)) != null) {
                 ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
             }
-            if (((ImageView) view.findViewById(R.id.sponsored_indicator)) != null) {
-                ((ImageView) view.findViewById(R.id.sponsored_indicator)).setVisibility(View.INVISIBLE);
+            if (((ImageView) view.findViewById(R.id.video_sponsored_indicator)) != null) {
+                ((ImageView) view.findViewById(R.id.video_sponsored_indicator)).setVisibility(View.INVISIBLE);
             }
             if (((TextView) view.findViewById(R.id.article_author)) != null) {
                 ((TextView) view.findViewById(R.id.article_author)).setText(R.string.sample_author);
@@ -80,7 +83,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return i == 2;
+        return true;
     }
 
     @Override
@@ -102,7 +105,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void needsDisplayClickOutURL(String s, String s1) {
-
+        parent.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
     }
 
     @Override

@@ -90,7 +90,7 @@ public class NativeAd implements NtvNativeAdInterface {
         titleLabel = v.findViewById(R.id.article_title);
         authorLabel = v.findViewById(R.id.article_author);
         image = v.findViewById(R.id.article_image);
-        sponsoredIndicator = v.findViewById(R.id.sponsored_indicator);
+        sponsoredIndicator = v.findViewById(R.id.video_sponsored_indicator);
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
     }
 }

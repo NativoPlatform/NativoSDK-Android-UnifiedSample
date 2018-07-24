@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,8 +64,8 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             if (((ImageView) view.findViewById(R.id.article_image)) != null) {
                 ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
             }
-            if (((ImageView) view.findViewById(R.id.sponsored_indicator)) != null) {
-                ((ImageView) view.findViewById(R.id.sponsored_indicator)).setVisibility(View.INVISIBLE);
+            if (((ImageView) view.findViewById(R.id.video_sponsored_indicator)) != null) {
+                ((ImageView) view.findViewById(R.id.video_sponsored_indicator)).setVisibility(View.INVISIBLE);
             }
             if (((TextView) view.findViewById(R.id.article_author)) != null) {
                 ((TextView) view.findViewById(R.id.article_author)).setText(R.string.sample_author);
@@ -145,7 +144,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             articleImage = container.findViewById(R.id.article_image);
             articleTitle = container.findViewById(R.id.article_title);
             articleAuthor = container.findViewById(R.id.article_author);
-            articleSponsor = container.findViewById(R.id.sponsored_indicator);
+            articleSponsor = container.findViewById(R.id.video_sponsored_indicator);
         }
     }
 }
