@@ -3,6 +3,7 @@ package com.nativo.nativo_android_unifiedsample.ViewAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -123,7 +124,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void needsDisplayClickOutURL(String s, String s1) {
-
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
     }
 
     @Override
