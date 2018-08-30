@@ -68,8 +68,12 @@ public class NativeAd implements NtvNativeAdInterface {
         } else if (view != null){
             view.setBackgroundColor(Color.LTGRAY);
         }
-        sponsoredIndicator.setVisibility(View.VISIBLE);
-        sponsoredTag.setVisibility(View.VISIBLE);
+        if (sponsoredIndicator != null) {
+            sponsoredIndicator.setVisibility(View.VISIBLE);
+        }
+        if (sponsoredTag != null) {
+            sponsoredTag.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

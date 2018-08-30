@@ -52,7 +52,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
         }
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
+        boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this);
         if (!ad) {
             bindView(view, i);
         }

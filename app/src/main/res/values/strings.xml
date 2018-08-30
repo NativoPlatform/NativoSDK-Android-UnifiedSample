@@ -7,6 +7,7 @@
     <string name="recycle_grid_tab">Recycle Grid</string>
     <string name="multiple_section_tab">Multiple Section</string>
     <string name="single_view">Single View</string>
+    <string name="single_view_video">Single Video</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment one</string>
@@ -16,5 +17,6 @@
     <string name="hide_ad">Hide Ad</string>
     <string name="show_ad">Show Ad</string>
     <string name="sample_title">Sample Title</string>
+    <string name="sample_viewable_impression">Sample Viewable Impression</string>
     <string name="sample_author">Sample Author</string>
 </resources>

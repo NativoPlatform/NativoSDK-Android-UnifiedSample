@@ -29,7 +29,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public int getCount() {
-        return 1;
+        return 5;
     }
 
     @Override
@@ -44,15 +44,14 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-//        if (view == null) {
-//            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-//        }
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
-//        if (!ad) {
-//            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
-//            bindView(view, i);
-//        }
+        if (view == null) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
+        }
+        boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this);
+        if (!ad) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
+            bindView(view, i);
+        }
         return view;
     }
 
@@ -83,7 +82,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return true;
+        return i==3;
     }
 
     @Override

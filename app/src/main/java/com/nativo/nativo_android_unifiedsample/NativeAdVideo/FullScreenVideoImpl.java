@@ -31,7 +31,7 @@ public class FullScreenVideoImpl implements NtvFullscreenVideoInterface {
 
     @Override
     public void bindViews(View v) {
-        textureView = (TextureView) v.findViewById(R.id.video_texture);
+        textureView = (TextureView) v.findViewById(R.id.video);
         mediaControllerWrapper = (FrameLayout) v.findViewById(R.id.full_screen_media_controller_wrapper);
         titleLabel = (TextView) v.findViewById(R.id.video_title);
         authorLabel = (TextView) v.findViewById(R.id.video_author);

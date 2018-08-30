@@ -57,12 +57,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
+
         return new ListViewHolder(adViewTry, viewGroup);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder listViewHolder, int i) {
-        boolean ad = NativoSDK.getInstance().placeAdInView(listViewHolder.container, recyclerView, SECTION_URL, i, this, null);
+        boolean ad = NativoSDK.getInstance().placeAdInView(listViewHolder.container, recyclerView, SECTION_URL, i, this);
         if (!ad) {
             bindView(listViewHolder.container, i);
         }

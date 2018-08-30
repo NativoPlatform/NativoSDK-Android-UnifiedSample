@@ -1,4 +1,4 @@
-package com.nativo.nativo_android_unifiedsample.NativeAdVideo;
+package com.nativo.nativo_android_unifiedsample.NativeAdImpl;
 
 import android.content.Context;
 import android.view.TextureView;
@@ -13,7 +13,8 @@ import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
 
 import java.util.Date;
 
-public class VideoImpl implements NtvVideoAdInterface {
+public class SingleVideoAd implements NtvVideoAdInterface {
+
     private RelativeLayout layout;
     private TextureView textureView;
     private ImageView previewImage;
@@ -23,16 +24,22 @@ public class VideoImpl implements NtvVideoAdInterface {
     private TextView authorLabel;
     private ImageView sponsoredIndicator;
 
+
+    @Override
+    public int getLayout(Context context) {
+        return 0;
+    }
+
     @Override
     public void bindViews(View v) {
-        layout = (RelativeLayout) v.findViewById(R.id.video_layout);
-        textureView = (TextureView) v.findViewById(R.id.video_texture);
-        previewImage = (ImageView) v.findViewById(R.id.video_preview_image);
-        playButton = (ImageView) v.findViewById(R.id.video_play);
-        restartButton = (ImageView) v.findViewById(R.id.video_restart);
-        titleLabel = (TextView) v.findViewById(R.id.video_title);
-        authorLabel = (TextView) v.findViewById(R.id.video_author);
-        sponsoredIndicator = (ImageView) v.findViewById(R.id.video_sponsored_indicator);
+        layout = (RelativeLayout) v.findViewById(R.id.video_container);
+        textureView = (TextureView) v.findViewById(R.id.video);
+        previewImage = (ImageView) v.findViewById(R.id.preview_image);
+        playButton = (ImageView) v.findViewById(R.id.play);
+        restartButton = (ImageView) v.findViewById(R.id.restart);
+        titleLabel = (TextView) v.findViewById(R.id.title);
+        authorLabel = (TextView) v.findViewById(R.id.author);
+        sponsoredIndicator = (ImageView) v.findViewById(R.id.sponsored_indicator);
     }
 
     @Override
@@ -86,18 +93,19 @@ public class VideoImpl implements NtvVideoAdInterface {
     }
 
     @Override
-    public void displaySponsoredIndicators(boolean b) {
-        sponsoredIndicator.setVisibility(View.VISIBLE);
+    public void displaySponsoredIndicators(boolean isSponsored) {
+        if (isSponsored) {
+            layout.setBackgroundResource(R.drawable.sponsored_border);
+            sponsoredIndicator.setVisibility(View.VISIBLE);
+        } else {
+            layout.setBackground(null);
+            sponsoredIndicator.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public String formatDate(Date date) {
         return null;
-    }
-
-    @Override
-    public int getLayout(Context context) {
-        return R.layout.video_layout;
     }
 
 }
