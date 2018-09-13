@@ -14,18 +14,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAdRecycler;
+import com.nativo.nativo_android_unifiedsample.NativeAdImpl.SingleVideoAdRecycler;
 import com.nativo.nativo_android_unifiedsample.R;
 import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
+import net.nativo.sdk.ntvconstant.NtvConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ListViewHolder> implements NtvSectionAdapter {
 
-    private static String SECTION_URL = "http://www.nativo.net/test/";
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements NtvSectionAdapter {
+
     private Context context;
     private RecyclerView recyclerView;
     private static int x = 0;
@@ -50,22 +54,58 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             articleImage = container.findViewById(R.id.article_image);
             articleTitle = container.findViewById(R.id.article_title);
             articleAuthor = container.findViewById(R.id.article_author);
-            articleSponsor = container.findViewById(R.id.sponsored_indicator);
+            articleSponsor = container.findViewById(R.id.video_sponsored_indicator);
+        }
+
+        public View getContainer() {
+            return container;
         }
     }
 
-    @NonNull
     @Override
-    public ListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
-        return new ListViewHolder(adViewTry, viewGroup);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        RecyclerView.ViewHolder viewHolder;
+        View adViewTry;
+        if (i == 1) {
+            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
+            viewHolder = new NativeAdRecycler(adViewTry);
+        } else if (i == 2) {
+            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
+            viewHolder = new SingleVideoAdRecycler(adViewTry);
+        } else {
+            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
+            viewHolder = new ListViewHolder(adViewTry, viewGroup);
+        }
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListViewHolder listViewHolder, int i) {
-        boolean ad = NativoSDK.getInstance().placeAdInView(listViewHolder.container, recyclerView, SECTION_URL, i, this, null);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder listViewHolder, int i) {
+        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, i, this, null);
+        boolean ad = false;
+        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_NATIVE)) {
+            ad = NativoSDK.getInstance().placeAdInView(((NativeAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
+        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_VIDEO)) {
+            ad = NativoSDK.getInstance().placeAdInView(((SingleVideoAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
+        }
         if (!ad) {
-            bindView(listViewHolder.container, i);
+            bindView(((ListViewHolder) listViewHolder).container, i);
+        }
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        String s = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, position);
+        switch (s) {
+            case NtvConstants.AD_TYPE_VIDEO:
+                return 2;
+            case NtvConstants.AD_TYPE_NATIVE:
+                return 1;
+            case NtvConstants.AD_TYPE_NONE:
+                return 0;
+            default:
+                return -1;
         }
     }
 
@@ -74,8 +114,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             if (((ImageView) view.findViewById(R.id.article_image)) != null) {
                 ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
             }
-            if (((ImageView) view.findViewById(R.id.sponsored_indicator)) != null) {
-                ((ImageView) view.findViewById(R.id.sponsored_indicator)).setVisibility(View.INVISIBLE);
+            if (((ImageView) view.findViewById(R.id.video_sponsored_indicator)) != null) {
+                ((ImageView) view.findViewById(R.id.video_sponsored_indicator)).setVisibility(View.INVISIBLE);
             }
             if (((TextView) view.findViewById(R.id.article_author)) != null) {
                 ((TextView) view.findViewById(R.id.article_author)).setText(R.string.sample_author);
@@ -112,13 +152,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void needsReloadDataSource(String s, int i) {
-
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
     public void needsDisplayLandingPage(String s, int i) {
         context.startActivity(new Intent(context, SponsoredContentActivity.class)
-                .putExtra(SponsoredContentActivity.SECTION_URL, s)
+                .putExtra(SECTION_URL, s)
                 .putExtra(SponsoredContentActivity.CAMPAIGN_ID, i));
     }
 
@@ -152,8 +197,4 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return position;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return position;
-    }
 }

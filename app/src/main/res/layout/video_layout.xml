@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/article_constraint_layout"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:layout_gravity="center">
+
+    <RelativeLayout
+        android:id="@+id/video_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:clipToPadding="false"
+        android:foreground="?android:selectableItemBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/video_frame"
+            android:layout_width="450dp"
+            android:layout_height="250dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/black">
+
+            <TextureView
+                android:id="@+id/video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/preview_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@id/video"
+                android:layout_alignLeft="@id/video"
+                android:layout_alignRight="@id/video"
+                android:layout_alignTop="@id/video"
+                android:scaleType="center"
+                android:scaleX="3.0"
+                android:scaleY="3.0"
+                android:src="@android:drawable/ic_media_play"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/restart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@id/video"
+                android:layout_alignLeft="@id/video"
+                android:layout_alignRight="@id/video"
+                android:layout_alignTop="@id/video"
+                android:scaleType="center"
+                android:scaleX="2.0"
+                android:scaleY="2.0"
+                android:src="@drawable/restart"
+                android:visibility="visible" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/video_frame"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            tools:text="Author" />
+
+        <TextView
+            android:id="@+id/preview_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/author"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="4"
+            tools:text="Preview text" />
+
+        <ImageView
+            android:id="@+id/sponsored_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/sponsored_indicator"
+            tools:ignore="RtlHardcoded" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

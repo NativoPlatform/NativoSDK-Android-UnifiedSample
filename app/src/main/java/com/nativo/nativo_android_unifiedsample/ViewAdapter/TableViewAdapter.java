@@ -15,12 +15,14 @@ import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
+import net.nativo.sdk.ntvconstant.NtvConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
+
 public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
-    private static String SECTION_URL = "http://www.nativo.net/test/";
     private ViewGroup parent;
 
     public TableViewAdapter(ViewGroup parent) {
@@ -29,7 +31,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public int getCount() {
-        return 10;
+        return 2;
     }
 
     @Override
@@ -44,11 +46,19 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, i, this, null);
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
         }
+        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_VIDEO)) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
+        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_NATIVE)) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
+        }
+
         boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
         if (!ad) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
             bindView(view, i);
         }
         return view;
@@ -59,8 +69,8 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             if (((ImageView) view.findViewById(R.id.article_image)) != null) {
                 ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
             }
-            if (((ImageView) view.findViewById(R.id.sponsored_indicator)) != null) {
-                ((ImageView) view.findViewById(R.id.sponsored_indicator)).setVisibility(View.INVISIBLE);
+            if (((ImageView) view.findViewById(R.id.video_sponsored_indicator)) != null) {
+                ((ImageView) view.findViewById(R.id.video_sponsored_indicator)).setVisibility(View.INVISIBLE);
             }
             if (((TextView) view.findViewById(R.id.article_author)) != null) {
                 ((TextView) view.findViewById(R.id.article_author)).setText(R.string.sample_author);
@@ -81,7 +91,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return i == 2;
+        return true;
     }
 
     @Override
@@ -97,7 +107,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     @Override
     public void needsDisplayLandingPage(String s, int i) {
         parent.getContext().startActivity(new Intent(parent.getContext(), SponsoredContentActivity.class)
-                .putExtra(SponsoredContentActivity.SECTION_URL, s)
+                .putExtra(SECTION_URL, s)
                 .putExtra(SponsoredContentActivity.CAMPAIGN_ID, i));
     }
 

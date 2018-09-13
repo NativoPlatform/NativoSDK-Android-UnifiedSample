@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +19,14 @@ import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
+import net.nativo.sdk.ntvconstant.NtvConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 
 public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
-    private static String SECTION_URL = "http://www.nativo.net/test/";
     private static String RSS_URL = "http://www.engadget.com/rss.xml";
     Context context;
 
@@ -36,7 +36,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 
     @Override
@@ -54,6 +54,11 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
         }
+        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_VIDEO)) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
+        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_NATIVE)) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
+        }
         boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
         if (!ad) {
             bindView(view, i);
@@ -66,8 +71,8 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             if (((ImageView) view.findViewById(R.id.article_image)) != null) {
                 ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
             }
-            if (((ImageView) view.findViewById(R.id.sponsored_indicator)) != null) {
-                ((ImageView) view.findViewById(R.id.sponsored_indicator)).setVisibility(View.INVISIBLE);
+            if (((ImageView) view.findViewById(R.id.video_sponsored_indicator)) != null) {
+                ((ImageView) view.findViewById(R.id.video_sponsored_indicator)).setVisibility(View.INVISIBLE);
             }
             if (((TextView) view.findViewById(R.id.article_author)) != null) {
                 ((TextView) view.findViewById(R.id.article_author)).setText(R.string.sample_author);
@@ -104,7 +109,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     @Override
     public void needsDisplayLandingPage(String s, int i) {
         context.startActivity(new Intent(context, SponsoredContentActivity.class)
-                .putExtra(SponsoredContentActivity.SECTION_URL, s)
+                .putExtra(SECTION_URL, s)
                 .putExtra(SponsoredContentActivity.CAMPAIGN_ID, i));
     }
 
@@ -146,7 +151,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             articleImage = container.findViewById(R.id.article_image);
             articleTitle = container.findViewById(R.id.article_title);
             articleAuthor = container.findViewById(R.id.article_author);
-            articleSponsor = container.findViewById(R.id.sponsored_indicator);
+            articleSponsor = container.findViewById(R.id.video_sponsored_indicator);
         }
     }
 }

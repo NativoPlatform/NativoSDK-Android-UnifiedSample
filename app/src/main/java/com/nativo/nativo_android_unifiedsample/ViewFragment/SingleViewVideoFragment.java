@@ -1,6 +1,6 @@
 package com.nativo.nativo_android_unifiedsample.ViewFragment;
 
-import android.content.Intent;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nativo.nativo_android_unifiedsample.R;
-import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
@@ -23,27 +22,30 @@ import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 
-public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
-
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapter {
     private View convertView;
-    SingleViewFragment viewFragment = null;
+    SingleViewVideoFragment viewFragment;
 
-    public SingleViewFragment() {
+    public SingleViewVideoFragment() {
         viewFragment = this;
+        // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_single_view, container, false);
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_single_view_video, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        convertView = view.findViewById(R.id.article_container);
+        convertView = view.findViewById(R.id.video_container);
         NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, 0, viewFragment, null);
         if (!getAd()) {
             bindView(view, 0);
@@ -75,9 +77,13 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
                 ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
             }
             if (shouldPlaceAdAtIndex("sample", i)) {
-                view.findViewById(R.id.article_container).setBackgroundColor(Color.RED);
+                if (view.findViewById(R.id.article_container) != null) {
+                    view.findViewById(R.id.article_container).setBackgroundColor(Color.RED);
+                }
             } else {
-                view.findViewById(R.id.article_container).setBackgroundColor(Color.WHITE);
+                if (view.findViewById(R.id.article_container) != null) {
+                    view.findViewById(R.id.article_container).setBackgroundColor(Color.WHITE);
+                }
             }
         }
     }
@@ -124,9 +130,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
 
     @Override
     public void needsDisplayLandingPage(String s, int i) {
-        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
-                .putExtra(SponsoredContentActivity.SECTION_URL, s)
-                .putExtra(SponsoredContentActivity.CAMPAIGN_ID, i));
+
     }
 
     @Override

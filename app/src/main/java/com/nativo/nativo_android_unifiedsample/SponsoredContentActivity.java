@@ -8,10 +8,12 @@ import com.nativo.nativo_android_unifiedsample.NativeAdLandingImpl.NativeLanding
 
 import net.nativo.sdk.NativoSDK;
 
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
+
 public class SponsoredContentActivity extends AppCompatActivity {
 
-    public static final String SECTION_URL = "SECTION_URL";
     public static final String CAMPAIGN_ID = "CAMPAIGN_ID";
+    public static final String SECTION_URL = "SECTION_URL";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
