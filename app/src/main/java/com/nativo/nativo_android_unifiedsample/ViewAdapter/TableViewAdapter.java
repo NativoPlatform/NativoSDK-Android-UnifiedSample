@@ -3,6 +3,8 @@ package com.nativo.nativo_android_unifiedsample.ViewAdapter;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,7 +103,12 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void needsReloadDataSource(String s, int i) {
-
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

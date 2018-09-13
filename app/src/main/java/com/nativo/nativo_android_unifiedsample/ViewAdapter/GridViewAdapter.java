@@ -103,7 +103,12 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public void needsReloadDataSource(String s, int i) {
-
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
