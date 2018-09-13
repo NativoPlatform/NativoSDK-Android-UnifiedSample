@@ -3,6 +3,7 @@ package com.nativo.nativo_android_unifiedsample.NativeAdImpl;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class NativeAd implements NtvNativeAdInterface {
+public class NativeAdRecycler extends RecyclerView.ViewHolder implements NtvNativeAdInterface {
 
     private LinearLayout layout;
     private CardView cardView;
@@ -27,6 +28,7 @@ public class NativeAd implements NtvNativeAdInterface {
     private TextView sponsoredTag;
     private View view;
     private View adContainerView;
+
 
     @Override
     public TextView getTitleLabel() {
@@ -40,6 +42,12 @@ public class NativeAd implements NtvNativeAdInterface {
     @Override
     public View getAdContainerView() {
         return adContainerView;
+    }
+
+    public NativeAdRecycler(View itemView) {
+        super(itemView);
+        adContainerView = itemView;
+        bindViews(itemView);
     }
 
     @Override
@@ -92,10 +100,13 @@ public class NativeAd implements NtvNativeAdInterface {
         return R.layout.article;
     }
 
+    public View getView() {
+        return view;
+    }
+
     @Override
     public void bindViews(View v) {
         view = v;
-        adContainerView = v;
         layout = v.findViewById(R.id.article_layout);
         cardView = v.findViewById(R.id.article_constraint_layout);
         titleLabel = v.findViewById(R.id.article_title);

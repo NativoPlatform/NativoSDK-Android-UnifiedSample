@@ -17,6 +17,7 @@ public class NativeLandingPage implements NtvLandingPageInterface {
     private WebView webView;
     private TextView titleLabel;
     private TextView authorNameLabel;
+    private View adContainerView;
 
     @Override
     public WebView getContentWebView() {
@@ -80,8 +81,14 @@ public class NativeLandingPage implements NtvLandingPageInterface {
 
     @Override
     public void bindViews(View v) {
+        adContainerView = v;
         webView = v.findViewById(R.id.web_view);
         titleLabel = v.findViewById(R.id.title_label);
         authorNameLabel = v.findViewById(R.id.author_label);
+    }
+
+    @Override
+    public View getAdContainerView() {
+        return adContainerView;
     }
 }

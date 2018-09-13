@@ -27,14 +27,15 @@ public class FullScreenVideoImpl implements NtvFullscreenVideoInterface {
     private ImageButton playPauseButton;
     private ImageButton exitFullScreenButton;
     private ImageButton moreInfoButton;
+    private View adContainerView;
 
 
     @Override
     public void bindViews(View v) {
         textureView = (TextureView) v.findViewById(R.id.video);
         mediaControllerWrapper = (FrameLayout) v.findViewById(R.id.full_screen_media_controller_wrapper);
-        titleLabel = (TextView) v.findViewById(R.id.video_title);
-        authorLabel = (TextView) v.findViewById(R.id.video_author);
+        titleLabel = (TextView) v.findViewById(R.id.title);
+        authorLabel = (TextView) v.findViewById(R.id.author);
         previewTextLabel = (TextView) v.findViewById(R.id.description);
         learnMoreButton = (Button) v.findViewById(R.id.learn_more);
         shareButton = (Button) v.findViewById(R.id.share);
@@ -45,6 +46,11 @@ public class FullScreenVideoImpl implements NtvFullscreenVideoInterface {
         exitFullScreenButton = (ImageButton) v.findViewById(R.id.exit_fullscreen);
         moreInfoButton = (ImageButton) v.findViewById(R.id.more_info);
 
+    }
+
+    @Override
+    public View getAdContainerView() {
+        return adContainerView;
     }
 
     @Override

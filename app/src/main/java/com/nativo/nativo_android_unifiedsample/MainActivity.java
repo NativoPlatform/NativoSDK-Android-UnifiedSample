@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.SingleVideoAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdLandingImpl.NativeLandingPage;
-import com.nativo.nativo_android_unifiedsample.NativeAdVideo.FullScreenVideoImpl;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.GridFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.RecyclerViewFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.SingleViewFragment;

@@ -15,12 +15,14 @@ import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
+import net.nativo.sdk.ntvconstant.NtvConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
+
 public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
-    private static String SECTION_URL = "http://www.nativo.net/test/";
     private ViewGroup parent;
 
     public TableViewAdapter(ViewGroup parent) {
@@ -29,7 +31,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 2;
     }
 
     @Override
@@ -44,10 +46,17 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, i, this, null);
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
         }
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this);
+        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_VIDEO)) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
+        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_NATIVE)) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
+        }
+
+        boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
         if (!ad) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
             bindView(view, i);
@@ -82,7 +91,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return i==3;
+        return true;
     }
 
     @Override
@@ -98,7 +107,7 @@ public class TableViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     @Override
     public void needsDisplayLandingPage(String s, int i) {
         parent.getContext().startActivity(new Intent(parent.getContext(), SponsoredContentActivity.class)
-                .putExtra(SponsoredContentActivity.SECTION_URL, s)
+                .putExtra(SECTION_URL, s)
                 .putExtra(SponsoredContentActivity.CAMPAIGN_ID, i));
     }
 

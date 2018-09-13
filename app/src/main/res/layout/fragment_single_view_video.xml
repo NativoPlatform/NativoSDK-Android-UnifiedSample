@@ -19,58 +19,62 @@
         android:foreground="?android:selectableItemBackground"
         android:orientation="vertical">
 
-        <TextureView
-            android:id="@+id/video"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+        <FrameLayout
+            android:id="@+id/video_frame"
+            android:layout_width="450dp"
+            android:layout_height="250dp"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"/>
+            android:layout_marginTop="24dp"
+            android:background="@color/black">
 
-        <ImageView
-            android:id="@+id/preview_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"/>
+            <TextureView
+                android:id="@+id/video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <ImageView
-            android:id="@+id/play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/video"
-            android:layout_alignLeft="@id/video"
-            android:layout_alignRight="@id/video"
-            android:layout_alignTop="@id/video"
-            android:visibility="gone"
-            android:scaleType="center"
-            android:scaleX="3.0"
-            android:scaleY="3.0"
-            android:src="@android:drawable/ic_media_play"/>
+            <ImageView
+                android:id="@+id/preview_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"/>
 
-        <ImageView
-            android:id="@+id/restart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/video"
-            android:layout_alignLeft="@id/video"
-            android:layout_alignRight="@id/video"
-            android:layout_alignTop="@id/video"
-            android:scaleType="center"
-            android:visibility="gone"
-            android:scaleX="2.0"
-            android:scaleY="2.0"
-            android:src="@drawable/restart"/>
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@id/video"
+                android:layout_alignLeft="@id/video"
+                android:layout_alignRight="@id/video"
+                android:layout_alignTop="@id/video"
+                android:visibility="gone"
+                android:scaleType="center"
+                android:scaleX="3.0"
+                android:scaleY="3.0"
+                android:src="@android:drawable/ic_media_play" />
+
+            <ImageView
+                android:id="@+id/restart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@id/video"
+                android:layout_alignLeft="@id/video"
+                android:layout_alignRight="@id/video"
+                android:layout_alignTop="@id/video"
+                android:scaleType="center"
+                android:scaleX="2.0"
+                android:scaleY="2.0"
+                android:src="@drawable/restart"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/video"
+            android:layout_below="@id/video_frame"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"

@@ -1,6 +1,7 @@
 package com.nativo.nativo_android_unifiedsample.NativeAdImpl;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +14,7 @@ import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
 
 import java.util.Date;
 
-public class SingleVideoAd implements NtvVideoAdInterface {
+public class SingleVideoAdRecycler extends RecyclerView.ViewHolder implements NtvVideoAdInterface {
 
     private RelativeLayout layout;
     private TextureView textureView;
@@ -28,7 +29,12 @@ public class SingleVideoAd implements NtvVideoAdInterface {
 
     @Override
     public int getLayout(Context context) {
-        return R.layout.video_layout;
+        return 0;
+    }
+
+    public SingleVideoAdRecycler(View itemView) {
+        super(itemView);
+        adContainerView = itemView;
     }
 
     @Override
@@ -37,8 +43,12 @@ public class SingleVideoAd implements NtvVideoAdInterface {
     }
 
     @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
     public void bindViews(View v) {
-        adContainerView = v;
         layout = (RelativeLayout) v.findViewById(R.id.video_container);
         textureView = (TextureView) v.findViewById(R.id.video);
         previewImage = (ImageView) v.findViewById(R.id.preview_image);
