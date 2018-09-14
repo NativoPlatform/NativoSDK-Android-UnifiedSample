@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -28,10 +29,12 @@ public class FullScreenVideoImpl implements NtvFullscreenVideoInterface {
     private ImageButton exitFullScreenButton;
     private ImageButton moreInfoButton;
     private View adContainerView;
+    private ProgressBar progressBar;
 
 
     @Override
     public void bindViews(View v) {
+        adContainerView = v;
         textureView = (TextureView) v.findViewById(R.id.video);
         mediaControllerWrapper = (FrameLayout) v.findViewById(R.id.full_screen_media_controller_wrapper);
         titleLabel = (TextView) v.findViewById(R.id.title);
@@ -45,6 +48,7 @@ public class FullScreenVideoImpl implements NtvFullscreenVideoInterface {
         playPauseButton = (ImageButton) v.findViewById(R.id.play_pause);
         exitFullScreenButton = (ImageButton) v.findViewById(R.id.exit_fullscreen);
         moreInfoButton = (ImageButton) v.findViewById(R.id.more_info);
+        progressBar = v.findViewById(R.id.video_progress_bar);
 
     }
 
@@ -128,4 +132,8 @@ public class FullScreenVideoImpl implements NtvFullscreenVideoInterface {
         return moreInfoButton;
     }
 
+    @Override
+    public ProgressBar getProgressBar() {
+        return progressBar;
+    }
 }
