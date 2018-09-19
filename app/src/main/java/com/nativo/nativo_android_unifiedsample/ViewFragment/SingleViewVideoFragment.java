@@ -1,7 +1,9 @@
 package com.nativo.nativo_android_unifiedsample.ViewFragment;
 
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +22,7 @@ import net.nativo.sdk.ntvadtype.NtvBaseInterface;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 
 /**
@@ -85,8 +88,16 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
                     view.findViewById(R.id.article_container).setBackgroundColor(Color.WHITE);
                 }
             }
+            view.setOnClickListener(onClickListener);
         }
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(CLICK_OUT_URL)));
+        }
+    };
 
     View.OnClickListener loadAd = new View.OnClickListener() {
         @Override

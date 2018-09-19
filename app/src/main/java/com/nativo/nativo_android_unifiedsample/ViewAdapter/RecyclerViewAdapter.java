@@ -25,6 +25,7 @@ import net.nativo.sdk.ntvconstant.NtvConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
 
 
@@ -131,8 +132,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             } else {
                 view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
             }
+            view.setOnClickListener(onClickListener);
         }
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(CLICK_OUT_URL)));
+        }
+    };
 
     @Override
     public int getItemCount() {

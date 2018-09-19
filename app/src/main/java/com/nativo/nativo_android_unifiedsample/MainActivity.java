@@ -51,13 +51,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Toast.makeText(getApplicationContext(), "landscape", Toast.LENGTH_SHORT).show();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Toast.makeText(getApplicationContext(), "portrait", Toast.LENGTH_SHORT).show();
-        }
         NativoSDK.getInstance().onConfigurationChanged(newConfig);
     }
 
