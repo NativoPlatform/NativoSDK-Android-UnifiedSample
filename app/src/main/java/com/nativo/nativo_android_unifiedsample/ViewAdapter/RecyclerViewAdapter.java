@@ -21,6 +21,7 @@ import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
+import net.nativo.sdk.ntvconstant.NtvAdTypeConstants;
 import net.nativo.sdk.ntvconstant.NtvConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
@@ -84,9 +85,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder listViewHolder, int i) {
         NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, i, this, null);
         boolean ad = false;
-        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_NATIVE)) {
+        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
             ad = NativoSDK.getInstance().placeAdInView(((NativeAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
-        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_VIDEO)) {
+        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
             ad = NativoSDK.getInstance().placeAdInView(((SingleVideoAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
         }
         if (!ad) {
@@ -99,11 +100,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public int getItemViewType(int position) {
         String s = NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, position);
         switch (s) {
-            case NtvConstants.AD_TYPE_VIDEO:
+            case NtvAdTypeConstants.AD_TYPE_VIDEO:
                 return 2;
-            case NtvConstants.AD_TYPE_NATIVE:
+            case NtvAdTypeConstants.AD_TYPE_NATIVE:
                 return 1;
-            case NtvConstants.AD_TYPE_NONE:
+            case NtvAdTypeConstants.AD_TYPE_NONE:
                 return 0;
             default:
                 return -1;
@@ -145,28 +146,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 10;
     }
 
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return true;
+        return i%2==0;
     }
 
     @Override
     public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
         return null;
-    }
-
-    @Override
-    public void needsReloadDataSource(String s, int i) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
     }
 
     @Override
@@ -187,17 +178,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
+    public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
     }
 
     @Override
-    public void onFail(String s, Exception e) {
+    public void onFail(String s, int index) {
 
     }
 

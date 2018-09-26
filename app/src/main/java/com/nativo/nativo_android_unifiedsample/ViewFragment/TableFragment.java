@@ -30,7 +30,7 @@ public class TableFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_table, container, false);
         listView = view.findViewById(R.id.list_table);
         listView.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
-        tableViewAdapter = new TableViewAdapter((ViewGroup) view);
+        tableViewAdapter = new TableViewAdapter(listView);
         listView.setAdapter(tableViewAdapter);
         view.findViewById(R.id.load_ad).setOnClickListener(loadAd);
         view.findViewById(R.id.show_ad).setOnClickListener(showAd);

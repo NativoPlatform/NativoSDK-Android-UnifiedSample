@@ -19,6 +19,7 @@ import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
+import net.nativo.sdk.ntvconstant.NtvAdTypeConstants;
 import net.nativo.sdk.ntvconstant.NtvConstants;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
@@ -30,9 +31,11 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     private static String RSS_URL = "http://www.engadget.com/rss.xml";
     Context context;
+    ViewGroup parent;
 
-    public GridViewAdapter(Context context) {
+    public GridViewAdapter(Context context, ViewGroup parent) {
         this.context = context;
+        this.parent = parent;
     }
 
     @Override
@@ -55,12 +58,12 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
         }
-        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_VIDEO)) {
+        if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvConstants.AD_TYPE_NATIVE)) {
+        } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article, viewGroup, false);
         }
-        boolean ad = NativoSDK.getInstance().placeAdInView(view, viewGroup, SECTION_URL, i, this, null);
+        boolean ad = NativoSDK.getInstance().placeAdInView(view, parent, SECTION_URL, i, this, null);
         if (!ad) {
             bindView(view, i);
         }
@@ -111,16 +114,6 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     }
 
     @Override
-    public void needsReloadDataSource(String s, int i) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
-    }
-
-    @Override
     public void needsDisplayLandingPage(String s, int i) {
         context.startActivity(new Intent(context, SponsoredContentActivity.class)
                 .putExtra(SECTION_URL, s)
@@ -138,7 +131,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+    public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -149,7 +142,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     }
 
     @Override
-    public void onFail(String s, Exception e) {
+    public void onFail(String s, int index) {
 
     }
 
