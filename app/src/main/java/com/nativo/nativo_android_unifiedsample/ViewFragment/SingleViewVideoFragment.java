@@ -135,11 +135,6 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
     }
 
     @Override
-    public void needsReloadDataSource(String s, int i) {
-
-    }
-
-    @Override
     public void needsDisplayLandingPage(String s, int i) {
 
     }
@@ -155,12 +150,12 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
     }
 
     @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+    public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
 
     }
 
     @Override
-    public void onFail(String s, Exception e) {
+    public void onFail(String s, int index) {
 
     }
 }

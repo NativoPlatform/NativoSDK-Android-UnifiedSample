@@ -128,11 +128,6 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     }
 
     @Override
-    public void needsReloadDataSource(String s, int i) {
-
-    }
-
-    @Override
     public void needsDisplayLandingPage(String s, int i) {
         getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
                 .putExtra(SponsoredContentActivity.SECTION_URL, s)
@@ -150,12 +145,12 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     }
 
     @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData) {
+    public void onReceiveAd(String s, int index, NtvAdData ntvAdData) {
 
     }
 
     @Override
-    public void onFail(String s, Exception e) {
+    public void onFail(String s, int index) {
 
     }
 }

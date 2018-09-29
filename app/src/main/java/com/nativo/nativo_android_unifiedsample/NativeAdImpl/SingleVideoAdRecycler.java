@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class SingleVideoAdRecycler extends RecyclerView.ViewHolder implements Nt
     private TextView titleLabel;
     private TextView authorLabel;
     private ImageView sponsoredIndicator;
+    private ProgressBar progressBar;
     private View adContainerView;
 
 
@@ -57,6 +59,7 @@ public class SingleVideoAdRecycler extends RecyclerView.ViewHolder implements Nt
         titleLabel = (TextView) v.findViewById(R.id.title);
         authorLabel = (TextView) v.findViewById(R.id.author);
         sponsoredIndicator = (ImageView) v.findViewById(R.id.sponsored_indicator);
+        progressBar = v.findViewById(R.id.video_progress_bar);
     }
 
     @Override
@@ -125,4 +128,8 @@ public class SingleVideoAdRecycler extends RecyclerView.ViewHolder implements Nt
         return null;
     }
 
+    @Override
+    public ProgressBar getProgressBar() {
+        return progressBar;
+    }
 }
