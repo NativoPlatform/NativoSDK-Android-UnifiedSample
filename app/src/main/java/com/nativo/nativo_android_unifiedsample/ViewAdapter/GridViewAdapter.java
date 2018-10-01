@@ -26,6 +26,8 @@ import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_SECTION_URL;
 
 public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
@@ -116,8 +118,8 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     @Override
     public void needsDisplayLandingPage(String s, int i) {
         context.startActivity(new Intent(context, SponsoredContentActivity.class)
-                .putExtra(SECTION_URL, s)
-                .putExtra(SponsoredContentActivity.CAMPAIGN_ID, i));
+                .putExtra(SP_SECTION_URL, s)
+                .putExtra(SP_CAMPAIGN_ID, i));
     }
 
     @Override

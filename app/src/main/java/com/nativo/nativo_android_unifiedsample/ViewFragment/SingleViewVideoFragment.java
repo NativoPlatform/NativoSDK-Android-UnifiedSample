@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nativo.nativo_android_unifiedsample.R;
+import com.nativo.nativo_android_unifiedsample.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
@@ -24,6 +25,7 @@ import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -136,7 +138,9 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
 
     @Override
     public void needsDisplayLandingPage(String s, int i) {
-
+        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
+                .putExtra(SP_CAMPAIGN_ID, s)
+                .putExtra(SP_CAMPAIGN_ID, i));
     }
 
     @Override
