@@ -24,6 +24,7 @@ import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SECTION_URL;
+import static com.nativo.nativo_android_unifiedsample.util.AppConstants.SP_CAMPAIGN_ID;
 
 public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
 
@@ -130,8 +131,8 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     @Override
     public void needsDisplayLandingPage(String s, int i) {
         getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
-                .putExtra(SponsoredContentActivity.SECTION_URL, s)
-                .putExtra(SponsoredContentActivity.CAMPAIGN_ID, i));
+                .putExtra(SP_CAMPAIGN_ID, s)
+                .putExtra(SP_CAMPAIGN_ID, i));
     }
 
     @Override
