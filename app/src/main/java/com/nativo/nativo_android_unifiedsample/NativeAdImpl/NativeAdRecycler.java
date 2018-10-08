@@ -5,11 +5,13 @@ import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nativo.nativo_android_unifiedsample.R;
+import com.nativo.nativo_android_unifiedsample.ViewHolders.RecyclerListViewHolder;
 
 import net.nativo.sdk.ntvadtype.nativead.NtvNativeAdInterface;
 
@@ -17,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class NativeAdRecycler extends RecyclerView.ViewHolder implements NtvNativeAdInterface {
+public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativeAdInterface {
 
     private LinearLayout layout;
     private CardView cardView;
@@ -44,8 +46,8 @@ public class NativeAdRecycler extends RecyclerView.ViewHolder implements NtvNati
         return adContainerView;
     }
 
-    public NativeAdRecycler(View itemView) {
-        super(itemView);
+    public NativeAdRecycler(View itemView, ViewGroup viewGroup) {
+        super(itemView, viewGroup);
         adContainerView = itemView;
         bindViews(itemView);
     }
@@ -97,7 +99,7 @@ public class NativeAdRecycler extends RecyclerView.ViewHolder implements NtvNati
 
     @Override
     public int getLayout(Context context) {
-        return R.layout.article;
+        return R.layout.native_article;
     }
 
     public View getView() {
@@ -112,7 +114,7 @@ public class NativeAdRecycler extends RecyclerView.ViewHolder implements NtvNati
         titleLabel = v.findViewById(R.id.article_title);
         authorLabel = v.findViewById(R.id.article_author);
         image = v.findViewById(R.id.article_image);
-        sponsoredIndicator = v.findViewById(R.id.video_sponsored_indicator);
+        sponsoredIndicator = v.findViewById(R.id.sponsored_ad_indicator);
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
     }
 }

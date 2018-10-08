@@ -14,7 +14,7 @@ import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
 
 import java.util.Date;
 
-public class SingleVideoAd implements NtvVideoAdInterface {
+public class NativeVideoAd implements NtvVideoAdInterface {
 
     private RelativeLayout layout;
     private TextureView textureView;

@@ -11,7 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAd;
-import com.nativo.nativo_android_unifiedsample.NativeAdImpl.SingleVideoAd;
+import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeVideoAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdLandingImpl.NativeLandingPage;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.GridFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.RecyclerViewFragment;
@@ -21,7 +21,6 @@ import com.nativo.nativo_android_unifiedsample.ViewFragment.TableFragment;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.video.fullscreen.DefaultFullscreenVideo;
-import net.nativo.sdk.ntvcore.NtvAdData;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         NativoSDK.getInstance().init(this);
         NativoSDK.getInstance().registerNativeAd(new NativeAd());
         NativoSDK.getInstance().registerLandingPage(new NativeLandingPage());
-        NativoSDK.getInstance().registerVideoAd(new SingleVideoAd());
+        NativoSDK.getInstance().registerVideoAd(new NativeVideoAd());
         NativoSDK.getInstance().registerFullscreenVideo(new DefaultFullscreenVideo());
-        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO);
+//        NativoSDK.getInstance().enableTestAdvertisements(NtvAdData.NtvAdType.NATIVE);
         NativoSDK.getInstance().enableDevLogs();
     }
 

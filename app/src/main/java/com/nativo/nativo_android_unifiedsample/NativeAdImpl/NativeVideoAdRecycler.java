@@ -4,18 +4,20 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nativo.nativo_android_unifiedsample.R;
+import com.nativo.nativo_android_unifiedsample.ViewHolders.RecyclerListViewHolder;
 
 import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
 
 import java.util.Date;
 
-public class SingleVideoAdRecycler extends RecyclerView.ViewHolder implements NtvVideoAdInterface {
+public class NativeVideoAdRecycler extends RecyclerListViewHolder implements NtvVideoAdInterface {
 
     private RelativeLayout layout;
     private TextureView textureView;
@@ -34,8 +36,8 @@ public class SingleVideoAdRecycler extends RecyclerView.ViewHolder implements Nt
         return 0;
     }
 
-    public SingleVideoAdRecycler(View itemView) {
-        super(itemView);
+    public NativeVideoAdRecycler(View itemView, ViewGroup viewGroup) {
+        super(itemView, viewGroup);
         adContainerView = itemView;
     }
 

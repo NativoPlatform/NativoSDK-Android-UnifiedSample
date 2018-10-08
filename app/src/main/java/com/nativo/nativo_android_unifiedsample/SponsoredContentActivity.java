@@ -21,6 +21,6 @@ public class SponsoredContentActivity extends AppCompatActivity {
         String sectionUrl = getIntent().getStringExtra(SP_SECTION_URL);
         int campaignId = getIntent().getIntExtra(SP_CAMPAIGN_ID, 0);
         //pass in the class that implemented the NtvLandingPageInterface. Can be different layout classes that you switch between
-        NativoSDK.getInstance().initLandingPage(this, sectionUrl, campaignId,NativeLandingPage.class);
+        NativoSDK.getInstance().initLandingPage(this, sectionUrl, campaignId, NativeLandingPage.class);
     }
 }
