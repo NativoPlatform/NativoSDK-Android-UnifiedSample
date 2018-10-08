@@ -22,6 +22,9 @@ public class NativeAd implements NtvNativeAdInterface {
     private CardView cardView;
     private TextView titleLabel;
     private TextView authorLabel;
+    private TextView articlePreviewLabel;
+    private TextView articleDateLabel;
+    private ImageView articleAuthorImage;
     private ImageView image;
     private ImageView sponsoredIndicator;
     private TextView sponsoredTag;
@@ -44,12 +47,15 @@ public class NativeAd implements NtvNativeAdInterface {
 
     @Override
     public TextView getAuthorLabel() {
+        if(!authorLabel.getText().toString().contains("By")){
+            authorLabel.append("By ",0,3);
+        }
         return authorLabel;
     }
 
     @Override
     public TextView getPreviewTextLabel() {
-        return null;
+        return articlePreviewLabel;
     }
 
     @Override
@@ -59,20 +65,18 @@ public class NativeAd implements NtvNativeAdInterface {
 
     @Override
     public ImageView getAuthorImageView() {
-        return null;
+        return articleAuthorImage;
     }
 
     @Override
     public TextView getDateLabel() {
-        return null;
+        return articleDateLabel;
     }
 
     @Override
     public void displaySponsoredIndicators(boolean b) {
         if (cardView != null) {
             cardView.setBackgroundColor(Color.LTGRAY);
-        } else if (view != null){
-            view.setBackgroundColor(Color.LTGRAY);
         }
         if (sponsoredIndicator != null) {
             sponsoredIndicator.setVisibility(View.VISIBLE);
@@ -89,7 +93,7 @@ public class NativeAd implements NtvNativeAdInterface {
 
     @Override
     public int getLayout(Context context) {
-        return R.layout.article;
+        return R.layout.native_article;
     }
 
     @Override
@@ -101,7 +105,10 @@ public class NativeAd implements NtvNativeAdInterface {
         titleLabel = v.findViewById(R.id.article_title);
         authorLabel = v.findViewById(R.id.article_author);
         image = v.findViewById(R.id.article_image);
-        sponsoredIndicator = v.findViewById(R.id.video_sponsored_indicator);
+        articleDateLabel = v.findViewById(R.id.article_date);
+        articlePreviewLabel = v.findViewById(R.id.article_preview);
+        sponsoredIndicator = v.findViewById(R.id.sponsored_ad_indicator);
+        articleAuthorImage = v.findViewById(R.id.article_author_image);
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
     }
 }

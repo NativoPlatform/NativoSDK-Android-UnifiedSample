@@ -13,10 +13,11 @@
     <string name="hello_blank_fragment">Hello blank fragment one</string>
     <string name="hello_blank_fragment_two">Hello blank fragment two</string>
     <string name="sponsored_content">Sponsored Content</string>
+    <string name="by">By</string>
     <string name="load_ad">Load Ad</string>
     <string name="hide_ad">Hide Ad</string>
     <string name="show_ad">Show Ad</string>
-    <string name="sample_title">Sample Title</string>
+    <string name="sample_title">Publisher Article Title</string>
     <string name="sample_viewable_impression">Sample Viewable Impression</string>
-    <string name="sample_author">Sample Author</string>
+    <string name="sample_author">Publisher Article Author</string>
 </resources>
