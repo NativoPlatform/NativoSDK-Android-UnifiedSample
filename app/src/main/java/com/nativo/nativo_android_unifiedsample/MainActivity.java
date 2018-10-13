@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdImpl.NativeVideoAd;
 import com.nativo.nativo_android_unifiedsample.NativeAdLandingImpl.NativeLandingPage;
+import com.nativo.nativo_android_unifiedsample.ViewFragment.DfpFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.GridFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.RecyclerViewFragment;
 import com.nativo.nativo_android_unifiedsample.ViewFragment.SingleViewFragment;
@@ -21,6 +22,7 @@ import com.nativo.nativo_android_unifiedsample.ViewFragment.TableFragment;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.video.fullscreen.DefaultFullscreenVideo;
+import net.nativo.sdk.ntvcore.NtvAdData;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -84,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
                     return new SingleViewFragment();
                 case 4:
                     return new SingleViewVideoFragment();
+                case 5:
+                    return new DfpFragment();
             }
             return null;
         }
@@ -107,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
                     return getResources().getText(R.string.single_view);
                 case 4:
                     return getResources().getText(R.string.single_view);
+                case 5:
+                    return getResources().getText(R.string.dfp);
             }
             return null;
         }

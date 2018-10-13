@@ -65,7 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         NativoSDK.getInstance().prefetchAdForSection(SECTION_URL, i, this, null);
         boolean ad = false;
         View failedView = listViewHolder.getContainer();
-        if (shouldPlaceAdAtIndex("test", i)) {
+        if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
             if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
                 ad = NativoSDK.getInstance().placeAdInView(((NativeAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
             } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
