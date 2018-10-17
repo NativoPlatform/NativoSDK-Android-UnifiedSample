@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 1;
+            return 5;
         }
 
         @Nullable
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 case 3:
                     return getResources().getText(R.string.single_view);
                 case 4:
-                    return getResources().getText(R.string.single_view);
+                    return getResources().getText(R.string.single_view_video);
                 case 5:
                     return getResources().getText(R.string.dfp);
             }
