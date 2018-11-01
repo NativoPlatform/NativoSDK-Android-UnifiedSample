@@ -25,6 +25,9 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
     private CardView cardView;
     private TextView titleLabel;
     private TextView authorLabel;
+    private TextView articlePreviewLabel;
+    private TextView articleDateLabel;
+    private ImageView articleAuthorImage;
     private ImageView image;
     private ImageView sponsoredIndicator;
     private TextView sponsoredTag;
@@ -59,7 +62,7 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
 
     @Override
     public TextView getPreviewTextLabel() {
-        return null;
+        return articlePreviewLabel;
     }
 
     @Override
@@ -69,12 +72,12 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
 
     @Override
     public ImageView getAuthorImageView() {
-        return null;
+        return articleAuthorImage;
     }
 
     @Override
     public TextView getDateLabel() {
-        return null;
+        return articleDateLabel;
     }
 
     @Override
@@ -114,7 +117,10 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
         titleLabel = v.findViewById(R.id.article_title);
         authorLabel = v.findViewById(R.id.article_author);
         image = v.findViewById(R.id.article_image);
+        articleDateLabel = v.findViewById(R.id.article_date);
+        articlePreviewLabel = v.findViewById(R.id.article_preview);
         sponsoredIndicator = v.findViewById(R.id.sponsored_ad_indicator);
+        articleAuthorImage = v.findViewById(R.id.article_author_image);
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
     }
 }

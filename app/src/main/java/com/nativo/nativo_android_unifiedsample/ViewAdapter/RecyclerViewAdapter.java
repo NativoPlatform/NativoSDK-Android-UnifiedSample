@@ -66,9 +66,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         boolean ad = false;
         View failedView = listViewHolder.getContainer();
         if (shouldPlaceAdAtIndex(SECTION_URL, i)) {
-            if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
+            if (listViewHolder instanceof NativeAdRecycler && NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_NATIVE)) {
                 ad = NativoSDK.getInstance().placeAdInView(((NativeAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
-            } else if (NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
+            } else if (listViewHolder instanceof NativeVideoAdRecycler && NativoSDK.getInstance().getAdTypeForIndex(SECTION_URL, i).equals(NtvAdTypeConstants.AD_TYPE_VIDEO)) {
                 ad = NativoSDK.getInstance().placeAdInView(((NativeVideoAdRecycler) listViewHolder), recyclerView, SECTION_URL, i, this, null);
             } else {
                 ad = NativoSDK.getInstance().placeAdInView(failedView, recyclerView, SECTION_URL, i, this, null);
@@ -136,7 +136,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     @Override
     public boolean shouldPlaceAdAtIndex(String s, int i) {
-        return i%2==0;
+        return i % 2 == 0;
     }
 
     @Override

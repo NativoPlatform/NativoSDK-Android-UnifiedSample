@@ -77,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    return new TableFragment();
+                    return new RecyclerViewFragment();
                 case 1:
                     return new GridFragment();
                 case 2:
-                    return new RecyclerViewFragment();
+                    return new TableFragment();
                 case 3:
                     return new SingleViewFragment();
                 case 4:
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
 
         @Nullable
@@ -102,11 +102,11 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getResources().getText(R.string.table_tab);
+                    return getResources().getText(R.string.recycle_list_tab);
                 case 1:
                     return getResources().getText(R.string.grid_tab);
                 case 2:
-                    return getResources().getText(R.string.recycle_list_tab);
+                    return getResources().getText(R.string.table_tab);
                 case 3:
                     return getResources().getText(R.string.single_view);
                 case 4:
