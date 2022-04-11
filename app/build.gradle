@@ -47,6 +47,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation(group: 'com.iab.omid', name: 'omsdk-android', version: '1.3.13')
 
     // Kotlin Core
     def ktorVersion = "1.6.7"
@@ -56,11 +57,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     implementation "io.ktor:ktor-client-android:$ktorVersion"
     implementation "io.ktor:ktor-client-serialization:$ktorVersion"
-    implementation "io.ktor:ktor-client-logging:$ktorVersion"
-    api "co.touchlab:stately-common:$statelyVersion"
-    api "co.touchlab:stately-concurrency:$statelyVersion"
-    api "co.touchlab:stately-isolate:$statelyVersion"
-    api "co.touchlab:stately-iso-collections:$statelyVersion"
+//    implementation "io.ktor:ktor-client-logging:$ktorVersion"
+    implementation "co.touchlab:stately-common:$statelyVersion"
+    implementation "co.touchlab:stately-concurrency:$statelyVersion"
+    implementation "co.touchlab:stately-isolate:$statelyVersion"
+    implementation "co.touchlab:stately-iso-collections:$statelyVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
