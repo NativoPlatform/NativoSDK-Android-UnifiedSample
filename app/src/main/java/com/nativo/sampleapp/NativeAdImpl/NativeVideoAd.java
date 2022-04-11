@@ -14,8 +14,8 @@ import androidx.cardview.widget.CardView;
 
 import com.nativo.sampleapp.R;
 
-import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
-import net.nativo.sdk.ntvadtype.video.VideoPlaybackError;
+import net.nativo.sdk.adtype.video.NtvVideoAdInterface;
+import net.nativo.sdk.adtype.video.VideoPlaybackError;
 
 import java.util.Date;
 

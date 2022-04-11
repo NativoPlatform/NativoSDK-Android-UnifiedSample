@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView;
 
 import com.nativo.sampleapp.R;
 
-import net.nativo.sdk.ntvadtype.nativead.NtvNativeAdInterface;
+import net.nativo.sdk.adtype.nativead.NtvNativeAdInterface;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

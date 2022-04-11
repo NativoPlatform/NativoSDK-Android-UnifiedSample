@@ -18,17 +18,17 @@ import com.nativo.sampleapp.SponsoredContentActivity;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvconstant.NativoAdType;
-import net.nativo.sdk.ntvcore.NtvAdData;
-import net.nativo.sdk.ntvcore.NtvSectionAdapter;
+import net.nativo.sdk.NtvIntent;
+import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.adtype.NtvBaseInterface;
+import net.nativo.sdk.NtvAdData;
 
 import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
+import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER;
 
-public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
+public class SingleViewFragment extends Fragment implements NtvNotificationAdapter {
 
     private View nativoAdView;
     SingleViewFragment viewFragment = null;
@@ -41,7 +41,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
+        NativoSDK.prefetchAdForSection(SECTION_URL, null);
         View view = inflater.inflate(R.layout.fragment_single_view, container, false);
         return view;
     }
@@ -49,6 +49,9 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Nativo init
+        NativoSDK.setNotificationAdapterForSection(SECTION_URL, this, getContext());
         nativoAdView = view.findViewById(R.id.article_container);
 
         view.findViewById(R.id.load_ad).setOnClickListener(loadAd);
@@ -89,7 +92,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
         @Override
         public void onClick(View view) {
             NativoSDK.clearAdsInSection(SECTION_URL, (ViewGroup) getView());
-            NativoSDK.prefetchAdForSection(SECTION_URL, viewFragment, null);
+            NativoSDK.prefetchAdForSection(SECTION_URL, null);
         }
     };
 
@@ -112,12 +115,17 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
         return null;
     }
 
+//    @Override
+//    public void needsDisplayLandingPage(String s, int i) {
+//        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
+//                .putExtra(SP_CAMPAIGN_ID, s)
+//                .putExtra(SP_CAMPAIGN_ID, i)
+//                .putExtra(SP_CONTAINER, getView().hashCode()));
+//    }
+
     @Override
-    public void needsDisplayLandingPage(String s, int i) {
-        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
-                .putExtra(SP_CAMPAIGN_ID, s)
-                .putExtra(SP_CAMPAIGN_ID, i)
-                .putExtra(SP_CONTAINER_HASH, getView().hashCode()));
+    public void needsDisplayLandingPage(String sectionUrl, NtvIntent landingPageIntent) {
+        getView().getContext().startActivity(landingPageIntent);
     }
 
     @Override
@@ -133,7 +141,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     @Override
     public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
         Log.e(this.getClass().getName(), "Did receive ad: "+ntvAdData);
-        boolean didGetNativoAd = NativoSDK.placeAdInView(nativoAdView, (ViewGroup) getView(), SECTION_URL, 0, this, null);
+        boolean didGetNativoAd = NativoSDK.placeAdInView(nativoAdView, (ViewGroup) getView(), SECTION_URL, 0, null);
         if (didGetNativoAd) {
             nativoAdView.setVisibility(View.VISIBLE);
         }

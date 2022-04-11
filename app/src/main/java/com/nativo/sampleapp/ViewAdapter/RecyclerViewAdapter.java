@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nativo.sampleapp.NativeAdImpl.NativeAdRecycler;
-import com.nativo.sampleapp.NativeAdImpl.NativeStoryAdRecycler;
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAdRecycler;
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAdRecycler;
 import com.nativo.sampleapp.R;
@@ -23,13 +22,11 @@ import com.nativo.sampleapp.SponsoredContentActivity;
 import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvconstant.NativoAdType;
-import net.nativo.sdk.ntvcore.NtvAdData;
-import net.nativo.sdk.ntvcore.NtvSectionAdapter;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import net.nativo.sdk.NtvAdData;
+import net.nativo.sdk.NtvIntent;
+import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.adtype.NtvBaseInterface;
+import net.nativo.sdk.constant.NativoAdType;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,11 +36,11 @@ import java.util.Set;
 import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
+import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER;
 import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHolder> implements NtvSectionAdapter {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHolder> implements NtvNotificationAdapter {
 
     private static String TAG = RecyclerViewAdapter.class.getName();
     private Context context;
@@ -53,12 +50,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
+        // Nativo init
+        NativoSDK.setNotificationAdapterForSection(SECTION_URL, this, context);
+
         this.context = context;
         this.recyclerView = recyclerView;
         for (int i = 0; i < 20; i++) {
             integerList.add(i);
         }
-        //NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
     }
 
     // Helper method to determine which indexes should be Nativo ads
@@ -110,7 +109,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         if (shouldPlaceNativoAdAtIndex(i)) {
             Log.e(TAG, "binding index: "+i);
             adsRequestIndex.add(i);
-            isAdContentAvailable = NativoSDK.placeAdInView(view, recyclerView, SECTION_URL, i, this, null);
+            isAdContentAvailable = NativoSDK.placeAdInView(view, recyclerView, SECTION_URL, i, null);
         }
 
         if (!isAdContentAvailable) {
@@ -169,19 +168,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     }
 
     /**
-     * NtvSectionAdapter implementation
+     * NtvNotificationAdapter implementation
      */
-    @Override
-    public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
-        return null;
-    }
+//    @Override
+//    public void needsDisplayLandingPage(String s, int i) {
+//        context.startActivity(new Intent(context, SponsoredContentActivity.class)
+//        .putExtra(SP_SECTION_URL, s)
+//        .putExtra(SP_CAMPAIGN_ID, i)
+//        .putExtra(SP_CONTAINER, recyclerView.hashCode()));
+//    }
 
     @Override
-    public void needsDisplayLandingPage(String s, int i) {
-        context.startActivity(new Intent(context, SponsoredContentActivity.class)
-                .putExtra(SP_SECTION_URL, s)
-                .putExtra(SP_CAMPAIGN_ID, i)
-                .putExtra(SP_CONTAINER_HASH, recyclerView.hashCode()));
+    public void needsDisplayLandingPage(String sectionUrl, NtvIntent landingPageIntent) {
+        context.startActivity(landingPageIntent);
     }
 
     @Override
@@ -194,14 +193,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     }
 
-    public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
+    @Override
+    public void onReceiveAd(String sectionUrl, NtvAdData ntvAdData, Integer index) {
         Log.e(this.getClass().getName(), "Index: "+index+" Did receive ad: "+ ntvAdData);
         integerList.add(index);
         notifyDataSetChanged();
     }
 
     @Override
-    public void onFail(String section, Integer index) {
+    public void onFail(String sectionUrl, Integer index) {
         // Remove failed Nativo ads
         NativoAdType adTypeForIndex = NativoSDK.getAdTypeForIndex(SECTION_URL, recyclerView, index);
         if (adTypeForIndex == NativoAdType.AD_TYPE_NONE) {
@@ -211,4 +211,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         }
         notifyDataSetChanged();
     }
+
+    @Override
+    public Class<?> registerLayoutClassForIndex(int index, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
+        return null;
+    }
+
 }

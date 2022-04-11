@@ -16,10 +16,11 @@ import com.nativo.sampleapp.SponsoredContentActivity;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvconstant.NativoAdType;
-import net.nativo.sdk.ntvcore.NtvAdData;
-import net.nativo.sdk.ntvcore.NtvSectionAdapter;
+import net.nativo.sdk.NtvIntent;
+import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.adtype.NtvBaseInterface;
+import net.nativo.sdk.constant.NativoAdType;
+import net.nativo.sdk.NtvAdData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +28,10 @@ import java.util.List;
 import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
+import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER;
 import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
-public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
+public class GridViewAdapter extends BaseAdapter implements NtvNotificationAdapter {
 
     private Context context;
     private GridView gridView;
@@ -42,6 +43,9 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         for (int i = 0; i < 10; i++) {
             integerList.add(i);
         }
+
+        // Nativo init
+        NativoSDK.setNotificationAdapterForSection(SECTION_URL, this, context);
     }
 
     @Override
@@ -74,7 +78,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
                 default:
                     view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
             }
-            boolean isNativoAdAvailable = NativoSDK.placeAdInView(view, gridView, SECTION_URL, i, this, null);
+            boolean isNativoAdAvailable = NativoSDK.placeAdInView(view, gridView, SECTION_URL, i, null);
 
             // Hide if ad could not be placed in view
             if (!isNativoAdAvailable) {
@@ -129,12 +133,16 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         return null;
     }
 
-    @Override
     public void needsDisplayLandingPage(String s, int i) {
         context.startActivity(new Intent(context, SponsoredContentActivity.class)
                 .putExtra(SP_SECTION_URL, s)
                 .putExtra(SP_CAMPAIGN_ID, i)
-                .putExtra(SP_CONTAINER_HASH, gridView.hashCode()));
+                .putExtra(SP_CONTAINER, gridView.hashCode()));
+    }
+
+    @Override
+    public void needsDisplayLandingPage(String sectionUrl, NtvIntent landingPageIntent) {
+        context.startActivity(landingPageIntent);
     }
 
     @Override

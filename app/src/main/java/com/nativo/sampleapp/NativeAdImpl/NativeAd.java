@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.nativead.NtvNativeAdInterface;
+import net.nativo.sdk.adtype.nativead.NtvNativeAdInterface;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

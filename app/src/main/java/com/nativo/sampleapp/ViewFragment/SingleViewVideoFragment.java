@@ -19,19 +19,20 @@ import com.nativo.sampleapp.SponsoredContentActivity;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvcore.NtvAdData;
-import net.nativo.sdk.ntvcore.NtvSectionAdapter;
+import net.nativo.sdk.NtvIntent;
+import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.adtype.NtvBaseInterface;
+import net.nativo.sdk.NtvAdData;
 
 import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
+import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapter {
+public class SingleViewVideoFragment extends Fragment implements NtvNotificationAdapter {
     private View convertView;
     SingleViewVideoFragment viewFragment;
 
@@ -52,7 +53,11 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         convertView = view.findViewById(R.id.video_container);
-        NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
+
+        // Nativo init
+        NativoSDK.setNotificationAdapterForSection(SECTION_URL, this, getContext());
+        NativoSDK.prefetchAdForSection(SECTION_URL, null);
+
         if (!getAd()) {
             bindView(view, 0);
         }
@@ -62,7 +67,8 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
     }
 
     private boolean getAd() {
-        return NativoSDK.placeAdInView(convertView, (ViewGroup) getView(), SECTION_URL, 0, this, null);
+        boolean hasAd = NativoSDK.placeAdInView(convertView, (ViewGroup) getView(), SECTION_URL, 0, null);
+        return hasAd;
     }
 
     private void bindView(View view, int i) {
@@ -103,7 +109,7 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
     View.OnClickListener loadAd = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            NativoSDK.prefetchAdForSection(SECTION_URL, (ViewGroup) getView(),0, viewFragment, null);
+            NativoSDK.prefetchAdForSection(SECTION_URL, null);
             Log.d(getClass().getName(), NativoSDK.getAdTypeForIndex(SECTION_URL, (ViewGroup) getView(), 0).toString());
             if (!getAd()) {
                 bindView(getView(), 0);
@@ -130,12 +136,17 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
         return null;
     }
 
+//    @Override
+//    public void needsDisplayLandingPage(String s, int i) {
+//        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
+//                .putExtra(SP_CAMPAIGN_ID, s)
+//                .putExtra(SP_CAMPAIGN_ID, i)
+//                .putExtra(SP_CONTAINER, getView().hashCode()));
+//    }
+
     @Override
-    public void needsDisplayLandingPage(String s, int i) {
-        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
-                .putExtra(SP_CAMPAIGN_ID, s)
-                .putExtra(SP_CAMPAIGN_ID, i)
-                .putExtra(SP_CONTAINER_HASH, getView().hashCode()));
+    public void needsDisplayLandingPage(String sectionUrl, NtvIntent landingPageIntent) {
+        getView().getContext().startActivity(landingPageIntent);
     }
 
     @Override

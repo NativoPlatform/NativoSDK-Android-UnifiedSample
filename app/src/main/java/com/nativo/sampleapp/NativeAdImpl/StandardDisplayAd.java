@@ -8,7 +8,7 @@ import androidx.cardview.widget.CardView;
 
 import com.nativo.sampleapp.R;
 
-import net.nativo.sdk.ntvadtype.display.NtvStandardDisplayInterface;
+import net.nativo.sdk.adtype.display.NtvStandardDisplayInterface;
 
 public class StandardDisplayAd implements NtvStandardDisplayInterface {
 

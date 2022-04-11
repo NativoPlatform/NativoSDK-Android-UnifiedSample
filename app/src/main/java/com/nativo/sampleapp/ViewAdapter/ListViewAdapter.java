@@ -14,15 +14,16 @@ import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvconstant.NativoAdType;
-import net.nativo.sdk.ntvcore.NtvAdData;
-import net.nativo.sdk.ntvcore.NtvSectionAdapter;
+import net.nativo.sdk.NtvIntent;
+import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.adtype.NtvBaseInterface;
+import net.nativo.sdk.constant.NativoAdType;
+import net.nativo.sdk.NtvAdData;
 
 import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
+import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER;
 import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
 /**
@@ -30,12 +31,13 @@ import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
  * Ads are placed according to rule in link{@code shouldPlaceAdAtIndex()}.
  * If an ad is not placed(eg no fill scenario) the cell is marked with red
  */
-public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
+public class ListViewAdapter extends BaseAdapter implements NtvNotificationAdapter {
 
     private ViewGroup listView;
 
     public ListViewAdapter(ViewGroup parent) {
         this.listView = parent;
+        NativoSDK.setNotificationAdapterForSection(SECTION_URL, this, parent.getContext());
     }
 
     @Override
@@ -64,7 +66,7 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
         }
 
-        boolean ad = NativoSDK.placeAdInView(view, listView, SECTION_URL, i, this, null);
+        boolean ad = NativoSDK.placeAdInView(view, listView, SECTION_URL, i, null);
         if (!ad) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
             bindView(view, i);
@@ -115,12 +117,17 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         return null;
     }
 
+//    @Override
+//    public void needsDisplayLandingPage(String s, int i) {
+//        listView.getContext().startActivity(new Intent(listView.getContext(), SponsoredContentActivity.class)
+//                .putExtra(SP_SECTION_URL, s)
+//                .putExtra(SP_CAMPAIGN_ID, i)
+//                .putExtra(SP_CONTAINER, listView.hashCode()));
+//    }
+
     @Override
-    public void needsDisplayLandingPage(String s, int i) {
-        listView.getContext().startActivity(new Intent(listView.getContext(), SponsoredContentActivity.class)
-                .putExtra(SP_SECTION_URL, s)
-                .putExtra(SP_CAMPAIGN_ID, i)
-                .putExtra(SP_CONTAINER_HASH, listView.hashCode()));
+    public void needsDisplayLandingPage(String sectionUrl, NtvIntent landingPageIntent) {
+        listView.getContext().startActivity(landingPageIntent);
     }
 
     @Override

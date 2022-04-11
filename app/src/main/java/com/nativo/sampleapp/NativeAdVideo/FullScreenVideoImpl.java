@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.nativo.sampleapp.R;
 
-import net.nativo.sdk.ntvadtype.video.fullscreen.NtvFullscreenVideoInterface;
+import net.nativo.sdk.adtype.video.fullscreen.NtvFullscreenVideoInterface;
 
 public class FullScreenVideoImpl implements NtvFullscreenVideoInterface {
     private TextureView textureView;

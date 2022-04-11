@@ -36,19 +36,17 @@ import com.nativo.sampleapp.ViewFragment.SingleViewFragment;
 import com.nativo.sampleapp.ViewFragment.SingleViewVideoFragment;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvcore.NtvAdData;
-import net.nativo.sdk.ntvcore.NtvSectionAdapter;
+import net.nativo.sdk.NtvAdData;
+import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.adtype.NtvBaseInterface;
 
+import static com.nativo.sampleapp.util.AppConstants.GDPR_SHARED_PREFERENCE_STRING;
+import static com.nativo.sampleapp.util.AppConstants.CCPA_SHARED_PREFERENCE_STRING;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_CCPA_INVALID_CONSENT;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_CCPA_VALID_CONSENT;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_GDPR_CONSENT;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_GDPR_INVALID_CONSENT;
-import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
-import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
-import static net.nativo.sdk.ntvconstant.NtvConstants.CCPA_SHARED_PREFERENCE_STRING;
-import static net.nativo.sdk.ntvconstant.NtvConstants.GDPR_SHARED_PREFERENCE_STRING;
+
 
 enum NtvFragmentType {
     RECYCLE_LIST,
@@ -60,7 +58,7 @@ enum NtvFragmentType {
     MIDDLE_OF_ARTICLE
 }
 
-public class MainActivity extends AppCompatActivity implements NtvSectionAdapter {
+public class MainActivity extends AppCompatActivity {
 
     NtvFragmentType fragmentType;
 
@@ -98,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements NtvSectionAdapter
     }
 
     private void nativoInit() {
-        NativoSDK.init(this);
         NativoSDK.registerNativeAd(new NativeAd());
         NativoSDK.registerLandingPage(new NativeLandingPage());
         NativoSDK.registerVideoAd(new NativeVideoAd());
@@ -107,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NtvSectionAdapter
         NativoSDK.enableDevLogs();
 
         // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO);
+        NativoSDK.enableTestAdvertisements(NtvAdData.AdType.NATIVE);
     }
 
     private void setMainFragment(NtvFragmentType fragmentType) {
@@ -235,39 +232,5 @@ public class MainActivity extends AppCompatActivity implements NtvSectionAdapter
         editor.remove(GDPR_SHARED_PREFERENCE_STRING);
         editor.remove(CCPA_SHARED_PREFERENCE_STRING);
         editor.apply();
-    }
-
-    /**
-     *
-     * THIS IS NATIVE SECTION ADAPTER INTERFACE
-     */
-    @Override
-    public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
-        return null;
-    }
-
-    @Override
-    public void needsDisplayLandingPage(String s, int i) {
-
-    }
-
-    @Override
-    public void needsDisplayClickOutURL(String s, String s1) {
-
-    }
-
-    @Override
-    public void hasbuiltView(View view, NtvBaseInterface ntvBaseInterface, NtvAdData ntvAdData) {
-
-    }
-
-    @Override
-    public void onReceiveAd(String s, NtvAdData ntvAdData, Integer index) {
-        Log.e(this.getClass().getName(), "Did receive ad at index: "+index);
-    }
-
-    @Override
-    public void onFail(String s, Integer integer) {
-
     }
 }

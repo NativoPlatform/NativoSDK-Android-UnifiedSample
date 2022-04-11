@@ -19,18 +19,16 @@ import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
-import com.nativo.sampleapp.SponsoredContentActivity;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvcore.NtvAdData;
-import net.nativo.sdk.ntvcore.NtvSectionAdapter;
+import net.nativo.sdk.NtvIntent;
+import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.adtype.NtvBaseInterface;
+import net.nativo.sdk.NtvAdData;
 
 import static com.nativo.sampleapp.util.AppConstants.DFP_SECTION_URL;
-import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
-import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
+
 
 /*
 * This sample use the Nativo DFP account
@@ -38,19 +36,17 @@ import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 * LineItem -> "Mobile Test Line Item"
 * Creative -> "Nativo Tag Creative"
 * Campaign ID "c" -> 114921*/
-public class DfpFragment extends Fragment implements NtvSectionAdapter {
+public class DfpFragment extends Fragment implements NtvNotificationAdapter {
 
     PublisherAdView mPublisherAdView;
     private NativoSDK mNativoSDK;
     AdLoader mAdLoader;
     String mMesssage;
-    DfpFragment fragmentAdapter;
     View nativoView;
     View nativoVideoView;
     ViewGroup parentView;
 
     public DfpFragment() {
-        fragmentAdapter = this;
         // Required empty public constructor
     }
 
@@ -59,19 +55,23 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentView = inflater.inflate(R.layout.fragment_dfp, container, false);
-        return fragmentView;
+        return inflater.inflate(R.layout.fragment_dfp, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Nativo init
+        NativoSDK.setNotificationAdapterForSection(DFP_SECTION_URL, this, getContext());
+        NativoSDK.enableGAMwithVersion("19.1.0");
+
         parentView = (ViewGroup) view;
         nativoView = view.findViewById(R.id.article_constraint_layout);
         nativoView.setVisibility(View.GONE);
         nativoVideoView = view.findViewById(R.id.video_constraint_layout);
         nativoVideoView.setVisibility(View.GONE);
-        NativoSDK.initWithGAMVersion(this.getContext(), "17.0.0");
+
         View loadAd = view.findViewById(R.id.load_ad);
         loadAd.setOnClickListener(loadClick);
         loadGAMAd();
@@ -93,7 +93,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
                 Log.d("DFP","adUnit: "+mPublisherAdView.getAdUnitId()+" adSize: "+mPublisherAdView.getAdSize());
                 if(mPublisherAdView.getAdSize().equals(ntvAdSize) ) {
                     //call nativo.dfp.bannerexample.sdk method here pass in the mAdView to parse out the html
-                    NativoSDK.makeGAMRequestWithPublisherAdView(mPublisherAdView, parentView,DFP_SECTION_URL, 0, fragmentAdapter);
+                    NativoSDK.makeGAMRequestWithPublisherAdView(mPublisherAdView, parentView, DFP_SECTION_URL, 0);
                 }
                 else{
                     Log.d("DFP", "Did receive DFP banner ad");
@@ -114,12 +114,17 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         return null;
     }
 
+//    @Override
+//    public void needsDisplayLandingPage(String sectionUrl, int adRow, Object container) {
+//        Intent landingPage = new Intent(getContext(), SponsoredContentActivity.class);
+//        landingPage.putExtra(SP_SECTION_URL, sectionUrl);
+//        landingPage.putExtra(SP_CAMPAIGN_ID, adRow);
+//        getContext().startActivity(landingPage);
+//    }
+
     @Override
-    public void needsDisplayLandingPage(String s, int i) {
-        getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
-                .putExtra(SP_SECTION_URL, s)
-                .putExtra(SP_CAMPAIGN_ID, i)
-                .putExtra(SP_CONTAINER_HASH, parentView.hashCode()));
+    public void needsDisplayLandingPage(String sectionUrl, NtvIntent landingPageIntent) {
+        getContext().startActivity(landingPageIntent);
     }
 
     @Override
@@ -135,12 +140,12 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     @Override
     public void onReceiveAd(String s, NtvAdData ntvAdData, Integer integer) {
         Log.d("DFP", "Ad loaded");
-        if (ntvAdData.getAdType() == NtvAdData.NtvAdType.NATIVE || ntvAdData.getAdType() == NtvAdData.NtvAdType.CLICK_OUT) {
+        if (ntvAdData.getAdType() == NtvAdData.AdType.NATIVE || ntvAdData.getAdType() == NtvAdData.AdType.CLICK_OUT) {
             nativoView.setVisibility(View.VISIBLE);
-            NativoSDK.placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
-        } else if (ntvAdData.getAdType() == NtvAdData.NtvAdType.IN_FEED_VIDEO || ntvAdData.getAdType() == NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO) {
+            NativoSDK.placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, null);
+        } else if (ntvAdData.getAdType() == NtvAdData.AdType.IN_FEED_VIDEO || ntvAdData.getAdType() == NtvAdData.AdType.IN_FEED_AUTO_PLAY_VIDEO) {
             nativoVideoView.setVisibility(View.VISIBLE);
-            NativoSDK.placeAdInView(nativoVideoView, parentView, DFP_SECTION_URL, 0, fragmentAdapter, null);
+            NativoSDK.placeAdInView(nativoVideoView, parentView, DFP_SECTION_URL, 0, null);
         }
     }
 
