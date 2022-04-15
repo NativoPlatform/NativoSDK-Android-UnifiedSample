@@ -1,16 +1,13 @@
 package com.nativo.sampleapp;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +22,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.nativo.sampleapp.NativeAdImpl.NativeAd;
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAd;
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAd;
-import com.nativo.sampleapp.NativeAdLandingImpl.NativeLandingPage;
 import com.nativo.sampleapp.NativeAdVideo.FullScreenVideoImpl;
 import com.nativo.sampleapp.ViewFragment.DfpFragment;
 import com.nativo.sampleapp.ViewFragment.GridFragment;
@@ -37,8 +33,6 @@ import com.nativo.sampleapp.ViewFragment.SingleViewVideoFragment;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
-import net.nativo.sdk.NtvNotificationAdapter;
-import net.nativo.sdk.adtype.NtvBaseInterface;
 
 import static com.nativo.sampleapp.util.AppConstants.GDPR_SHARED_PREFERENCE_STRING;
 import static com.nativo.sampleapp.util.AppConstants.CCPA_SHARED_PREFERENCE_STRING;

@@ -6,18 +6,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.cardview.widget.CardView;
-
 import com.nativo.sampleapp.R;
-
-import net.nativo.sdk.adtype.nativead.NtvNativeAdInterface;
-
+import net.nativo.sdk.injector.nativead.NtvNativeAdInjectable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class NativeStoryAd implements NtvNativeAdInterface {
+public class NativeStoryAd implements NtvNativeAdInjectable {
 
     private LinearLayout layout;
     private CardView cardView;

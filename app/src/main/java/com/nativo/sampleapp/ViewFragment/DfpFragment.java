@@ -1,18 +1,21 @@
 package com.nativo.sampleapp.ViewFragment;
 
 
+import static com.nativo.sampleapp.util.AppConstants.DFP_SECTION_URL;
+
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
@@ -22,11 +25,9 @@ import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NtvNotificationAdapter;
-import net.nativo.sdk.adtype.NtvBaseInterface;
 import net.nativo.sdk.NtvAdData;
-
-import static com.nativo.sampleapp.util.AppConstants.DFP_SECTION_URL;
+import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.injector.NtvInjectable;
 
 
 /*
@@ -132,7 +133,7 @@ public class DfpFragment extends Fragment implements NtvNotificationAdapter {
     }
 
     @Override
-    public void hasbuiltView(View view, NtvBaseInterface ntvBaseInterface, NtvAdData ntvAdData) {
+    public void hasbuiltView(View view, NtvInjectable ntvInjectable, NtvAdData ntvAdData) {
 
     }
 

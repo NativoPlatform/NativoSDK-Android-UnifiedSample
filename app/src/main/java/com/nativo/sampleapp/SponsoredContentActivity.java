@@ -8,23 +8,13 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.nativo.sampleapp.NativeAdLandingImpl.NativeLandingPage;
-
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NtvIntent;
-import net.nativo.sdk.adtype.landing.NtvLandingPageInterface;
-
-import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER;
-import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
-
+import net.nativo.sdk.injector.landing.NtvLandingPageInjectable;
 import java.util.Date;
 
-public class SponsoredContentActivity extends AppCompatActivity implements NtvLandingPageInterface {
+public class SponsoredContentActivity extends AppCompatActivity implements NtvLandingPageInjectable {
 
     boolean withView = true;
     @Override

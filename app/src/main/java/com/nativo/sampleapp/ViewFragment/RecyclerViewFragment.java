@@ -1,15 +1,16 @@
 package com.nativo.sampleapp.ViewFragment;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nativo.sampleapp.ViewAdapter.RecyclerViewAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.nativo.sampleapp.R;
+import com.nativo.sampleapp.ViewAdapter.RecyclerViewAdapter;
 
 public class RecyclerViewFragment extends Fragment {
 

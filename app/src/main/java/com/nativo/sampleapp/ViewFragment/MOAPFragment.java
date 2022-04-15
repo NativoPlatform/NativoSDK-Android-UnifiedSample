@@ -1,10 +1,10 @@
 package com.nativo.sampleapp.ViewFragment;
 
 
+import static com.nativo.sampleapp.util.AppConstants.MOAP_SECTION_URL;
+import static com.nativo.sampleapp.util.AppConstants.PUBLISHER_URL;
+
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +13,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-
-import static com.nativo.sampleapp.util.AppConstants.MOAP_SECTION_URL;
-import static com.nativo.sampleapp.util.AppConstants.PUBLISHER_URL;
 
 public class MOAPFragment extends Fragment {
 

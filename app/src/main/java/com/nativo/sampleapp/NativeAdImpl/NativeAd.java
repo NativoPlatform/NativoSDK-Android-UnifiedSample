@@ -1,24 +1,19 @@
 package com.nativo.sampleapp.NativeAdImpl;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import androidx.cardview.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.nativo.sampleapp.R;
-
-import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.adtype.nativead.NtvNativeAdInterface;
-
+import net.nativo.sdk.injector.nativead.NtvNativeAdInjectable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class NativeAd implements NtvNativeAdInterface {
+public class NativeAd implements NtvNativeAdInjectable {
 
     private LinearLayout layout;
     private CardView cardView;

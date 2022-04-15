@@ -9,17 +9,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.cardview.widget.CardView;
-
 import com.nativo.sampleapp.R;
-
-import net.nativo.sdk.adtype.video.NtvVideoAdInterface;
-import net.nativo.sdk.adtype.video.VideoPlaybackError;
+import net.nativo.sdk.injector.video.NtvVideoAdInjectable;
+import net.nativo.sdk.injector.video.VideoPlaybackError;
 
 import java.util.Date;
 
-public class NativeVideoAd implements NtvVideoAdInterface {
+public class NativeVideoAd implements NtvVideoAdInjectable {
 
     private static String TAG = NativeVideoAd.class.getName();
     private RelativeLayout layout;

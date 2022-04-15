@@ -1,13 +1,13 @@
 package com.nativo.sampleapp.ViewFragment;
 
 
+import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
+import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,15 +15,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NtvNotificationAdapter;
-import net.nativo.sdk.adtype.NtvBaseInterface;
 import net.nativo.sdk.NtvAdData;
-
-import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
-import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
+import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.injector.NtvInjectable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -151,7 +152,7 @@ public class SingleViewVideoFragment extends Fragment implements NtvNotification
     }
 
     @Override
-    public void hasbuiltView(View view, NtvBaseInterface ntvBaseInterface, NtvAdData ntvAdData) {
+    public void hasbuiltView(View view, NtvInjectable ntvInjectable, NtvAdData ntvAdData) {
 
     }
 

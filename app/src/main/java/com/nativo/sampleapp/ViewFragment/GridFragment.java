@@ -1,14 +1,15 @@
 package com.nativo.sampleapp.ViewFragment;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
-import com.nativo.sampleapp.ViewAdapter.GridViewAdapter;
+import androidx.fragment.app.Fragment;
+
 import com.nativo.sampleapp.R;
+import com.nativo.sampleapp.ViewAdapter.GridViewAdapter;
 
 public class GridFragment extends Fragment {
 

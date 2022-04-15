@@ -4,16 +4,13 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-
 import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
+import net.nativo.sdk.injector.display.NtvStandardDisplayInjectable;
 
-import net.nativo.sdk.adtype.display.NtvStandardDisplayInterface;
-
-public class StandardDisplayAdRecycler extends RecyclerListViewHolder implements NtvStandardDisplayInterface {
+public class StandardDisplayAdRecycler extends RecyclerListViewHolder implements NtvStandardDisplayInjectable {
 
     private CardView layout;
     private WebView webView;

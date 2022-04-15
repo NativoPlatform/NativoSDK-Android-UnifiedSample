@@ -12,14 +12,13 @@ import androidx.cardview.widget.CardView;
 
 import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
-
-import net.nativo.sdk.adtype.nativead.NtvNativeAdInterface;
+import net.nativo.sdk.injector.nativead.NtvNativeAdInjectable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativeAdInterface {
+public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativeAdInjectable {
 
     private LinearLayout layout;
     private CardView cardView;

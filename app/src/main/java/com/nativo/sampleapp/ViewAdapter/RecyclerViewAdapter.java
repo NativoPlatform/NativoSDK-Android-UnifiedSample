@@ -1,9 +1,11 @@
 package com.nativo.sampleapp.ViewAdapter;
 
+import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
+import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.TextureView;
@@ -24,16 +26,13 @@ import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
 import net.nativo.sdk.NtvNotificationAdapter;
-import net.nativo.sdk.adtype.NtvBaseInterface;
 import net.nativo.sdk.constant.NativoAdType;
+import net.nativo.sdk.injector.NtvInjectable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
-import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHolder> implements NtvNotificationAdapter {
@@ -185,7 +184,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     }
 
     @Override
-    public void hasbuiltView(View view, NtvBaseInterface ntvBaseInterface, NtvAdData ntvAdData) {
+    public void hasbuiltView(View view, NtvInjectable ntvInjectable, NtvAdData ntvAdData) {
 
     }
 

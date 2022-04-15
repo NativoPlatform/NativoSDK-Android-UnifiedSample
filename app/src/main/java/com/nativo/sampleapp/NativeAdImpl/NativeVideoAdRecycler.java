@@ -10,18 +10,15 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.cardview.widget.CardView;
-
 import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
-
-import net.nativo.sdk.adtype.video.NtvVideoAdInterface;
-import net.nativo.sdk.adtype.video.VideoPlaybackError;
+import net.nativo.sdk.injector.video.NtvVideoAdInjectable;
+import net.nativo.sdk.injector.video.VideoPlaybackError;
 
 import java.util.Date;
 
-public class NativeVideoAdRecycler extends RecyclerListViewHolder implements NtvVideoAdInterface {
+public class NativeVideoAdRecycler extends RecyclerListViewHolder implements NtvVideoAdInjectable {
 
     private static String TAG = NativeVideoAdRecycler.class.getName();
     private RelativeLayout layout;

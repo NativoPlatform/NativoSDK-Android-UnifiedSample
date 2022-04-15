@@ -3,14 +3,11 @@ package com.nativo.sampleapp.NativeAdImpl;
 import android.content.Context;
 import android.view.View;
 import android.webkit.WebView;
-
 import androidx.cardview.widget.CardView;
-
 import com.nativo.sampleapp.R;
+import net.nativo.sdk.injector.display.NtvStandardDisplayInjectable;
 
-import net.nativo.sdk.adtype.display.NtvStandardDisplayInterface;
-
-public class StandardDisplayAd implements NtvStandardDisplayInterface {
+public class StandardDisplayAd implements NtvStandardDisplayInjectable {
 
     private CardView layout;
     private WebView webView;

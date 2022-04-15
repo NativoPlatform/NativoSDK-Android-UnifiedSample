@@ -9,12 +9,10 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import com.nativo.sampleapp.R;
+import net.nativo.sdk.injector.video.fullscreen.NtvFullscreenVideoInjectable;
 
-import net.nativo.sdk.adtype.video.fullscreen.NtvFullscreenVideoInterface;
-
-public class FullScreenVideoImpl implements NtvFullscreenVideoInterface {
+public class FullScreenVideoImpl implements NtvFullscreenVideoInjectable {
     private TextureView textureView;
     private FrameLayout mediaControllerWrapper;
     private TextView titleLabel;

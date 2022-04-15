@@ -1,5 +1,8 @@
 package com.nativo.sampleapp.ViewAdapter;
 
+import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
+import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -13,13 +16,10 @@ import android.widget.TextView;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NtvNotificationAdapter;
-import net.nativo.sdk.adtype.NtvBaseInterface;
-import net.nativo.sdk.constant.NativoAdType;
 import net.nativo.sdk.NtvAdData;
-
-import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
-import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
+import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.constant.NativoAdType;
+import net.nativo.sdk.injector.NtvInjectable;
 
 /**
  * Example of Nativo SDK implemented using ListView
@@ -131,7 +131,7 @@ public class ListViewAdapter extends BaseAdapter implements NtvNotificationAdapt
     }
 
     @Override
-    public void hasbuiltView(View view, NtvBaseInterface ntvBaseInterface, NtvAdData ntvAdData) {
+    public void hasbuiltView(View view, NtvInjectable ntvInjectable, NtvAdData ntvAdData) {
 
     }
 
