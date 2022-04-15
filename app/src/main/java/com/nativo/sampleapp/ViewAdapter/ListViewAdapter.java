@@ -11,10 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nativo.sampleapp.R;
-import com.nativo.sampleapp.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NtvIntent;
 import net.nativo.sdk.NtvNotificationAdapter;
 import net.nativo.sdk.adtype.NtvBaseInterface;
 import net.nativo.sdk.constant.NativoAdType;
@@ -22,9 +20,6 @@ import net.nativo.sdk.NtvAdData;
 
 import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
-import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER;
-import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
 /**
  * Example of Nativo SDK implemented using ListView
@@ -126,7 +121,7 @@ public class ListViewAdapter extends BaseAdapter implements NtvNotificationAdapt
 //    }
 
     @Override
-    public void needsDisplayLandingPage(String sectionUrl, NtvIntent landingPageIntent) {
+    public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
         listView.getContext().startActivity(landingPageIntent);
     }
 

@@ -14,19 +14,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nativo.sampleapp.SponsoredContentActivity;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NtvIntent;
 import net.nativo.sdk.NtvNotificationAdapter;
 import net.nativo.sdk.adtype.NtvBaseInterface;
 import net.nativo.sdk.NtvAdData;
 
 import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
-import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER;
 
 public class SingleViewFragment extends Fragment implements NtvNotificationAdapter {
 
@@ -124,7 +120,7 @@ public class SingleViewFragment extends Fragment implements NtvNotificationAdapt
 //    }
 
     @Override
-    public void needsDisplayLandingPage(String sectionUrl, NtvIntent landingPageIntent) {
+    public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
         getView().getContext().startActivity(landingPageIntent);
     }
 

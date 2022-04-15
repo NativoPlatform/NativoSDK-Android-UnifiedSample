@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Nativo-Android-UnifiedSample</string>
+    <string name="app_name">Nativo-Android-DevApp</string>
     <string name="grid_tab">Grid</string>
     <string name="table_tab">Table</string>
     <string name="recycle_list_tab">Recycle List</string>

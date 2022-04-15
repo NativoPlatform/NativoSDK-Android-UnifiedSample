@@ -3,6 +3,7 @@ package com.nativo.sampleapp.ViewAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.TextureView;
@@ -18,12 +19,10 @@ import com.nativo.sampleapp.NativeAdImpl.NativeAdRecycler;
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAdRecycler;
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAdRecycler;
 import com.nativo.sampleapp.R;
-import com.nativo.sampleapp.SponsoredContentActivity;
 import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
-import net.nativo.sdk.NtvIntent;
 import net.nativo.sdk.NtvNotificationAdapter;
 import net.nativo.sdk.adtype.NtvBaseInterface;
 import net.nativo.sdk.constant.NativoAdType;
@@ -35,9 +34,6 @@ import java.util.Set;
 
 import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
 import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
-import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER;
-import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHolder> implements NtvNotificationAdapter {
@@ -179,7 +175,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 //    }
 
     @Override
-    public void needsDisplayLandingPage(String sectionUrl, NtvIntent landingPageIntent) {
+    public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
         context.startActivity(landingPageIntent);
     }
 

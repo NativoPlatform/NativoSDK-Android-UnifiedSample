@@ -96,8 +96,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void nativoInit() {
+        // Register the class that will be used for Nativo Content Landing Page
+        NativoSDK.registerLandingPage(SponsoredContentActivity.class);
+
         NativoSDK.registerNativeAd(new NativeAd());
-        NativoSDK.registerLandingPage(new NativeLandingPage());
         NativoSDK.registerVideoAd(new NativeVideoAd());
         NativoSDK.registerFullscreenVideo(new FullScreenVideoImpl());
         NativoSDK.registerStandardDisplayAd(new StandardDisplayAd());

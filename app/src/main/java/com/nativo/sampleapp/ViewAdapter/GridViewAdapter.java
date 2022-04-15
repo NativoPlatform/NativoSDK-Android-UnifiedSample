@@ -16,7 +16,6 @@ import com.nativo.sampleapp.SponsoredContentActivity;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NtvIntent;
 import net.nativo.sdk.NtvNotificationAdapter;
 import net.nativo.sdk.adtype.NtvBaseInterface;
 import net.nativo.sdk.constant.NativoAdType;
@@ -141,7 +140,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvNotificationAdapt
     }
 
     @Override
-    public void needsDisplayLandingPage(String sectionUrl, NtvIntent landingPageIntent) {
+    public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
         context.startActivity(landingPageIntent);
     }
 

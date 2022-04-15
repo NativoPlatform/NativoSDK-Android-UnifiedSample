@@ -22,7 +22,6 @@ import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NtvIntent;
 import net.nativo.sdk.NtvNotificationAdapter;
 import net.nativo.sdk.adtype.NtvBaseInterface;
 import net.nativo.sdk.NtvAdData;
@@ -123,7 +122,7 @@ public class DfpFragment extends Fragment implements NtvNotificationAdapter {
 //    }
 
     @Override
-    public void needsDisplayLandingPage(String sectionUrl, NtvIntent landingPageIntent) {
+    public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
         getContext().startActivity(landingPageIntent);
     }
 
@@ -140,13 +139,13 @@ public class DfpFragment extends Fragment implements NtvNotificationAdapter {
     @Override
     public void onReceiveAd(String s, NtvAdData ntvAdData, Integer integer) {
         Log.d("DFP", "Ad loaded");
-        if (ntvAdData.getAdType() == NtvAdData.AdType.NATIVE || ntvAdData.getAdType() == NtvAdData.AdType.CLICK_OUT) {
-            nativoView.setVisibility(View.VISIBLE);
-            NativoSDK.placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, null);
-        } else if (ntvAdData.getAdType() == NtvAdData.AdType.IN_FEED_VIDEO || ntvAdData.getAdType() == NtvAdData.AdType.IN_FEED_AUTO_PLAY_VIDEO) {
-            nativoVideoView.setVisibility(View.VISIBLE);
-            NativoSDK.placeAdInView(nativoVideoView, parentView, DFP_SECTION_URL, 0, null);
-        }
+//        if (ntvAdData.getAdType() == NtvAdData.AdType.NATIVE || ntvAdData.getAdType() == NtvAdData.AdType.CLICK_OUT) {
+//            nativoView.setVisibility(View.VISIBLE);
+//            NativoSDK.placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, null);
+//        } else if (ntvAdData.getAdType() == NtvAdData.AdType.IN_FEED_VIDEO || ntvAdData.getAdType() == NtvAdData.AdType.IN_FEED_AUTO_PLAY_VIDEO) {
+//            nativoVideoView.setVisibility(View.VISIBLE);
+//            NativoSDK.placeAdInView(nativoVideoView, parentView, DFP_SECTION_URL, 0, null);
+//        }
     }
 
     @Override

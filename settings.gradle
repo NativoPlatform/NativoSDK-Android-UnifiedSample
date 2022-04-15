@@ -1,1 +1,12 @@
 include ':app'
+
+def nativoSdkDir = file("../NativoSDK-Android")
+include ':nativo-sdk'
+project(':nativo-sdk').projectDir = new File(nativoSdkDir, '/nativo-sdk')
+include ':NtvCore'
+project(':NtvCore').projectDir = new File(nativoSdkDir, '/NativoSDK-Core/NtvCore')
+
+
+// Import internal Exoplayer
+gradle.ext.exoplayerModulePrefix = 'ntvexoplayer-'
+apply from: new File(nativoSdkDir, '/ExoPlayer/core_settings.gradle')
