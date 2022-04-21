@@ -23,6 +23,7 @@ import com.nativo.sampleapp.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
+import net.nativo.sdk.NtvAdTemplateType;
 import net.nativo.sdk.NtvNotificationAdapter;
 import net.nativo.sdk.constant.NativoAdType;
 import net.nativo.sdk.injector.NtvInjectable;
@@ -127,11 +128,6 @@ public class GridViewAdapter extends BaseAdapter implements NtvNotificationAdapt
         return i % 2 == 1;
     }
 
-    @Override
-    public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
-        return null;
-    }
-
     public void needsDisplayLandingPage(String s, int i) {
         context.startActivity(new Intent(context, SponsoredContentActivity.class)
                 .putExtra(SP_SECTION_URL, s)
@@ -162,5 +158,10 @@ public class GridViewAdapter extends BaseAdapter implements NtvNotificationAdapt
     @Override
     public void onFail(String section, Integer index) {
         notifyDataSetChanged();
+    }
+
+    @Override
+    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvAdTemplateType templateType, String sectionUrl, Integer index) {
+        return null;
     }
 }

@@ -25,6 +25,7 @@ import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
+import net.nativo.sdk.NtvAdTemplateType;
 import net.nativo.sdk.NtvNotificationAdapter;
 import net.nativo.sdk.constant.NativoAdType;
 import net.nativo.sdk.injector.NtvInjectable;
@@ -80,6 +81,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     public RecyclerListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewTypeInt) {
         RecyclerListViewHolder viewHolder;
         View adViewTry;
+        // TODO: Inflate empty view for Nativo ads. No need to check ad type.
+        // Then inflate previously registered layout and inject into view.
         if (viewTypeInt == 1) { // Nativo Article
             adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
             viewHolder = new NativeAdRecycler(adViewTry, viewGroup);
@@ -162,17 +165,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         super.onViewRecycled(holder);
     }
 
-    /**
-     * NtvNotificationAdapter implementation
-     */
-//    @Override
-//    public void needsDisplayLandingPage(String s, int i) {
-//        context.startActivity(new Intent(context, SponsoredContentActivity.class)
-//        .putExtra(SP_SECTION_URL, s)
-//        .putExtra(SP_CAMPAIGN_ID, i)
-//        .putExtra(SP_CONTAINER, recyclerView.hashCode()));
-//    }
-
     @Override
     public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
         context.startActivity(landingPageIntent);
@@ -208,7 +200,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     }
 
     @Override
-    public Class<?> registerLayoutClassForIndex(int index, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
+    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvAdTemplateType templateType, String sectionUrl, Integer index) {
         return null;
     }
 

@@ -91,16 +91,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void nativoInit() {
         // Register the class that will be used for Nativo Content Landing Page
-        NativoSDK.registerLandingPage(SponsoredContentActivity.class);
-
-        NativoSDK.registerNativeAd(new NativeAd());
-        NativoSDK.registerVideoAd(new NativeVideoAd());
+        NativoSDK.registerClassForLandingPage(SponsoredContentActivity.class);
+        NativoSDK.registerClassForNativeAd(NativeAd.class);
+        NativoSDK.registerClassForVideoAd(NativeVideoAd.class);
+        NativoSDK.registerClassForStandardDisplayAd(StandardDisplayAd.class);
         NativoSDK.registerFullscreenVideo(new FullScreenVideoImpl());
-        NativoSDK.registerStandardDisplayAd(new StandardDisplayAd());
-        NativoSDK.enableDevLogs();
 
         // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements(NtvAdData.AdType.NATIVE);
+        NativoSDK.enableTestAdvertisements();
+        NativoSDK.enableDevLogs();
     }
 
     private void setMainFragment(NtvFragmentType fragmentType) {

@@ -22,6 +22,7 @@ import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
+import net.nativo.sdk.NtvAdTemplateType;
 import net.nativo.sdk.NtvNotificationAdapter;
 import net.nativo.sdk.injector.NtvInjectable;
 
@@ -107,11 +108,6 @@ public class SingleViewFragment extends Fragment implements NtvNotificationAdapt
         }
     };
 
-    @Override
-    public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
-        return null;
-    }
-
 //    @Override
 //    public void needsDisplayLandingPage(String s, int i) {
 //        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
@@ -147,5 +143,10 @@ public class SingleViewFragment extends Fragment implements NtvNotificationAdapt
     @Override
     public void onFail(String section, Integer index) {
         nativoAdView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvAdTemplateType templateType, String sectionUrl, Integer index) {
+        return null;
     }
 }

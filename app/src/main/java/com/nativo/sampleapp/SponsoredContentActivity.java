@@ -20,21 +20,7 @@ public class SponsoredContentActivity extends AppCompatActivity implements NtvLa
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         NativoSDK.initLandingPage(this);
-
-//        setContentView(R.layout.activity_sponsored_content);
-//        View view = findViewById(R.id.landing_page_container);
-//        String sectionUrl = getIntent().getStringExtra(SP_SECTION_URL);
-//        int campaignId = getIntent().getIntExtra(SP_CAMPAIGN_ID, 0);
-//        Integer containerHash = getIntent().getIntExtra(SP_CONTAINER, 0);
-//        if (withView) {
-//            NativoSDK.initLandingPage(view, sectionUrl, containerHash, campaignId, NativeLandingPage.class);
-//        } else {
-//            NativoSDK.initLandingPage(this, sectionUrl, containerHash, campaignId, NativeLandingPage.class);
-//            NativoSDK.initLandingPage(this, sectionUrl,0,null, NativeLandingPage.class);
-//        }
-
     }
 
     /**
@@ -43,19 +29,15 @@ public class SponsoredContentActivity extends AppCompatActivity implements NtvLa
     private WebView webView;
     private TextView titleLabel;
     private TextView authorNameLabel;
-    private View adContainerView;
     private ImageView articleAuthorImage;
     private ImageView shareButton;
-    private ViewGroup scrollView;
 
     @Override
     public void bindViews(View v) {
-        adContainerView = v;
         webView = v.findViewById(R.id.web_view);
         titleLabel = v.findViewById(R.id.title_label);
         authorNameLabel = v.findViewById(R.id.article_author);
         articleAuthorImage = v.findViewById(R.id.article_author_image);
-        scrollView = adContainerView.findViewById(R.id.landing_boap_container);
     }
 
     @Override
@@ -119,7 +101,7 @@ public class SponsoredContentActivity extends AppCompatActivity implements NtvLa
 
     @Override
     public void setShareAndTrackingUrl(String shareUrl, String adUUID) {
-        shareButton = (ImageView) adContainerView.findViewById(R.id.share_icon);
+        shareButton = (ImageView) findViewById(R.id.share_icon);
         if (shareButton != null) {
             shareButton.setOnClickListener(v -> {
                 v.getContext().startActivity(Intent.createChooser(
@@ -135,6 +117,6 @@ public class SponsoredContentActivity extends AppCompatActivity implements NtvLa
 
     @Override
     public View getAdContainerView() {
-        return adContainerView;
+        return findViewById(android.R.id.content).getRootView();
     }
 }

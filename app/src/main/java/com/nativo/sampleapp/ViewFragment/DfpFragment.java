@@ -26,6 +26,7 @@ import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
+import net.nativo.sdk.NtvAdTemplateType;
 import net.nativo.sdk.NtvNotificationAdapter;
 import net.nativo.sdk.injector.NtvInjectable;
 
@@ -109,10 +110,6 @@ public class DfpFragment extends Fragment implements NtvNotificationAdapter {
         mPublisherAdView.loadAd(adRequest);
     }
 
-    @Override
-    public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
-        return null;
-    }
 
 //    @Override
 //    public void needsDisplayLandingPage(String sectionUrl, int adRow, Object container) {
@@ -152,6 +149,11 @@ public class DfpFragment extends Fragment implements NtvNotificationAdapter {
     @Override
     public void onFail(String s, Integer integer) {
         Log.d("DFP", "Ad load failed");
+    }
+
+    @Override
+    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvAdTemplateType templateType, String sectionUrl, Integer index) {
+        return null;
     }
 
     View.OnClickListener loadClick = new View.OnClickListener() {
