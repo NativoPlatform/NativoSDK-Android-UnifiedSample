@@ -18,7 +18,7 @@ import com.nativo.sampleapp.R;
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
 import net.nativo.sdk.NtvAdTemplateType;
-import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.NtvSectionAdapter;
 import net.nativo.sdk.constant.NativoAdType;
 import net.nativo.sdk.injector.NtvInjectable;
 
@@ -27,13 +27,13 @@ import net.nativo.sdk.injector.NtvInjectable;
  * Ads are placed according to rule in link{@code shouldPlaceAdAtIndex()}.
  * If an ad is not placed(eg no fill scenario) the cell is marked with red
  */
-public class ListViewAdapter extends BaseAdapter implements NtvNotificationAdapter {
+public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     private ViewGroup listView;
 
     public ListViewAdapter(ViewGroup parent) {
         this.listView = parent;
-        NativoSDK.setNotificationAdapterForSection(SECTION_URL, this, parent.getContext());
+        NativoSDK.initSectionWithAdapter(this, SECTION_URL, parent.getContext());
     }
 
     @Override

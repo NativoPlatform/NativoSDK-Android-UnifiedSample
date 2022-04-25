@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativeAdInjectable {
+public class NativeAdRecycler extends RecyclerListViewHolder/* implements NtvNativeAdInjectable*/ {
 
     private LinearLayout layout;
     private CardView cardView;
@@ -31,15 +31,13 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
     private ImageView adChoicesIndicator;
     private TextView sponsoredTag;
     private View view;
-    private View adContainerView;
 
     public NativeAdRecycler(View itemView, ViewGroup viewGroup) {
         super(itemView, viewGroup);
-        adContainerView = itemView;
-        bindViews(itemView);
+        //bindViews(itemView);
     }
 
-    @Override
+    /*
     public TextView getTitleLabel() {
         if (titleLabel == null) {
             titleLabel = (TextView) view.findViewById(R.id.article_title);
@@ -50,7 +48,7 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
 
     @Override
     public View getAdContainerView() {
-        return adContainerView;
+        return this.itemView;
     }
 
     @Override
@@ -100,16 +98,12 @@ public class NativeAdRecycler extends RecyclerListViewHolder implements NtvNativ
         return R.layout.native_article;
     }
 
-    public View getView() {
-        return view;
-    }
-
     @Override
     public ImageView getAdChoicesImageView() {
         return adChoicesIndicator;
     }
+*/
 
-    @Override
     public void bindViews(View v) {
         view = v;
         layout = v.findViewById(R.id.article_layout);

@@ -24,13 +24,13 @@ import com.nativo.sampleapp.R;
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
 import net.nativo.sdk.NtvAdTemplateType;
-import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.NtvSectionAdapter;
 import net.nativo.sdk.injector.NtvInjectable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SingleViewVideoFragment extends Fragment implements NtvNotificationAdapter {
+public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapter {
     private View convertView;
     SingleViewVideoFragment viewFragment;
 
@@ -53,7 +53,7 @@ public class SingleViewVideoFragment extends Fragment implements NtvNotification
         convertView = view.findViewById(R.id.video_container);
 
         // Nativo init
-        NativoSDK.setNotificationAdapterForSection(SECTION_URL, this, getContext());
+        NativoSDK.initSectionWithAdapter(this, SECTION_URL, getContext());
         NativoSDK.prefetchAdForSection(SECTION_URL, null);
 
         if (!getAd()) {

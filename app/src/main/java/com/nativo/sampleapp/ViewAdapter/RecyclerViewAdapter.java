@@ -26,7 +26,7 @@ import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
 import net.nativo.sdk.NtvAdTemplateType;
-import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.NtvSectionAdapter;
 import net.nativo.sdk.constant.NativoAdType;
 import net.nativo.sdk.injector.NtvInjectable;
 
@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHolder> implements NtvNotificationAdapter {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHolder> implements NtvSectionAdapter {
 
     private static String TAG = RecyclerViewAdapter.class.getName();
     private Context context;
@@ -47,7 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
         // Nativo init
-        NativoSDK.setNotificationAdapterForSection(SECTION_URL, this, context);
+        NativoSDK.initSectionWithAdapter(this, SECTION_URL, context);
 
         this.context = context;
         this.recyclerView = recyclerView;
@@ -58,7 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     // Helper method to determine which indexes should be Nativo ads
     public boolean shouldPlaceNativoAdAtIndex(int i) {
-        return i % 2 == 1;
+        return i % 3 == 1;
     }
 
     @Override
@@ -77,65 +77,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         }
     }
 
+    @NonNull
     @Override
     public RecyclerListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewTypeInt) {
-        RecyclerListViewHolder viewHolder;
-        View adViewTry;
-        // TODO: Inflate empty view for Nativo ads. No need to check ad type.
-        // Then inflate previously registered layout and inject into view.
+        // TODO: Inflate empty view for Nativo ads. No need to check ad type. Then inflate previously registered layout and inject into view.
+        View view;
         if (viewTypeInt == 1) { // Nativo Article
-            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
-            viewHolder = new NativeAdRecycler(adViewTry, viewGroup);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
         } else if (viewTypeInt == 2) { // Nativo Video
-            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-            viewHolder = new NativeVideoAdRecycler(adViewTry, viewGroup);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
         } else if (viewTypeInt == 3) { // Nativo Banner Ad
-            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
-            viewHolder = new StandardDisplayAdRecycler(adViewTry, viewGroup);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
         } else { // Publisher Article Layout
-            adViewTry = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
-            viewHolder = new RecyclerListViewHolder(adViewTry, viewGroup);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
         }
-        return viewHolder;
+        return new RecyclerListViewHolder(view, viewGroup);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerListViewHolder listViewHolder, int i) {
 
-        View view = listViewHolder.getContainer();
         boolean isAdContentAvailable = false;
         if (shouldPlaceNativoAdAtIndex(i)) {
             Log.e(TAG, "binding index: "+i);
             adsRequestIndex.add(i);
-            isAdContentAvailable = NativoSDK.placeAdInView(view, recyclerView, SECTION_URL, i, null);
+            isAdContentAvailable = NativoSDK.placeAdInView(listViewHolder.itemView, recyclerView, SECTION_URL, i, null);
         }
 
         if (!isAdContentAvailable) {
-            bindView(listViewHolder.getContainer(), i);
-        }
-    }
-
-    private void bindView(View view, int i) {
-        if (view != null) {
-            if (view.findViewById(R.id.article_image) != null) {
-                ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
-            }
-            if (view.findViewById(R.id.sponsored_ad_indicator) != null) {
-                view.findViewById(R.id.sponsored_ad_indicator).setVisibility(View.INVISIBLE);
-            }
-            if (view.findViewById(R.id.article_author) != null) {
-                ((TextView) view.findViewById(R.id.article_author)).setText(R.string.sample_author);
-            }
-            if (view.findViewById(R.id.article_title) != null) {
-                ((TextView) view.findViewById(R.id.article_title)).setText(R.string.sample_title);
-            }
-            if (view.findViewById(R.id.article_description) != null) {
-                ((TextView) view.findViewById(R.id.article_description)).setText(R.string.sample_description);
-            }
-            if (view.findViewById(R.id.sponsored_tag) != null) {
-                view.findViewById(R.id.sponsored_tag).setVisibility(View.INVISIBLE);
-            }
-            view.setOnClickListener(onClickListener);
+            listViewHolder.articleTitle.setText(R.string.sample_title);
+            listViewHolder.articleDescription.setText(R.string.sample_description);
+            listViewHolder.articleImage.setImageResource(R.drawable.newsimage);
+            listViewHolder.articleAuthor.setText(R.string.sample_author);
+            listViewHolder.itemView.setOnClickListener(onClickListener);
         }
     }
 

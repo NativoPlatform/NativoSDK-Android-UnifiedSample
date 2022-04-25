@@ -24,14 +24,14 @@ import com.nativo.sampleapp.SponsoredContentActivity;
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
 import net.nativo.sdk.NtvAdTemplateType;
-import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.NtvSectionAdapter;
 import net.nativo.sdk.constant.NativoAdType;
 import net.nativo.sdk.injector.NtvInjectable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GridViewAdapter extends BaseAdapter implements NtvNotificationAdapter {
+public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
 
     private Context context;
     private GridView gridView;
@@ -45,7 +45,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvNotificationAdapt
         }
 
         // Nativo init
-        NativoSDK.setNotificationAdapterForSection(SECTION_URL, this, context);
+        NativoSDK.initSectionWithAdapter(this, SECTION_URL, context);
     }
 
     @Override
@@ -126,13 +126,6 @@ public class GridViewAdapter extends BaseAdapter implements NtvNotificationAdapt
 
     public boolean shouldPlaceNativoAdAtIndex(int i) {
         return i % 2 == 1;
-    }
-
-    public void needsDisplayLandingPage(String s, int i) {
-        context.startActivity(new Intent(context, SponsoredContentActivity.class)
-                .putExtra(SP_SECTION_URL, s)
-                .putExtra(SP_CAMPAIGN_ID, i)
-                .putExtra(SP_CONTAINER, gridView.hashCode()));
     }
 
     @Override

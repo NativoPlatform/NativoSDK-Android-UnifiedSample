@@ -27,7 +27,7 @@ import com.nativo.sampleapp.R;
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
 import net.nativo.sdk.NtvAdTemplateType;
-import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.NtvSectionAdapter;
 import net.nativo.sdk.injector.NtvInjectable;
 
 
@@ -37,7 +37,7 @@ import net.nativo.sdk.injector.NtvInjectable;
 * LineItem -> "Mobile Test Line Item"
 * Creative -> "Nativo Tag Creative"
 * Campaign ID "c" -> 114921*/
-public class DfpFragment extends Fragment implements NtvNotificationAdapter {
+public class DfpFragment extends Fragment implements NtvSectionAdapter {
 
     PublisherAdView mPublisherAdView;
     private NativoSDK mNativoSDK;
@@ -64,7 +64,7 @@ public class DfpFragment extends Fragment implements NtvNotificationAdapter {
         super.onViewCreated(view, savedInstanceState);
 
         // Nativo init
-        NativoSDK.setNotificationAdapterForSection(DFP_SECTION_URL, this, getContext());
+        NativoSDK.initSectionWithAdapter(this, DFP_SECTION_URL, getContext());
         NativoSDK.enableGAMwithVersion("19.1.0");
 
         parentView = (ViewGroup) view;

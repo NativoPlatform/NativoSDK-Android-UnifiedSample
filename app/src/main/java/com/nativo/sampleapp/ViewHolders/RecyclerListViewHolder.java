@@ -11,26 +11,20 @@ import com.nativo.sampleapp.R;
 
 
 public class RecyclerListViewHolder extends RecyclerView.ViewHolder {
-    View container;
-    ViewGroup parent;
-    ImageView articleImage;
-    TextView articleTitle;
-    TextView articleAuthor;
-    ImageView articleSponsor;
+    public ViewGroup parent;
+    public ImageView articleImage;
+    public TextView articleTitle;
+    public TextView articleDescription;
+    public TextView articleAuthor;
+    public ImageView articleSponsor;
 
     public RecyclerListViewHolder(@NonNull View container, ViewGroup viewGroup) {
         super(container);
-        this.container = container;
         parent = viewGroup;
         articleImage = container.findViewById(R.id.article_image);
         articleTitle = container.findViewById(R.id.article_title);
+        articleDescription = container.findViewById(R.id.article_description);
         articleAuthor = container.findViewById(R.id.article_author);
         articleSponsor = container.findViewById(R.id.sponsored_ad_indicator);
     }
-
-    public View getContainer() {
-        return container;
-    }
-
-
 }

@@ -23,10 +23,10 @@ import com.nativo.sampleapp.R;
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
 import net.nativo.sdk.NtvAdTemplateType;
-import net.nativo.sdk.NtvNotificationAdapter;
+import net.nativo.sdk.NtvSectionAdapter;
 import net.nativo.sdk.injector.NtvInjectable;
 
-public class SingleViewFragment extends Fragment implements NtvNotificationAdapter {
+public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
 
     private View nativoAdView;
     SingleViewFragment viewFragment = null;
@@ -49,7 +49,7 @@ public class SingleViewFragment extends Fragment implements NtvNotificationAdapt
         super.onViewCreated(view, savedInstanceState);
 
         // Nativo init
-        NativoSDK.setNotificationAdapterForSection(SECTION_URL, this, getContext());
+        NativoSDK.initSectionWithAdapter(this, SECTION_URL, getContext());
         nativoAdView = view.findViewById(R.id.article_container);
 
         view.findViewById(R.id.load_ad).setOnClickListener(loadAd);
