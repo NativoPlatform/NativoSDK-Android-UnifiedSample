@@ -7,10 +7,11 @@ import android.webkit.WebView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import com.nativo.sampleapp.R;
-import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
-import net.nativo.sdk.injector.display.NtvStandardDisplayInjectable;
+import com.nativo.sampleapp.ViewHolders.ArticleViewHolder;
 
-public class StandardDisplayAdRecycler extends RecyclerListViewHolder implements NtvStandardDisplayInjectable {
+import net.nativo.sdk.injectable.NtvStandardDisplayInjectable;
+
+public class StandardDisplayAdRecycler extends ArticleViewHolder implements NtvStandardDisplayInjectable {
 
     private CardView layout;
     private WebView webView;
@@ -44,8 +45,8 @@ public class StandardDisplayAdRecycler extends RecyclerListViewHolder implements
     }
 
     @Override
-    public View getAdContainerView() {
-        return null;
+    public View getView() {
+        return view;
     }
 
     public StandardDisplayAdRecycler(@NonNull View container, ViewGroup viewGroup) {

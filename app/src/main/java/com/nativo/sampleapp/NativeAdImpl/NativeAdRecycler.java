@@ -11,14 +11,13 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 
 import com.nativo.sampleapp.R;
-import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
-import net.nativo.sdk.injector.nativead.NtvNativeAdInjectable;
+import com.nativo.sampleapp.ViewHolders.ArticleViewHolder;
 
-import java.text.SimpleDateFormat;
+import net.nativo.sdk.injectable.NtvNativeAdInjectable;
+
 import java.util.Date;
-import java.util.Locale;
 
-public class NativeAdRecycler extends RecyclerListViewHolder/* implements NtvNativeAdInjectable*/ {
+public class NativeAdRecycler extends ArticleViewHolder implements NtvNativeAdInjectable {
 
     private LinearLayout layout;
     private CardView cardView;
@@ -31,24 +30,21 @@ public class NativeAdRecycler extends RecyclerListViewHolder/* implements NtvNat
     private ImageView adChoicesIndicator;
     private TextView sponsoredTag;
     private View view;
+    private View adContainerView;
 
     public NativeAdRecycler(View itemView, ViewGroup viewGroup) {
         super(itemView, viewGroup);
-        //bindViews(itemView);
+        adContainerView = itemView;
+        bindViews(itemView);
     }
 
-    /*
+    @Override
     public TextView getTitleLabel() {
         if (titleLabel == null) {
             titleLabel = (TextView) view.findViewById(R.id.article_title);
             return titleLabel;
         }
         return titleLabel;
-    }
-
-    @Override
-    public View getAdContainerView() {
-        return this.itemView;
     }
 
     @Override
@@ -90,7 +86,7 @@ public class NativeAdRecycler extends RecyclerListViewHolder/* implements NtvNat
 
     @Override
     public String formatDate(Date date) {
-        return new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(date);
+        return null;
     }
 
     @Override
@@ -98,12 +94,16 @@ public class NativeAdRecycler extends RecyclerListViewHolder/* implements NtvNat
         return R.layout.native_article;
     }
 
+    public View getView() {
+        return view;
+    }
+
     @Override
     public ImageView getAdChoicesImageView() {
         return adChoicesIndicator;
     }
-*/
 
+    @Override
     public void bindViews(View v) {
         view = v;
         layout = v.findViewById(R.id.article_layout);

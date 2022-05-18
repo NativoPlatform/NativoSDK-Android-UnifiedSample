@@ -22,11 +22,11 @@ import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
-import net.nativo.sdk.NtvAdTemplateType;
 import net.nativo.sdk.NtvSectionAdapter;
-import net.nativo.sdk.injector.NtvInjectable;
+import net.nativo.sdk.injectable.NtvInjectable;
+import net.nativo.sdk.injectable.NtvInjectableType;
 
-public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
+public class SingleViewFragment extends Fragment /*implements NtvSectionAdapter*/ {
 
     private View nativoAdView;
     SingleViewFragment viewFragment = null;
@@ -49,7 +49,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
         super.onViewCreated(view, savedInstanceState);
 
         // Nativo init
-        NativoSDK.initSectionWithAdapter(this, SECTION_URL, getContext());
+        //NativoSDK.initSectionWithAdapter(this, SECTION_URL, getContext());
         nativoAdView = view.findViewById(R.id.article_container);
 
         view.findViewById(R.id.load_ad).setOnClickListener(loadAd);
@@ -108,15 +108,8 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
         }
     };
 
-//    @Override
-//    public void needsDisplayLandingPage(String s, int i) {
-//        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
-//                .putExtra(SP_CAMPAIGN_ID, s)
-//                .putExtra(SP_CAMPAIGN_ID, i)
-//                .putExtra(SP_CONTAINER, getView().hashCode()));
-//    }
 
-    @Override
+/*    @Override
     public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
         getView().getContext().startActivity(landingPageIntent);
     }
@@ -146,7 +139,7 @@ public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
     }
 
     @Override
-    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvAdTemplateType templateType, String sectionUrl, Integer index) {
+    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvInjectableType templateType, String sectionUrl, Integer index) {
         return null;
-    }
+    }*/
 }

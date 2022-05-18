@@ -12,14 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import com.nativo.sampleapp.R;
-import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
-import net.nativo.sdk.injector.nativead.NtvNativeAdInjectable;
+import com.nativo.sampleapp.ViewHolders.ArticleViewHolder;
+import net.nativo.sdk.injectable.NtvNativeAdInjectable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class NativeStoryAdRecycler extends RecyclerListViewHolder implements NtvNativeAdInjectable {
+public class NativeStoryAdRecycler extends ArticleViewHolder implements NtvNativeAdInjectable {
 
     private LinearLayout layout;
     private CardView cardView;
@@ -119,7 +119,7 @@ public class NativeStoryAdRecycler extends RecyclerListViewHolder implements Ntv
     }
 
     @Override
-    public View getAdContainerView() {
+    public View getView() {
         return adContainerView;
     }
 }

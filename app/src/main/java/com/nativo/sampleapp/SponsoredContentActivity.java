@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.injector.landing.NtvLandingPageInjectable;
+import net.nativo.sdk.injectable.NtvLandingPageInjectable;
 import java.util.Date;
 
 public class SponsoredContentActivity extends AppCompatActivity implements NtvLandingPageInjectable {
@@ -31,9 +30,11 @@ public class SponsoredContentActivity extends AppCompatActivity implements NtvLa
     private TextView authorNameLabel;
     private ImageView articleAuthorImage;
     private ImageView shareButton;
+    private View view;
 
     @Override
     public void bindViews(View v) {
+        view = v;
         webView = v.findViewById(R.id.web_view);
         titleLabel = v.findViewById(R.id.title_label);
         authorNameLabel = v.findViewById(R.id.article_author);
@@ -116,7 +117,7 @@ public class SponsoredContentActivity extends AppCompatActivity implements NtvLa
     }
 
     @Override
-    public View getAdContainerView() {
-        return findViewById(android.R.id.content).getRootView();
+    public View getView() {
+        return view;
     }
 }

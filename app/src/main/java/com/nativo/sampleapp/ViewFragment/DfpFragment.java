@@ -26,9 +26,9 @@ import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
-import net.nativo.sdk.NtvAdTemplateType;
 import net.nativo.sdk.NtvSectionAdapter;
-import net.nativo.sdk.injector.NtvInjectable;
+import net.nativo.sdk.injectable.NtvInjectable;
+import net.nativo.sdk.injectable.NtvInjectableType;
 
 
 /*
@@ -37,7 +37,7 @@ import net.nativo.sdk.injector.NtvInjectable;
 * LineItem -> "Mobile Test Line Item"
 * Creative -> "Nativo Tag Creative"
 * Campaign ID "c" -> 114921*/
-public class DfpFragment extends Fragment implements NtvSectionAdapter {
+public class DfpFragment extends Fragment /*implements NtvSectionAdapter*/ {
 
     PublisherAdView mPublisherAdView;
     private NativoSDK mNativoSDK;
@@ -64,7 +64,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         super.onViewCreated(view, savedInstanceState);
 
         // Nativo init
-        NativoSDK.initSectionWithAdapter(this, DFP_SECTION_URL, getContext());
+        //NativoSDK.initSectionWithAdapter(this, DFP_SECTION_URL, getContext());
         NativoSDK.enableGAMwithVersion("19.1.0");
 
         parentView = (ViewGroup) view;
@@ -110,14 +110,16 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         mPublisherAdView.loadAd(adRequest);
     }
 
+    View.OnClickListener loadClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            loadGAMAd();
+        }
+    };
 
-//    @Override
-//    public void needsDisplayLandingPage(String sectionUrl, int adRow, Object container) {
-//        Intent landingPage = new Intent(getContext(), SponsoredContentActivity.class);
-//        landingPage.putExtra(SP_SECTION_URL, sectionUrl);
-//        landingPage.putExtra(SP_CAMPAIGN_ID, adRow);
-//        getContext().startActivity(landingPage);
-//    }
+
+
+/*
 
     @Override
     public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
@@ -129,12 +131,10 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
     }
 
-    @Override
     public void hasbuiltView(View view, NtvInjectable ntvInjectable, NtvAdData ntvAdData) {
 
     }
 
-    @Override
     public void onReceiveAd(String s, NtvAdData ntvAdData, Integer integer) {
         Log.d("DFP", "Ad loaded");
 //        if (ntvAdData.getAdType() == NtvAdData.AdType.NATIVE || ntvAdData.getAdType() == NtvAdData.AdType.CLICK_OUT) {
@@ -146,20 +146,39 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
 //        }
     }
 
-    @Override
     public void onFail(String s, Integer integer) {
         Log.d("DFP", "Ad load failed");
     }
 
     @Override
-    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvAdTemplateType templateType, String sectionUrl, Integer index) {
+    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvInjectableType templateType, String sectionUrl, Integer index) {
         return null;
     }
 
-    View.OnClickListener loadClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            loadGAMAd();
-        }
-    };
+
+    @Override
+    public void needsPlaceAdInView(@NonNull String sectionUrl, int atLocation) {
+
+    }
+
+
+    @Override
+    public void didPrefetchAd(@NonNull String sectionUrl, boolean didGetAd) {
+        Log.d("DFP", "didPrefetchAd: "+didGetAd);
+    }
+
+    @Override
+    public void didPlaceAdInView(@NonNull String sectionUrl, int atLocation, @NonNull NtvInjectable adInjectable) {
+
+    }
+
+    @Override
+    public void didFailAd(@NonNull String sectionUrl, int atLocation, @Nullable Throwable error) {
+        Log.d("DFP", "Ad load failed");
+    }
+
+    @Override
+    public void didAssignAdToLocation(@NonNull String sectionUrl, int location) {
+
+    }*/
 }

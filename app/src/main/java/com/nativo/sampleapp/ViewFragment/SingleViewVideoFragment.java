@@ -23,14 +23,14 @@ import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
-import net.nativo.sdk.NtvAdTemplateType;
 import net.nativo.sdk.NtvSectionAdapter;
-import net.nativo.sdk.injector.NtvInjectable;
+import net.nativo.sdk.injectable.NtvInjectable;
+import net.nativo.sdk.injectable.NtvInjectableType;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapter {
+public class SingleViewVideoFragment extends Fragment /*implements NtvSectionAdapter*/ {
     private View convertView;
     SingleViewVideoFragment viewFragment;
 
@@ -53,7 +53,7 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
         convertView = view.findViewById(R.id.video_container);
 
         // Nativo init
-        NativoSDK.initSectionWithAdapter(this, SECTION_URL, getContext());
+        //NativoSDK.initSectionWithAdapter(this, SECTION_URL, getContext());
         NativoSDK.prefetchAdForSection(SECTION_URL, null);
 
         if (!getAd()) {
@@ -137,7 +137,7 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
 //                .putExtra(SP_CAMPAIGN_ID, i)
 //                .putExtra(SP_CONTAINER, getView().hashCode()));
 //    }
-
+/*
     @Override
     public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
         getView().getContext().startActivity(landingPageIntent);
@@ -164,7 +164,7 @@ public class SingleViewVideoFragment extends Fragment implements NtvSectionAdapt
     }
 
     @Override
-    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvAdTemplateType templateType, String sectionUrl, Integer index) {
+    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvInjectableType templateType, String sectionUrl, Integer index) {
         return null;
-    }
+    }*/
 }

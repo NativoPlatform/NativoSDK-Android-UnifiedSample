@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.nativo.sampleapp.R;
-import net.nativo.sdk.injector.video.fullscreen.NtvFullscreenVideoInjectable;
+import net.nativo.sdk.injectable.NtvFullscreenVideoInjectable;
 
 public class FullScreenVideoImpl implements NtvFullscreenVideoInjectable {
     private TextureView textureView;
@@ -26,13 +26,13 @@ public class FullScreenVideoImpl implements NtvFullscreenVideoInjectable {
     private ImageButton playPauseButton;
     private ImageButton exitFullScreenButton;
     private ImageButton moreInfoButton;
-    private View adContainerView;
+    private View view;
     private ProgressBar progressBar;
 
 
     @Override
     public void bindViews(View v) {
-        adContainerView = v;
+        view = v;
         textureView = (TextureView) v.findViewById(R.id.video);
         mediaControllerWrapper = (FrameLayout) v.findViewById(R.id.full_screen_media_controller_wrapper);
         titleLabel = (TextView) v.findViewById(R.id.title);
@@ -51,8 +51,8 @@ public class FullScreenVideoImpl implements NtvFullscreenVideoInjectable {
     }
 
     @Override
-    public View getAdContainerView() {
-        return adContainerView;
+    public View getView() {
+        return view;
     }
 
     @Override

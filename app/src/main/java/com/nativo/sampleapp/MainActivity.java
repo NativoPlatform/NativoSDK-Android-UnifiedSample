@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,7 +33,7 @@ import com.nativo.sampleapp.ViewFragment.SingleViewFragment;
 import com.nativo.sampleapp.ViewFragment.SingleViewVideoFragment;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NtvAdData;
+import net.nativo.sdk.NtvTestAdType;
 
 import static com.nativo.sampleapp.util.AppConstants.GDPR_SHARED_PREFERENCE_STRING;
 import static com.nativo.sampleapp.util.AppConstants.CCPA_SHARED_PREFERENCE_STRING;
@@ -40,6 +41,7 @@ import static com.nativo.sampleapp.util.AppConstants.SAMPLE_CCPA_INVALID_CONSENT
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_CCPA_VALID_CONSENT;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_GDPR_CONSENT;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_GDPR_INVALID_CONSENT;
+import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 
 
 enum NtvFragmentType {
@@ -61,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         nativoInit();
-        //NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
+        Log.d("NativoSDK", "Prefetching onCreate");
+        NativoSDK.prefetchAdForSection(SECTION_URL, getApplicationContext());
 
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void nativoInit() {
+
         // Register the class that will be used for Nativo Content Landing Page
         NativoSDK.registerClassForLandingPage(SponsoredContentActivity.class);
         NativoSDK.registerClassForNativeAd(NativeAd.class);
@@ -98,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         NativoSDK.registerFullscreenVideo(new FullScreenVideoImpl());
 
         // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements();
+        NativoSDK.enableTestAdvertisements(NtvTestAdType.NATIVE);
         NativoSDK.enableDevLogs();
     }
 

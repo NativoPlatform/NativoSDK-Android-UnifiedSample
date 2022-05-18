@@ -17,21 +17,17 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.nativo.sampleapp.R;
-import com.nativo.sampleapp.SponsoredContentActivity;
-
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
-import net.nativo.sdk.NtvAdTemplateType;
 import net.nativo.sdk.NtvSectionAdapter;
-import net.nativo.sdk.constant.NativoAdType;
-import net.nativo.sdk.injector.NtvInjectable;
+import net.nativo.sdk.injectable.NtvInjectable;
+import net.nativo.sdk.injectable.NtvInjectableType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
+public class GridViewAdapter extends BaseAdapter/* implements NtvSectionAdapter*/ {
 
     private Context context;
     private GridView gridView;
@@ -45,7 +41,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         }
 
         // Nativo init
-        NativoSDK.initSectionWithAdapter(this, SECTION_URL, context);
+        //NativoSDK.initSectionWithAdapter(this, SECTION_URL, context);
     }
 
     @Override
@@ -67,14 +63,17 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         if (shouldPlaceNativoAdAtIndex(i)) {
-            NativoAdType adType = NativoSDK.getAdTypeForIndex(SECTION_URL, gridView, i);
+            NtvInjectableType adType = NativoSDK.getAdTypeForIndex(SECTION_URL, gridView, i);
             switch (adType) {
-                case AD_TYPE_NATIVE:
+                case NATIVE:
                     view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
-                case AD_TYPE_VIDEO:
+                    break;
+                case VIDEO:
                     view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-                case AD_TYPE_STANDARD_DISPLAY:
+                    break;
+                case STANDARD_DISPLAY:
                     view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
+                    break;
                 default:
                     view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
             }
@@ -127,7 +126,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     public boolean shouldPlaceNativoAdAtIndex(int i) {
         return i % 2 == 1;
     }
-
+/*
     @Override
     public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
         context.startActivity(landingPageIntent);
@@ -154,7 +153,7 @@ public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     }
 
     @Override
-    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvAdTemplateType templateType, String sectionUrl, Integer index) {
+    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvInjectableType templateType, String sectionUrl, Integer index) {
         return null;
-    }
+    }*/
 }

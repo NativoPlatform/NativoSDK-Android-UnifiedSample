@@ -12,13 +12,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import com.nativo.sampleapp.R;
-import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder;
-import net.nativo.sdk.injector.video.NtvVideoAdInjectable;
-import net.nativo.sdk.injector.video.VideoPlaybackError;
+import com.nativo.sampleapp.ViewHolders.ArticleViewHolder;
+
+import net.nativo.sdk.injectable.NtvVideoAdInjectable;
+import net.nativo.sdk.video.VideoPlaybackError;
 
 import java.util.Date;
 
-public class NativeVideoAdRecycler extends RecyclerListViewHolder implements NtvVideoAdInjectable {
+public class NativeVideoAdRecycler extends ArticleViewHolder implements NtvVideoAdInjectable {
 
     private static String TAG = NativeVideoAdRecycler.class.getName();
     private RelativeLayout layout;
@@ -49,7 +50,7 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
     }
 
     @Override
-    public View getAdContainerView() {
+    public View getView() {
         return view;
     }
 
@@ -60,7 +61,6 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
 
     @Override
     public void bindViews(View v) {
-        layout = (RelativeLayout) v.findViewById(R.id.video_container);
         textureView = (TextureView) v.findViewById(R.id.video);
         previewImage = (ImageView) v.findViewById(R.id.preview_image);
         playButton = (ImageView) v.findViewById(R.id.play);
@@ -74,11 +74,6 @@ public class NativeVideoAdRecycler extends RecyclerListViewHolder implements Ntv
         articleAuthorImage = v.findViewById(R.id.article_author_image);
         articleDateLabel = v.findViewById(R.id.article_date);
         cardView = v.findViewById(R.id.video_constraint_layout);
-    }
-
-    @Override
-    public View getRootView() {
-        return layout;
     }
 
     @Override

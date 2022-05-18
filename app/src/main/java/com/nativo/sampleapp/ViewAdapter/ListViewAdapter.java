@@ -13,27 +13,28 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
-import net.nativo.sdk.NtvAdTemplateType;
 import net.nativo.sdk.NtvSectionAdapter;
-import net.nativo.sdk.constant.NativoAdType;
-import net.nativo.sdk.injector.NtvInjectable;
+import net.nativo.sdk.injectable.NtvInjectable;
+import net.nativo.sdk.injectable.NtvInjectableType;
 
 /**
  * Example of Nativo SDK implemented using ListView
  * Ads are placed according to rule in link{@code shouldPlaceAdAtIndex()}.
  * If an ad is not placed(eg no fill scenario) the cell is marked with red
  */
-public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
+public class ListViewAdapter extends BaseAdapter /*implements NtvSectionAdapter*/ {
 
     private ViewGroup listView;
 
     public ListViewAdapter(ViewGroup parent) {
         this.listView = parent;
-        NativoSDK.initSectionWithAdapter(this, SECTION_URL, parent.getContext());
+        //NativoSDK.initSectionWithAdapter(this, SECTION_URL, parent.getContext());
     }
 
     @Override
@@ -56,9 +57,9 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
         }
-        if (NativoSDK.getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_VIDEO)) {
+        if (NativoSDK.getAdTypeForIndex(SECTION_URL, listView, i).equals(NtvInjectableType.VIDEO)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-        } else if (NativoSDK.getAdTypeForIndex(SECTION_URL, listView, i).equals(NativoAdType.AD_TYPE_NATIVE)) {
+        } else if (NativoSDK.getAdTypeForIndex(SECTION_URL, listView, i).equals(NtvInjectableType.NATIVE)) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
         }
 
@@ -107,15 +108,7 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
     public boolean shouldPlaceNativoAdAtIndex(int i) {
         return i % 3 == 0;
     }
-
-//    @Override
-//    public void needsDisplayLandingPage(String s, int i) {
-//        listView.getContext().startActivity(new Intent(listView.getContext(), SponsoredContentActivity.class)
-//                .putExtra(SP_SECTION_URL, s)
-//                .putExtra(SP_CAMPAIGN_ID, i)
-//                .putExtra(SP_CONTAINER, listView.hashCode()));
-//    }
-
+/*
     @Override
     public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
         listView.getContext().startActivity(landingPageIntent);
@@ -126,23 +119,45 @@ public class ListViewAdapter extends BaseAdapter implements NtvSectionAdapter {
         listView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
     }
 
-    @Override
     public void hasbuiltView(View view, NtvInjectable ntvInjectable, NtvAdData ntvAdData) {
 
     }
 
-    @Override
     public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
         notifyDataSetChanged();
     }
 
-    @Override
     public void onFail(String section, Integer index) {
         notifyDataSetChanged();
     }
 
     @Override
-    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvAdTemplateType templateType, String sectionUrl, Integer index) {
+    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvInjectableType templateType, String sectionUrl, Integer index) {
         return null;
     }
+
+    @Override
+    public void needsPlaceAdInView(@NonNull String sectionUrl, int atLocation) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void didPlaceAdInView(@NonNull String sectionUrl, int atLocation, @NonNull NtvInjectable adInjectable) {
+
+    }
+
+    @Override
+    public void didFailAd(@NonNull String sectionUrl, int atLocation, Throwable error) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void didPrefetchAd(@NonNull String sectionUrl, boolean didGetAd) {
+
+    }
+
+    @Override
+    public void didAssignAdToLocation(@NonNull String sectionUrl, int location) {
+
+    }*/
 }

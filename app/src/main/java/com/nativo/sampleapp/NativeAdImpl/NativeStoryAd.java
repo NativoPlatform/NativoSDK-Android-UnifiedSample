@@ -8,7 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import com.nativo.sampleapp.R;
-import net.nativo.sdk.injector.nativead.NtvNativeAdInjectable;
+
+import net.nativo.sdk.injectable.NtvNativeAdInjectable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -26,7 +27,6 @@ public class NativeStoryAd implements NtvNativeAdInjectable {
     private ImageView adChoicesIndicator;
     private TextView sponsoredTag;
     private View view;
-    private View adContainerView;
 
     @Override
     public ImageView getPreviewImageView() {
@@ -95,7 +95,6 @@ public class NativeStoryAd implements NtvNativeAdInjectable {
     @Override
     public void bindViews(View v) {
         view = v;
-        adContainerView = v;
         layout = v.findViewById(R.id.article_layout);
         cardView = v.findViewById(R.id.article_constraint_layout);
         titleLabel = v.findViewById(R.id.article_title);
@@ -109,8 +108,8 @@ public class NativeStoryAd implements NtvNativeAdInjectable {
     }
 
     @Override
-    public View getAdContainerView() {
-        return adContainerView;
+    public View getView() {
+        return view;
     }
 
 }
