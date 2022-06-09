@@ -22,8 +22,11 @@ import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NativoViewHolder;
 import net.nativo.sdk.NtvAdData;
 import net.nativo.sdk.NtvSectionAdapter;
+import net.nativo.sdk.NtvTestAdType;
 import net.nativo.sdk.injectable.NtvInjectable;
 import net.nativo.sdk.injectable.NtvInjectableType;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,16 +41,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     ArrayList<String> articleList = new ArrayList<>();
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
+        // Nativo init
+        NativoSDK.initSectionWithAdapter(this, SECTION_URL, context);
         this.context = context;
         this.recyclerView = recyclerView;
-        // Create sudo article list
-        for (int i = 0; i < 20; i++) {
+
+        // Create sudo articles datasource
+        for (int i = 0; i < 30; i++) {
             String title = "Publisher Article " + i;
             articleList.add(title);
         }
-
-        // Nativo init
-        NativoSDK.initSectionWithAdapter(this, SECTION_URL, context);
+        // Add Nativo placeholders
+        for (int i = 0; i < 40; i++) {
+            if (shouldPlaceNativoAdAtIndex(i)) {
+                String title = "Nativo Placeholder";
+                articleList.add(i, title);
+            }
+        }
     }
 
     // Helper method to determine which indexes should be Nativo ads
@@ -100,12 +110,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        NtvInjectableType nativeType = null;
-        if (shouldPlaceNativoAdAtIndex(position)) {
-            //Log.d(NtvTAG, "shouldPlaceNativoAdAtIndex "+position);
-            nativeType = NativoSDK.getAdTypeForIndex(SECTION_URL, recyclerView, position);
-        }
-        if (nativeType != null) {
+        if (articleList.get(position).contains("Nativo")) {
             return ITEM_TYPE_NATIVO;
         } else {
             return ITEM_TYPE_ARTICLE;
@@ -130,7 +135,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         boolean isAdContentAvailable = false;
         if (holder instanceof NativoViewHolder) {
+            Log.d(NtvTAG, "placing ad at position "+position);
             isAdContentAvailable = NativoSDK.placeAdInView(holder.itemView, recyclerView, SECTION_URL, position, null);
+            Log.w(NtvTAG, "isAdContentAvailable = "+isAdContentAvailable);
         }
 
         // LEGACY
@@ -164,31 +171,34 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      * NativoSDK Section Adapter
      */
 
+    Boolean initialNativoRequest = true;
     @Override
-    public void didReceiveAd(@NonNull String inSectionUrl, @Nullable Integer atLocation, @Nullable ViewGroup container) {
-        if (atLocation == null) {
-            Log.d(NtvTAG, "Did receive ad: "+ inSectionUrl);
-        } else {
-            Log.d(NtvTAG, "Did receive ad at: "+ atLocation +" in Section: "+ inSectionUrl);
+    public void didReceiveAd(boolean didGetAdFill, @NotNull String inSectionUrl) {
+        Log.d(NtvTAG, "Did receive ad: "+ didGetAdFill);
+        if (didGetAdFill && initialNativoRequest) {
+            Log.w(NtvTAG, "Needs Reload Everything");
+            notifyDataSetChanged();
         }
+        initialNativoRequest = false;
     }
 
     @Override
     public void didAssignAdToLocation(int location, @NonNull NtvAdData adData, @NonNull String inSection, @NonNull ViewGroup container) {
         Log.d(NtvTAG, "didAssignAdToLocation: "+location);
-        articleList.add(location, "Nativo placeholder "+location);
-        notifyItemInserted(location);
+        //articleList.add(location, "Nativo placeholder "+location);
+        //notifyItemInserted(location);
     }
 
     @Override
-    public void didPlaceAdInView(@NonNull View view, @NonNull NtvAdData adData, @NonNull NtvInjectable adInjectable, int atLocation, @NonNull String inSection, @NonNull ViewGroup container) {
-        Log.d(NtvTAG, "didPlaceAdInView: "+view+" Location: "+atLocation +" AdData: "+adData);
+    public void didPlaceAdInView(@NonNull View view, @NonNull NtvAdData adData, @NonNull NtvInjectable injectableTemplate, int atLocation, @NonNull String inSection, @NonNull ViewGroup container) {
+        Log.d(NtvTAG, "didPlaceAdInView: "+ atLocation +" AdData: "+adData);
     }
 
     @Override
-    public void didFailAd(@NonNull String inSection, @Nullable Integer atLocation, @Nullable ViewGroup container, @Nullable Throwable error) {
-        Log.d(NtvTAG, "onFail Reloading data. Index: "+atLocation);
-        if (atLocation != null) {
+    public void didFailAd(@NotNull String inSection, @org.jetbrains.annotations.Nullable Integer atLocation, @org.jetbrains.annotations.Nullable View inView, @org.jetbrains.annotations.Nullable ViewGroup container, @org.jetbrains.annotations.Nullable Throwable error) {
+        Log.d(NtvTAG, "onFail at location: "+atLocation+" Error: "+ error);
+        if (atLocation != null && inView != null) {
+            Log.w(NtvTAG,"Removing Nativo Ad!");
             articleList.remove(atLocation.intValue());
             notifyItemRemoved(atLocation);
         }
@@ -209,4 +219,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public Class<NtvInjectable> registerInjectableClassForTemplateType(@NonNull NtvInjectableType injectableType, @Nullable Integer atLocation, @Nullable String inSection) {
         return null;
     }
+
+
 }

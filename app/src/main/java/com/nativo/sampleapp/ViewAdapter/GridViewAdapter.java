@@ -63,7 +63,7 @@ public class GridViewAdapter extends BaseAdapter/* implements NtvSectionAdapter*
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         if (shouldPlaceNativoAdAtIndex(i)) {
-            NtvInjectableType adType = NativoSDK.getAdTypeForIndex(SECTION_URL, gridView, i);
+            NtvInjectableType adType = NativoSDK.getAdTypeAtLocation(i, SECTION_URL, gridView);
             switch (adType) {
                 case NATIVE:
                     view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);

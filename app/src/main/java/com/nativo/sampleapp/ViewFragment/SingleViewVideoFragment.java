@@ -108,7 +108,7 @@ public class SingleViewVideoFragment extends Fragment /*implements NtvSectionAda
         @Override
         public void onClick(View view) {
             NativoSDK.prefetchAdForSection(SECTION_URL, null);
-            Log.d(getClass().getName(), NativoSDK.getAdTypeForIndex(SECTION_URL, (ViewGroup) getView(), 0).toString());
+            Log.d(getClass().getName(), NativoSDK.getAdTypeAtLocation(0, SECTION_URL, (ViewGroup) getView()).toString());
             if (!getAd()) {
                 bindView(getView(), 0);
             }

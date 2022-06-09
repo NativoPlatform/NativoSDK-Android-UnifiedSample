@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         nativoInit();
-        Log.d("NativoSDK", "Prefetching onCreate");
-        NativoSDK.prefetchAdForSection(SECTION_URL, getApplicationContext());
 
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -80,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 viewPager.setOffscreenPageLimit(0);
                 TabLayout tabLayout = findViewById(R.id.tabs);
                 tabLayout.setupWithViewPager(viewPager);
+
 
             }
         }, 2000);
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         NativoSDK.registerFullscreenVideo(new FullScreenVideoImpl());
 
         // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements(NtvTestAdType.NATIVE);
+        NativoSDK.enableTestAdvertisements();
         NativoSDK.enableDevLogs();
     }
 
