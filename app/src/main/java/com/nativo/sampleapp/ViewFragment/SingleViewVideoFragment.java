@@ -30,13 +30,12 @@ import net.nativo.sdk.injectable.NtvInjectableType;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SingleViewVideoFragment extends Fragment /*implements NtvSectionAdapter*/ {
+public class SingleViewVideoFragment extends Fragment  {
     private View convertView;
     SingleViewVideoFragment viewFragment;
 
     public SingleViewVideoFragment() {
         viewFragment = this;
-        // Required empty public constructor
     }
 
 
@@ -52,22 +51,12 @@ public class SingleViewVideoFragment extends Fragment /*implements NtvSectionAda
         super.onViewCreated(view, savedInstanceState);
         convertView = view.findViewById(R.id.video_container);
 
-        // Nativo init
-        //NativoSDK.initSectionWithAdapter(this, SECTION_URL, getContext());
-        NativoSDK.prefetchAdForSection(SECTION_URL, null);
-
-        if (!getAd()) {
-            bindView(view, 0);
-        }
+        bindView(view, 0);
         view.findViewById(R.id.load_ad).setOnClickListener(loadAd);
         view.findViewById(R.id.show_ad).setOnClickListener(showAd);
         view.findViewById(R.id.hide_ad).setOnClickListener(hideAd);
     }
 
-    private boolean getAd() {
-        boolean hasAd = NativoSDK.placeAdInView(convertView, (ViewGroup) getView(), SECTION_URL, 0, null);
-        return hasAd;
-    }
 
     private void bindView(View view, int i) {
         if (view != null) {
@@ -107,11 +96,7 @@ public class SingleViewVideoFragment extends Fragment /*implements NtvSectionAda
     View.OnClickListener loadAd = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            NativoSDK.prefetchAdForSection(SECTION_URL, null);
-            Log.d(getClass().getName(), NativoSDK.getAdTypeAtLocation(0, SECTION_URL, (ViewGroup) getView()).toString());
-            if (!getAd()) {
-                bindView(getView(), 0);
-            }
+
         }
     };
 
@@ -130,41 +115,4 @@ public class SingleViewVideoFragment extends Fragment /*implements NtvSectionAda
     };
 
 
-//    @Override
-//    public void needsDisplayLandingPage(String s, int i) {
-//        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
-//                .putExtra(SP_CAMPAIGN_ID, s)
-//                .putExtra(SP_CAMPAIGN_ID, i)
-//                .putExtra(SP_CONTAINER, getView().hashCode()));
-//    }
-/*
-    @Override
-    public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
-        getView().getContext().startActivity(landingPageIntent);
-    }
-
-    @Override
-    public void needsDisplayClickOutURL(String s, String s1) {
-
-    }
-
-    @Override
-    public void hasbuiltView(View view, NtvInjectable ntvInjectable, NtvAdData ntvAdData) {
-
-    }
-
-    @Override
-    public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
-
-    }
-
-    @Override
-    public void onFail(String section, Integer index) {
-
-    }
-
-    @Override
-    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvInjectableType templateType, String sectionUrl, Integer index) {
-        return null;
-    }*/
 }

@@ -23,18 +23,14 @@ import net.nativo.sdk.NtvSectionAdapter;
 import net.nativo.sdk.injectable.NtvInjectable;
 import net.nativo.sdk.injectable.NtvInjectableType;
 
-/**
- * Example of Nativo SDK implemented using ListView
- * Ads are placed according to rule in link{@code shouldPlaceAdAtIndex()}.
- * If an ad is not placed(eg no fill scenario) the cell is marked with red
- */
-public class ListViewAdapter extends BaseAdapter /*implements NtvSectionAdapter*/ {
+
+public class ListViewAdapter extends BaseAdapter {
 
     private ViewGroup listView;
 
     public ListViewAdapter(ViewGroup parent) {
         this.listView = parent;
-        //NativoSDK.initSectionWithAdapter(this, SECTION_URL, parent.getContext());
+
     }
 
     @Override
@@ -57,17 +53,7 @@ public class ListViewAdapter extends BaseAdapter /*implements NtvSectionAdapter*
         if (view == null) {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
         }
-        if (NativoSDK.getAdTypeAtLocation(i, SECTION_URL, listView).equals(NtvInjectableType.VIDEO)) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-        } else if (NativoSDK.getAdTypeAtLocation(i, SECTION_URL, listView).equals(NtvInjectableType.NATIVE)) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
-        }
-
-        boolean ad = NativoSDK.placeAdInView(view, listView, SECTION_URL, i, null);
-        if (!ad) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
-            bindView(view, i);
-        }
+        bindView(view, i);
         return view;
     }
 
@@ -88,11 +74,6 @@ public class ListViewAdapter extends BaseAdapter /*implements NtvSectionAdapter*
             if (((TextView) view.findViewById(R.id.sponsored_tag)) != null) {
                 ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
             }
-            if (shouldPlaceNativoAdAtIndex(i)) {
-                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.RED);
-            } else {
-                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
-            }
 
             view.setOnClickListener(onClickListener);
         }
@@ -104,60 +85,4 @@ public class ListViewAdapter extends BaseAdapter /*implements NtvSectionAdapter*
             view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(CLICK_OUT_URL)));
         }
     };
-
-    public boolean shouldPlaceNativoAdAtIndex(int i) {
-        return i % 3 == 0;
-    }
-/*
-    @Override
-    public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
-        listView.getContext().startActivity(landingPageIntent);
-    }
-
-    @Override
-    public void needsDisplayClickOutURL(String s, String s1) {
-        listView.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
-    }
-
-    public void hasbuiltView(View view, NtvInjectable ntvInjectable, NtvAdData ntvAdData) {
-
-    }
-
-    public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
-        notifyDataSetChanged();
-    }
-
-    public void onFail(String section, Integer index) {
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvInjectableType templateType, String sectionUrl, Integer index) {
-        return null;
-    }
-
-    @Override
-    public void needsPlaceAdInView(@NonNull String sectionUrl, int atLocation) {
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void didPlaceAdInView(@NonNull String sectionUrl, int atLocation, @NonNull NtvInjectable adInjectable) {
-
-    }
-
-    @Override
-    public void didFailAd(@NonNull String sectionUrl, int atLocation, Throwable error) {
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void didPrefetchAd(@NonNull String sectionUrl, boolean didGetAd) {
-
-    }
-
-    @Override
-    public void didAssignAdToLocation(@NonNull String sectionUrl, int location) {
-
-    }*/
 }
