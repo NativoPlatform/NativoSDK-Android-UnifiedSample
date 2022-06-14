@@ -11,14 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.preference.PreferenceManager
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import com.nativo.sampleapp.NativeAdImpl.NativeAd
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAd
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAd
 import com.nativo.sampleapp.NativeAdVideo.FullScreenVideoImpl
 import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewFragment.*
+import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.NativoSDK.enableDevLogs
@@ -29,6 +28,9 @@ import net.nativo.sdk.NativoSDK.registerClassForStandardDisplayAd
 import net.nativo.sdk.NativoSDK.registerClassForVideoAd
 import net.nativo.sdk.NativoSDK.registerFullscreenVideo
 
+/**
+ * Various of Fragment Types
+ */
 internal enum class NtvFragmentType {
     RECYCLE_LIST, GRID, TABLE, SINGLEVIEW, SINGLEVIEW_VIDEO, GAM_INTEGRATION, MIDDLE_OF_ARTICLE
 }
@@ -41,43 +43,32 @@ class MainActivity : AppCompatActivity() {
         const val DELAY_DURATION = 2000L
     }
 
-    private var mainFragment: NtvFragmentType? = null
+    // Binding variable to inflate layout
+    private lateinit var binding: ActivityMainBinding
+
+    // Main fragment type (NtvFragmentType)
+    private var mainFragmentType: NtvFragmentType? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
         nativoInit()
 
         val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({ // Set desired fragment for app
+        handler.postDelayed({
+            // Set desired fragment for app
             setMainFragment(NtvFragmentType.RECYCLE_LIST)
-            setContentView(R.layout.activity_main)
-            val fragmentViewAdapter = FragmentViewAdapter(
-                supportFragmentManager
-            )
-            val viewPager = findViewById<ViewPager>(R.id.pager)
-            viewPager.adapter = fragmentViewAdapter
-            viewPager.offscreenPageLimit = 0
-            val tabLayout = findViewById<TabLayout>(R.id.tabs)
-            tabLayout.setupWithViewPager(viewPager)
+            setContentView(binding.root)
+
+            // Setup view pager
+            binding.pager.adapter = FragmentViewAdapter(supportFragmentManager)
+            binding.pager.offscreenPageLimit = 0
+            binding.tabs.setupWithViewPager(binding.pager)
         }, DELAY_DURATION)
     }
 
-    private fun setPrivacyAndTransparencyKeys() {
-        getEditor().apply {
-            putString(
-                AppConstants.GDPR_SHARED_PREFERENCE_STRING,
-                AppConstants.SAMPLE_GDPR_CONSENT
-            )
-            putString(
-                AppConstants.CCPA_SHARED_PREFERENCE_STRING,
-                AppConstants.SAMPLE_CCPA_VALID_CONSENT
-            )
-            apply()
-        }
-    }
-
     private fun nativoInit() {
-
         // Register the class that will be used for Nativo Content Landing Page
         registerClassForLandingPage(SponsoredContentActivity::class.java)
         registerClassForNativeAd(NativeAd::class.java)
@@ -88,10 +79,6 @@ class MainActivity : AppCompatActivity() {
         // Force specific ad types if needed
         enableTestAdvertisements()
         enableDevLogs()
-    }
-
-    private fun setMainFragment(fragmentType: NtvFragmentType) {
-        mainFragment = fragmentType
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -109,10 +96,10 @@ class MainActivity : AppCompatActivity() {
         NativoSDK.onResume()
     }
 
-    private inner class FragmentViewAdapter(fm: FragmentManager?) :
-        FragmentPagerAdapter(fm!!) {
+    private inner class FragmentViewAdapter(fm: FragmentManager) :
+        FragmentPagerAdapter(fm) {
         override fun getItem(i: Int): Fragment {
-            return when (mainFragment) {
+            return when (mainFragmentType) {
                 NtvFragmentType.RECYCLE_LIST -> RecyclerViewFragment()
                 NtvFragmentType.GRID -> GridFragment()
                 NtvFragmentType.TABLE -> ListViewFragment()
@@ -129,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
-            return when (mainFragment) {
+            return when (mainFragmentType) {
                 NtvFragmentType.RECYCLE_LIST -> resources.getText(R.string.recycle_list_tab)
                 NtvFragmentType.GRID -> resources.getText(R.string.grid_tab)
                 NtvFragmentType.TABLE -> resources.getText(R.string.table_tab)
@@ -166,6 +153,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setPrivacyAndTransparencyKeys() {
+        getEditor().apply {
+            putString(
+                AppConstants.GDPR_SHARED_PREFERENCE_STRING,
+                AppConstants.SAMPLE_GDPR_CONSENT
+            )
+            putString(
+                AppConstants.CCPA_SHARED_PREFERENCE_STRING,
+                AppConstants.SAMPLE_CCPA_VALID_CONSENT
+            )
+            apply()
+        }
+    }
+
     private fun invalidPrivacyAndTransparencyKeys() {
         getEditor().apply {
             putString(
@@ -180,8 +181,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getEditor() = PreferenceManager.getDefaultSharedPreferences(this).edit()
-
     private fun removePrivacyAndTransparencyKeys() {
         getEditor().apply {
             remove(AppConstants.GDPR_SHARED_PREFERENCE_STRING)
@@ -189,4 +188,13 @@ class MainActivity : AppCompatActivity() {
             apply()
         }
     }
+
+    private fun setMainFragment(fragmentType: NtvFragmentType) {
+        mainFragmentType = fragmentType
+    }
+
+    /**
+     * @return Editor of Preference Manager instance
+     */
+    private fun getEditor() = PreferenceManager.getDefaultSharedPreferences(this).edit()
 }
