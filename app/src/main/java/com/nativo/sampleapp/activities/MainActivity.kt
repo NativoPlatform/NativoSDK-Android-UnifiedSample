@@ -57,14 +57,14 @@ class MainActivity : AppCompatActivity() {
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-            // Set desired fragment for app
-            setMainFragment(NtvFragmentType.RECYCLE_LIST)
             setContentView(binding.root)
 
-            // Setup view pager
-            binding.pager.adapter = FragmentViewAdapter(supportFragmentManager)
+            // Setup view pager and tab layout
             binding.pager.offscreenPageLimit = 0
             binding.tabs.setupWithViewPager(binding.pager)
+
+            // Set desired fragment for app
+            setMainFragment(NtvFragmentType.RECYCLE_LIST)
         }, DELAY_DURATION)
     }
 
@@ -191,6 +191,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setMainFragment(fragmentType: NtvFragmentType) {
         mainFragmentType = fragmentType
+        binding.pager.adapter = FragmentViewAdapter(supportFragmentManager)
     }
 
     /**
