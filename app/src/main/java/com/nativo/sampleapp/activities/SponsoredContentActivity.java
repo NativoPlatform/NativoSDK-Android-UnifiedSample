@@ -1,4 +1,4 @@
-package com.nativo.sampleapp;
+package com.nativo.sampleapp.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.nativo.sampleapp.R;
+
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.injectable.NtvLandingPageInjectable;
 import java.util.Date;

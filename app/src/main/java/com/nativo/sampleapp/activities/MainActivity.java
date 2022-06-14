@@ -1,11 +1,10 @@
-package com.nativo.sampleapp;
+package com.nativo.sampleapp.activities;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +23,7 @@ import com.nativo.sampleapp.NativeAdImpl.NativeAd;
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAd;
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAd;
 import com.nativo.sampleapp.NativeAdVideo.FullScreenVideoImpl;
+import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.ViewFragment.DfpFragment;
 import com.nativo.sampleapp.ViewFragment.GridFragment;
 import com.nativo.sampleapp.ViewFragment.ListViewFragment;
@@ -33,7 +33,6 @@ import com.nativo.sampleapp.ViewFragment.SingleViewFragment;
 import com.nativo.sampleapp.ViewFragment.SingleViewVideoFragment;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NtvTestAdType;
 
 import static com.nativo.sampleapp.util.AppConstants.GDPR_SHARED_PREFERENCE_STRING;
 import static com.nativo.sampleapp.util.AppConstants.CCPA_SHARED_PREFERENCE_STRING;
@@ -41,7 +40,6 @@ import static com.nativo.sampleapp.util.AppConstants.SAMPLE_CCPA_INVALID_CONSENT
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_CCPA_VALID_CONSENT;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_GDPR_CONSENT;
 import static com.nativo.sampleapp.util.AppConstants.SAMPLE_GDPR_INVALID_CONSENT;
-import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 
 
 enum NtvFragmentType {
