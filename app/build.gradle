@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 31
@@ -28,6 +31,10 @@ android {
     packagingOptions {
         pickFirst "META-INF/*.kotlin_module"
         pickFirst 'META-INF/com.android.tools/proguard/coroutines.pro'
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 }
 

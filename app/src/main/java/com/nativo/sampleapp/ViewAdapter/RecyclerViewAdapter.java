@@ -9,35 +9,31 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nativo.sampleapp.NativeAdImpl.NativeAdRecycler;
-import com.nativo.sampleapp.NativeAdImpl.NativeVideoAdRecycler;
-import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAdRecycler;
 import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.ViewHolders.ArticleViewHolder;
+
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NativoViewHolder;
 import net.nativo.sdk.NtvAdData;
 import net.nativo.sdk.NtvSectionAdapter;
-import net.nativo.sdk.NtvTestAdType;
 import net.nativo.sdk.injectable.NtvInjectable;
 import net.nativo.sdk.injectable.NtvInjectableType;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
-
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements NtvSectionAdapter {
 
     private static String TAG = RecyclerViewAdapter.class.getName();
     final String NtvTAG = "NativoSDK";
-    private Context context;
-    private RecyclerView recyclerView;
+    private final Context context;
+    private final RecyclerView recyclerView;
     ArrayList<String> articleList = new ArrayList<>();
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
