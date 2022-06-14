@@ -32,7 +32,13 @@ import net.nativo.sdk.NativoSDK.registerFullscreenVideo
  * Various of Fragment Types
  */
 internal enum class NtvFragmentType {
-    RECYCLE_LIST, GRID, TABLE, SINGLEVIEW, SINGLEVIEW_VIDEO, GAM_INTEGRATION, MIDDLE_OF_ARTICLE
+    RECYCLE_LIST,
+    GRID,
+    TABLE,
+    SINGLEVIEW,
+    SINGLEVIEW_VIDEO,
+    GAM_INTEGRATION,
+    MIDDLE_OF_ARTICLE
 }
 
 /**

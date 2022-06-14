@@ -32,8 +32,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private static String TAG = RecyclerViewAdapter.class.getName();
     final String NtvTAG = "NativoSDK";
-    private Context context;
-    private RecyclerView recyclerView;
+    private final Context context;
+    private final RecyclerView recyclerView;
     ArrayList<String> articleList = new ArrayList<>();
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
