@@ -11,7 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.nativo.sampleapp.R
-import com.nativo.sampleapp.util.AppConstants
+import com.nativo.sampleapp.util.AppConstants.NtvTAG
 import com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL
 import com.nativo.sampleapp.util.AppConstants.SECTION_URL
 import net.nativo.sdk.NativoSDK
@@ -83,7 +83,7 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
         if (shouldShowPlaceAd(item)) {
             val isAdContentAvailable =
                 NativoSDK.placeAdInView(container, listView, SECTION_URL, i, null)
-            Log.w(AppConstants.NtvTAG, "isAdContentAvailable = $isAdContentAvailable")
+            Log.w(NtvTAG, "isAdContentAvailable = $isAdContentAvailable")
         }
     }
 
@@ -92,10 +92,10 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
     }
 
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {
-        Log.d(AppConstants.NtvTAG, "Did receive ad: $didGetFill")
+        Log.d(NtvTAG, "Did receive ad: $didGetFill")
 
         if (didGetFill && initialNativoRequest) {
-            Log.w(AppConstants.NtvTAG, "Needs Reload Everything")
+            Log.w(NtvTAG, "Needs Reload Everything")
             notifyDataSetChanged()
         }
 
@@ -108,7 +108,7 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
         inSection: String,
         container: ViewGroup
     ) {
-        Log.d(AppConstants.NtvTAG, "didAssignAdToLocation: $location")
+        Log.d(NtvTAG, "didAssignAdToLocation: $location")
     }
 
     override fun didPlaceAdInView(
@@ -119,7 +119,7 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
         inSection: String,
         container: ViewGroup
     ) {
-        Log.d(AppConstants.NtvTAG, "didPlaceAdInView: $atLocation AdData: $adData")
+        Log.d(NtvTAG, "didPlaceAdInView: $atLocation AdData: $adData")
     }
 
     override fun didFailAd(
@@ -129,9 +129,9 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
         container: ViewGroup?,
         error: Throwable?
     ) {
-        Log.d(AppConstants.NtvTAG, "onFail at location: $atLocation Error: $error")
+        Log.d(NtvTAG, "onFail at location: $atLocation Error: $error")
         if (atLocation != null && inView != null) {
-            Log.w(AppConstants.NtvTAG, "Removing Nativo Ad!")
+            Log.w(NtvTAG, "Removing Nativo Ad!")
             integerList.removeAt(atLocation.toInt())
             notifyDataSetChanged()
         }
