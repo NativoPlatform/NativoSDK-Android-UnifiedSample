@@ -15,8 +15,7 @@ import com.nativo.sampleapp.R
 import com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL
 import com.nativo.sampleapp.util.AppConstants.NtvTAG
 import com.nativo.sampleapp.util.AppConstants.SECTION_URL
-import net.nativo.sdk.NativoSDK.initSectionWithAdapter
-import net.nativo.sdk.NativoSDK.placeAdInView
+import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.NtvAdData
 import net.nativo.sdk.NtvSectionAdapter
 import net.nativo.sdk.injectable.NtvInjectable
@@ -34,7 +33,7 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
 
     init {
         // Nativo init
-        initSectionWithAdapter(this, SECTION_URL, context)
+        NativoSDK.initSectionWithAdapter(this, SECTION_URL, context)
 
         for (i in 0..ITEM_COUNT) {
             integerList.add(i)
@@ -64,11 +63,11 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
         return convertView
     }
 
-    inner class ItemViewHolder(private val container: View) {
-        private val articleImage: ImageView? = container.findViewById(R.id.article_image)
-        private val articleTitle: TextView? = container.findViewById(R.id.article_title)
-        private val articleAuthor: TextView? = container.findViewById(R.id.article_description)
-        private val articleSponsor: ImageView? = container.findViewById(R.id.sponsored_ad_indicator)
+    inner class ItemViewHolder(private val view: View) {
+        private val articleImage: ImageView? = view.findViewById(R.id.article_image)
+        private val articleTitle: TextView? = view.findViewById(R.id.article_title)
+        private val articleAuthor: TextView? = view.findViewById(R.id.article_description)
+        private val articleSponsor: ImageView? = view.findViewById(R.id.sponsored_ad_indicator)
 
         fun bind(item: Int, position: Int) {
             articleImage?.setImageResource(R.drawable.newsimage)
@@ -76,7 +75,7 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
             articleAuthor?.setText(R.string.sample_author)
             articleTitle?.setText(R.string.sample_title)
 
-            container.setOnClickListener {
+            view.setOnClickListener {
                 context.startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
@@ -87,7 +86,7 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
 
             if (shouldShowPlaceAd(item)) {
                 val isAdContentAvailable =
-                    placeAdInView(container, gridView, SECTION_URL, position, null)
+                    NativoSDK.placeAdInView(view, gridView, SECTION_URL, position, null)
                 Log.w(NtvTAG, "isAdContentAvailable = $isAdContentAvailable")
             }
         }
