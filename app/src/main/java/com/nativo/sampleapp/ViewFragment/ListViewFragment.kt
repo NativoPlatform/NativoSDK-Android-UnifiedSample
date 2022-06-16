@@ -23,6 +23,6 @@ class ListViewFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.listTable.adapter = ListViewAdapter(binding.listTable)
+        binding.listTable.adapter = ListViewAdapter(requireContext(), binding.listTable)
     }
 }

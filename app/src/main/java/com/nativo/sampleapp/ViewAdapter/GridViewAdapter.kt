@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.nativo.sampleapp.R
 import com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL
+import com.nativo.sampleapp.util.AppConstants.NtvTAG
 import com.nativo.sampleapp.util.AppConstants.SECTION_URL
 import net.nativo.sdk.NativoSDK.initSectionWithAdapter
 import net.nativo.sdk.NativoSDK.placeAdInView
@@ -25,7 +26,6 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
     ArrayAdapter<Int>(context, R.layout.publisher_article), NtvSectionAdapter {
 
     companion object {
-        const val NtvTAG = "NativoSDK"
         const val ITEM_COUNT = 30
     }
 
