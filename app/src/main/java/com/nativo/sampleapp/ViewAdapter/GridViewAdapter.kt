@@ -31,6 +31,18 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
     var integerList: MutableList<Int> = ArrayList()
     var initialNativoRequest = true
 
+    /**
+     * Show [CLICK_OUT_URL] as a default listener
+     */
+    private var _itemClickListener: ((item: Int) -> Unit)? = {
+        context.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(CLICK_OUT_URL)
+            )
+        )
+    }
+
     init {
         // Nativo init
         NativoSDK.initSectionWithAdapter(this, SECTION_URL, context)
@@ -76,12 +88,7 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
             articleTitle?.setText(R.string.sample_title)
 
             view.setOnClickListener {
-                context.startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(CLICK_OUT_URL)
-                    )
-                )
+                _itemClickListener?.invoke(item)
             }
 
             if (shouldShowPlaceAd(item)) {
@@ -94,6 +101,10 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
         private fun shouldShowPlaceAd(item: Int): Boolean {
             return item % 3 == 1
         }
+    }
+
+    fun setItemClickListener(listener: ((item: Int) -> Unit)?) {
+        _itemClickListener = listener
     }
 
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {

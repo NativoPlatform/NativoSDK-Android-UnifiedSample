@@ -29,6 +29,18 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
     var integerList: MutableList<Int> = ArrayList()
     var initialNativoRequest = true
 
+    /**
+     * Show [CLICK_OUT_URL] as a default listener
+     */
+    private var _itemClickListener: ((item: Int) -> Unit)? = {
+        context.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(CLICK_OUT_URL)
+            )
+        )
+    }
+
     init {
         // Nativo init
         NativoSDK.initSectionWithAdapter(this, SECTION_URL, context)
@@ -72,12 +84,7 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
         sponsoredTag?.visibility = View.INVISIBLE
 
         view.setOnClickListener {
-            context.startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(CLICK_OUT_URL)
-                )
-            )
+            _itemClickListener?.invoke(item)
         }
 
         if (shouldShowPlaceAd(item)) {
@@ -85,6 +92,10 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
                 NativoSDK.placeAdInView(view, listView, SECTION_URL, i, null)
             Log.w(NtvTAG, "isAdContentAvailable = $isAdContentAvailable")
         }
+    }
+
+    fun setItemClickListener(listener: ((item: Int) -> Unit)?) {
+        _itemClickListener = listener
     }
 
     private fun shouldShowPlaceAd(item: Int): Boolean {
