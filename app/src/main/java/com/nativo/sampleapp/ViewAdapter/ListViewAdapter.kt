@@ -83,14 +83,12 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
         articleTitle?.setText(R.string.sample_title)
         sponsoredTag?.visibility = View.INVISIBLE
 
-        view.setOnClickListener {
-            _itemClickListener?.invoke(item)
-        }
-
         if (shouldShowPlaceAd(item)) {
             val isAdContentAvailable =
                 NativoSDK.placeAdInView(view, listView, SECTION_URL, i, null)
             Log.w(NtvTAG, "isAdContentAvailable = $isAdContentAvailable")
+        } else {
+            _itemClickListener?.invoke(item)
         }
     }
 

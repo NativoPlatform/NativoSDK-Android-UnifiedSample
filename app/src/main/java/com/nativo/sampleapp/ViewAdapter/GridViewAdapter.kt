@@ -87,14 +87,12 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
             articleAuthor?.setText(R.string.sample_author)
             articleTitle?.setText(R.string.sample_title)
 
-            view.setOnClickListener {
-                _itemClickListener?.invoke(item)
-            }
-
             if (shouldShowPlaceAd(item)) {
                 val isAdContentAvailable =
                     NativoSDK.placeAdInView(view, gridView, SECTION_URL, position, null)
                 Log.w(NtvTAG, "isAdContentAvailable = $isAdContentAvailable")
+            } else {
+                _itemClickListener?.invoke(item)
             }
         }
 
