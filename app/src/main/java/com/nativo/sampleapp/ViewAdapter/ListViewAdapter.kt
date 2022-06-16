@@ -58,12 +58,12 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
         return convertView
     }
 
-    private fun bindView(container: View, item: Int, i: Int) {
-        val articleImage = container.findViewById<ImageView>(R.id.article_image)
-        val sponsoredIndicator = container.findViewById<ImageView>(R.id.sponsored_ad_indicator)
-        val articleAuthor = container.findViewById<TextView>(R.id.article_author)
-        val articleTitle = container.findViewById<TextView>(R.id.article_title)
-        val sponsoredTag = container.findViewById<TextView>(R.id.sponsored_tag)
+    private fun bindView(view: View, item: Int, i: Int) {
+        val articleImage = view.findViewById<ImageView>(R.id.article_image)
+        val sponsoredIndicator = view.findViewById<ImageView>(R.id.sponsored_ad_indicator)
+        val articleAuthor = view.findViewById<TextView>(R.id.article_author)
+        val articleTitle = view.findViewById<TextView>(R.id.article_title)
+        val sponsoredTag = view.findViewById<TextView>(R.id.sponsored_tag)
 
         articleImage?.setImageResource(R.drawable.newsimage)
         sponsoredIndicator?.visibility = View.INVISIBLE
@@ -71,7 +71,7 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
         articleTitle?.setText(R.string.sample_title)
         sponsoredTag?.visibility = View.INVISIBLE
 
-        container.setOnClickListener {
+        view.setOnClickListener {
             context.startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
@@ -82,7 +82,7 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
 
         if (shouldShowPlaceAd(item)) {
             val isAdContentAvailable =
-                NativoSDK.placeAdInView(container, listView, SECTION_URL, i, null)
+                NativoSDK.placeAdInView(view, listView, SECTION_URL, i, null)
             Log.w(NtvTAG, "isAdContentAvailable = $isAdContentAvailable")
         }
     }
