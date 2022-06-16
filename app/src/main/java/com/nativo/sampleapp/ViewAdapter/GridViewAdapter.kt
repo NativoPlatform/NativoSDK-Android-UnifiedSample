@@ -32,9 +32,9 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
     var initialNativoRequest = true
 
     /**
-     * Show [CLICK_OUT_URL] as a default listener
+     * Show [CLICK_OUT_URL]
      */
-    private var _itemClickListener: ((item: Int) -> Unit)? = {
+    private var itemClickListener = Runnable {
         context.startActivity(
             Intent(
                 Intent.ACTION_VIEW,
@@ -92,17 +92,15 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
                     NativoSDK.placeAdInView(view, gridView, SECTION_URL, position, null)
                 Log.w(NtvTAG, "isAdContentAvailable = $isAdContentAvailable")
             } else {
-                _itemClickListener?.invoke(item)
+                view.setOnClickListener {
+                    itemClickListener.run()
+                }
             }
         }
 
         private fun shouldShowPlaceAd(item: Int): Boolean {
             return item % 3 == 1
         }
-    }
-
-    fun setItemClickListener(listener: ((item: Int) -> Unit)?) {
-        _itemClickListener = listener
     }
 
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {

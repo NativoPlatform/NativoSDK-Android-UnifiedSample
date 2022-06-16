@@ -30,9 +30,9 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
     var initialNativoRequest = true
 
     /**
-     * Show [CLICK_OUT_URL] as a default listener
+     * Show [CLICK_OUT_URL]
      */
-    private var _itemClickListener: ((item: Int) -> Unit)? = {
+    private var itemClickListener = Runnable {
         context.startActivity(
             Intent(
                 Intent.ACTION_VIEW,
@@ -88,12 +88,10 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
                 NativoSDK.placeAdInView(view, listView, SECTION_URL, i, null)
             Log.w(NtvTAG, "isAdContentAvailable = $isAdContentAvailable")
         } else {
-            _itemClickListener?.invoke(item)
+            view.setOnClickListener {
+                itemClickListener.run()
+            }
         }
-    }
-
-    fun setItemClickListener(listener: ((item: Int) -> Unit)?) {
-        _itemClickListener = listener
     }
 
     private fun shouldShowPlaceAd(item: Int): Boolean {
