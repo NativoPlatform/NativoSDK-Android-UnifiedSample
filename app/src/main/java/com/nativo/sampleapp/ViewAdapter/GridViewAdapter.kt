@@ -26,6 +26,7 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
 
     companion object {
         const val NtvTAG = "NativoSDK"
+        const val ITEM_COUNT = 30
     }
 
     var integerList: MutableList<Int> = ArrayList()
@@ -35,7 +36,7 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
         // Nativo init
         initSectionWithAdapter(this, SECTION_URL, context)
 
-        for (i in 0..30) {
+        for (i in 0..ITEM_COUNT) {
             integerList.add(i)
         }
     }
