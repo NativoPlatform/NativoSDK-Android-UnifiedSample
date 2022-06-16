@@ -23,6 +23,6 @@ class GridFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.gridView.adapter = GridViewAdapter(requireContext())
+        binding.gridView.adapter = GridViewAdapter(requireContext(), binding.gridView)
     }
 }
