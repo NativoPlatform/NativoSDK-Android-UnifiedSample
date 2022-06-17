@@ -1,5 +1,6 @@
 package com.nativo.sampleapp.ViewAdapter;
 
+import static com.nativo.sampleapp.util.AppConstants.NtvTAG;
 import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 
 import android.content.Context;
@@ -31,7 +32,6 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements NtvSectionAdapter {
 
     private static String TAG = RecyclerViewAdapter.class.getName();
-    final String NtvTAG = "NativoSDK";
     private final Context context;
     private final RecyclerView recyclerView;
     ArrayList<String> articleList = new ArrayList<>();

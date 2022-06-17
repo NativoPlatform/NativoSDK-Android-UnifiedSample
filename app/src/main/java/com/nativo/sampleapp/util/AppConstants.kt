@@ -21,4 +21,7 @@ object AppConstants {
     const val SAMPLE_GDPR_INVALID_CONSENT = "BOqm1JLOqm1JLAPABBAAABAAAAAsuABgA"
     const val SAMPLE_CCPA_VALID_CONSENT = "1YNY"
     const val SAMPLE_CCPA_INVALID_CONSENT = "1YYY"
+
+    // Nativo STK Tag
+    const val NtvTAG = "NativoSDK"
 }
