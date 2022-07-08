@@ -14,12 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nativo.sampleapp.SponsoredContentActivity;
+import com.nativo.sampleapp.activities.SponsoredContentActivity;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvconstant.NativoAdType;
 import net.nativo.sdk.ntvcore.NtvAdData;
 import net.nativo.sdk.ntvcore.NtvSectionAdapter;
 

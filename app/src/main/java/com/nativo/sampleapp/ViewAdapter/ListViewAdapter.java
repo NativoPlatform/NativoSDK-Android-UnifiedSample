@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nativo.sampleapp.R;
-import com.nativo.sampleapp.SponsoredContentActivity;
+import com.nativo.sampleapp.activities.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.ntvadtype.NtvBaseInterface;

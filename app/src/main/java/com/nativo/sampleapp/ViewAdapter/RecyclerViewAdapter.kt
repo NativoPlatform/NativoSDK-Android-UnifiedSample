@@ -14,7 +14,7 @@ import com.nativo.sampleapp.NativeAdImpl.NativeAdRecycler
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAdRecycler
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAdRecycler
 import com.nativo.sampleapp.R
-import com.nativo.sampleapp.SponsoredContentActivity
+import com.nativo.sampleapp.activities.SponsoredContentActivity
 import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK

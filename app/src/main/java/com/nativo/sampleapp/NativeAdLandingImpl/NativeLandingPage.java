@@ -9,22 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nativo.sampleapp.R;
-import com.nativo.sampleapp.SponsoredContentActivity;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.NtvBaseInterface;
 import net.nativo.sdk.ntvadtype.landing.NtvLandingPageInterface;
-import net.nativo.sdk.ntvcore.NtvAdData;
-import net.nativo.sdk.ntvcore.NtvSectionAdapter;
-import net.nativo.sdk.ntvutils.AppUtils;
 
 import java.util.Date;
-import java.util.Random;
-
-import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
-import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
-import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
 
 public class NativeLandingPage implements NtvLandingPageInterface {
 

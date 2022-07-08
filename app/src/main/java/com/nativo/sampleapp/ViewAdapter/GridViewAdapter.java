@@ -12,7 +12,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nativo.sampleapp.SponsoredContentActivity;
+import com.nativo.sampleapp.activities.SponsoredContentActivity;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;

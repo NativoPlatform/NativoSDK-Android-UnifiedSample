@@ -19,7 +19,7 @@ import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
-import com.nativo.sampleapp.SponsoredContentActivity;
+import com.nativo.sampleapp.activities.SponsoredContentActivity;
 import com.nativo.sampleapp.R;
 
 import net.nativo.sdk.NativoSDK;

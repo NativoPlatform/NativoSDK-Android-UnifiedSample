@@ -1,4 +1,4 @@
-package com.nativo.sampleapp
+package com.nativo.sampleapp.activities
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -18,6 +18,7 @@ import com.nativo.sampleapp.NativeAdImpl.NativeVideoAd
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAd
 import com.nativo.sampleapp.NativeAdLandingImpl.NativeLandingPage
 import com.nativo.sampleapp.NativeAdVideo.FullScreenVideoImpl
+import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants

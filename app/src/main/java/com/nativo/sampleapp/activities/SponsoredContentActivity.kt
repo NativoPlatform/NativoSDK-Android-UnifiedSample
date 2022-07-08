@@ -1,4 +1,4 @@
-package com.nativo.sampleapp
+package com.nativo.sampleapp.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
