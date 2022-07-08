@@ -13,14 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.preference.PreferenceManager
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import com.nativo.sampleapp.NativeAdImpl.NativeAd
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAd
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAd
 import com.nativo.sampleapp.NativeAdLandingImpl.NativeLandingPage
 import com.nativo.sampleapp.NativeAdVideo.FullScreenVideoImpl
 import com.nativo.sampleapp.ViewFragment.*
+import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.ntvadtype.NtvBaseInterface
@@ -35,21 +34,31 @@ internal enum class NtvFragmentType {
 
 class MainActivity : AppCompatActivity(), NtvSectionAdapter {
 
+    companion object {
+        private val TAG = MainActivity::class.java.simpleName
+    }
+
+    private lateinit var binding: ActivityMainBinding
     private var mainFragment: NtvFragmentType? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
         nativoInit()
         //NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
+
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({ // Set desired fragment for app
             setMainFragment(NtvFragmentType.RECYCLE_LIST)
-            setContentView(R.layout.activity_main)
-            val fragmentViewAdapter = FragmentViewAdapter(supportFragmentManager)
-            val viewPager = findViewById<ViewPager>(R.id.pager)
-            viewPager.adapter = fragmentViewAdapter
-            viewPager.offscreenPageLimit = 0
-            val tabLayout = findViewById<TabLayout>(R.id.tabs)
-            tabLayout.setupWithViewPager(viewPager)
+            setContentView(binding.root)
+
+            binding.pager.apply {
+                adapter = FragmentViewAdapter(supportFragmentManager)
+                offscreenPageLimit = 0
+            }
+
+            binding.tabs.setupWithViewPager(binding.pager)
         }, 2000)
     }
 
@@ -96,7 +105,7 @@ class MainActivity : AppCompatActivity(), NtvSectionAdapter {
             return 1
         }
 
-        override fun getPageTitle(position: Int): CharSequence? {
+        override fun getPageTitle(position: Int): CharSequence {
             return when (mainFragment) {
                 NtvFragmentType.RECYCLE_LIST -> resources.getText(R.string.recycle_list_tab)
                 NtvFragmentType.GRID -> resources.getText(R.string.grid_tab)
@@ -174,7 +183,7 @@ class MainActivity : AppCompatActivity(), NtvSectionAdapter {
     }
 
     override fun onReceiveAd(s: String, ntvAdData: NtvAdData, index: Int) {
-        Log.e(this.javaClass.name, "Did receive ad at index: $index")
+        Log.e(TAG, "Did receive ad at index: $index")
     }
 
     override fun onFail(s: String, integer: Int) {}
