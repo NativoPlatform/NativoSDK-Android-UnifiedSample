@@ -1,6 +1,5 @@
 package com.nativo.sampleapp.activities
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,7 +18,6 @@ import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
-import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.NativoSDK.enableDevLogs
 import net.nativo.sdk.NativoSDK.enableTestAdvertisements
 import net.nativo.sdk.NativoSDK.registerClassForLandingPage
@@ -85,21 +83,6 @@ class MainActivity : AppCompatActivity() {
         // Force specific ad types if needed
         enableTestAdvertisements()
         enableDevLogs()
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        NativoSDK.onConfigurationChanged(newConfig)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        NativoSDK.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        NativoSDK.onResume()
     }
 
     private inner class FragmentViewAdapter(fm: FragmentManager) :
