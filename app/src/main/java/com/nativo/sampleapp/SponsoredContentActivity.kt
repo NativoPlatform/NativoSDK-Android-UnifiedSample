@@ -1,36 +1,44 @@
-package com.nativo.sampleapp;
+package com.nativo.sampleapp
 
-import android.os.Bundle;
-import android.view.View;
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.nativo.sampleapp.NativeAdLandingImpl.NativeLandingPage
+import com.nativo.sampleapp.databinding.ActivitySponsoredContentBinding
+import com.nativo.sampleapp.util.AppConstants
+import net.nativo.sdk.NativoSDK
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+class SponsoredContentActivity : AppCompatActivity() {
 
-import com.nativo.sampleapp.NativeAdLandingImpl.NativeLandingPage;
+    private lateinit var binding: ActivitySponsoredContentBinding
+    private var withView = true
 
-import net.nativo.sdk.NativoSDK;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
-import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
+        binding = ActivitySponsoredContentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-public class SponsoredContentActivity extends AppCompatActivity {
+        val sectionUrl = intent.getStringExtra(AppConstants.SP_SECTION_URL)
+        val campaignId = intent.getIntExtra(AppConstants.SP_CAMPAIGN_ID, 0)
+        val containerHash = intent.getIntExtra(AppConstants.SP_CONTAINER_HASH, 0)
 
-    boolean withView = true;
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        String sectionUrl = getIntent().getStringExtra(SP_SECTION_URL);
-        int campaignId = getIntent().getIntExtra(SP_CAMPAIGN_ID, 0);
-        Integer containerHash = getIntent().getIntExtra(SP_CONTAINER_HASH, 0);
-        //pass in the class that implemented the NtvLandingPageInterface. Can be different layout classes that you switch between
-        setContentView(R.layout.activity_sponsored_content);
-        View view = findViewById(R.id.landing_page_container);
+        // Pass in the class that implemented the NtvLandingPageInterface. Can be different layout classes that you switch between
         if (withView) {
-            NativoSDK.initLandingPage(view, sectionUrl, containerHash, campaignId, NativeLandingPage.class);
+            NativoSDK.initLandingPage(
+                binding.landingPageContainer,
+                sectionUrl,
+                containerHash,
+                campaignId,
+                NativeLandingPage::class.java
+            )
         } else {
-            NativoSDK.initLandingPage(this, sectionUrl, containerHash, campaignId, NativeLandingPage.class);
+            NativoSDK.initLandingPage(
+                this,
+                sectionUrl,
+                containerHash,
+                campaignId,
+                NativeLandingPage::class.java
+            )
         }
     }
 }

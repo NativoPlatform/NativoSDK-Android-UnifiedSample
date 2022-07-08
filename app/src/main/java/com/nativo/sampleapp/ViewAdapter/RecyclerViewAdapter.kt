@@ -1,32 +1,28 @@
 package com.nativo.sampleapp.ViewAdapter
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
-import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder
-import net.nativo.sdk.ntvcore.NtvSectionAdapter
-import net.nativo.sdk.ntvconstant.NativoAdType
-import net.nativo.sdk.NativoSDK
-import android.view.ViewGroup
-import android.view.LayoutInflater
-import com.nativo.sampleapp.R
-import com.nativo.sampleapp.NativeAdImpl.NativeAdRecycler
-import com.nativo.sampleapp.NativeAdImpl.NativeVideoAdRecycler
-import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAdRecycler
-import com.nativo.sampleapp.ViewAdapter.RecyclerViewAdapter
-import android.widget.TextView
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import android.view.TextureView
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
-import net.nativo.sdk.ntvcore.NtvAdData.NtvAdTemplateType
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.nativo.sampleapp.NativeAdImpl.NativeAdRecycler
+import com.nativo.sampleapp.NativeAdImpl.NativeVideoAdRecycler
+import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAdRecycler
+import com.nativo.sampleapp.R
 import com.nativo.sampleapp.SponsoredContentActivity
+import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder
 import com.nativo.sampleapp.util.AppConstants
+import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.ntvadtype.NtvBaseInterface
+import net.nativo.sdk.ntvconstant.NativoAdType
 import net.nativo.sdk.ntvcore.NtvAdData
-import java.util.ArrayList
-import java.util.HashSet
+import net.nativo.sdk.ntvcore.NtvAdData.NtvAdTemplateType
+import net.nativo.sdk.ntvcore.NtvSectionAdapter
 
 class RecyclerViewAdapter(private val context: Context, private val recyclerView: RecyclerView) :
     RecyclerView.Adapter<RecyclerListViewHolder>(), NtvSectionAdapter {
