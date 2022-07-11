@@ -1,32 +1,30 @@
-package com.nativo.sampleapp.ViewFragment;
+package com.nativo.sampleapp.ViewFragment
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.nativo.sampleapp.ViewAdapter.ListViewAdapter
+import com.nativo.sampleapp.databinding.FragmentTableBinding
 
-import androidx.fragment.app.Fragment;
+class ListViewFragment : Fragment() {
 
-import com.nativo.sampleapp.R;
-import com.nativo.sampleapp.ViewAdapter.ListViewAdapter;
+    private lateinit var binding: FragmentTableBinding
 
-public class ListViewFragment extends Fragment {
-
-    private ListView listView;
-    private ListViewAdapter listViewAdapter;
-
-    public ListViewFragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentTableBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_table, container, false);
-        listView = view.findViewById(R.id.list_table);
-        listViewAdapter = new ListViewAdapter(listView);
-        listView.setAdapter(listViewAdapter);
-        return view;
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        binding.listTable.apply {
+            adapter = ListViewAdapter(this)
+        }
+    }
 }

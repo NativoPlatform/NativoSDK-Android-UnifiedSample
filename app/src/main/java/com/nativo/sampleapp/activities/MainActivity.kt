@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), NtvSectionAdapter {
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({ // Set desired fragment for app
-            setMainFragment(NtvFragmentType.RECYCLE_LIST)
+            setMainFragment(NtvFragmentType.SINGLEVIEW)
             setContentView(binding.root)
 
             binding.pager.apply {

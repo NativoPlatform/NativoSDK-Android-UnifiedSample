@@ -1,139 +1,113 @@
-package com.nativo.sampleapp.NativeAdVideo;
+package com.nativo.sampleapp.NativeAdVideo
 
-import android.content.Context;
-import android.view.TextureView;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.content.Context
+import net.nativo.sdk.ntvadtype.video.fullscreen.NtvFullscreenVideoInterface
+import android.view.TextureView
+import android.view.View
+import android.widget.*
+import com.nativo.sampleapp.R
 
-import com.nativo.sampleapp.R;
+class FullScreenVideoImpl : NtvFullscreenVideoInterface {
+    private var textureView: TextureView? = null
+    private var mediaControllerWrapper: FrameLayout? = null
+    private var titleLabel: TextView? = null
+    private var authorLabel: TextView? = null
+    private var previewTextLabel: TextView? = null
+    private var currentTimeView: TextView? = null
+    private var durationTimeView: TextView? = null
+    private var learnMoreButton: Button? = null
+    private var shareButton: Button? = null
+    private var seekBar: SeekBar? = null
+    private var playPauseButton: ImageButton? = null
+    private var exitFullScreenButton: ImageButton? = null
+    private var moreInfoButton: ImageButton? = null
+    private var adContainerView: View? = null
+    private var progressBar: ProgressBar? = null
 
-import net.nativo.sdk.ntvadtype.video.fullscreen.NtvFullscreenVideoInterface;
-
-public class FullScreenVideoImpl implements NtvFullscreenVideoInterface {
-    private TextureView textureView;
-    private FrameLayout mediaControllerWrapper;
-    private TextView titleLabel;
-    private TextView authorLabel;
-    private TextView previewTextLabel;
-    private TextView currentTimeView;
-    private TextView durationTimeView;
-    private Button learnMoreButton;
-    private Button shareButton;
-    private SeekBar seekBar;
-    private ImageButton playPauseButton;
-    private ImageButton exitFullScreenButton;
-    private ImageButton moreInfoButton;
-    private View adContainerView;
-    private ProgressBar progressBar;
-
-
-    @Override
-    public void bindViews(View v) {
-        adContainerView = v;
-        textureView = (TextureView) v.findViewById(R.id.video);
-        mediaControllerWrapper = (FrameLayout) v.findViewById(R.id.full_screen_media_controller_wrapper);
-        titleLabel = (TextView) v.findViewById(R.id.title);
-        authorLabel = (TextView) v.findViewById(R.id.author);
-        previewTextLabel = (TextView) v.findViewById(R.id.description);
-        learnMoreButton = (Button) v.findViewById(R.id.learn_more);
-        shareButton = (Button) v.findViewById(R.id.share);
-        seekBar = (SeekBar) v.findViewById(R.id.mediacontroller_progress);
-        currentTimeView = (TextView) v.findViewById(R.id.current_time);
-        durationTimeView = (TextView) v.findViewById(R.id.end_time);
-        playPauseButton = (ImageButton) v.findViewById(R.id.play_pause);
-        exitFullScreenButton = (ImageButton) v.findViewById(R.id.exit_fullscreen);
-        moreInfoButton = (ImageButton) v.findViewById(R.id.more_info);
-        progressBar = v.findViewById(R.id.video_progress_bar);
-
+    override fun bindViews(v: View) {
+        adContainerView = v
+        textureView = v.findViewById<View>(R.id.video) as TextureView
+        mediaControllerWrapper =
+            v.findViewById<View>(R.id.full_screen_media_controller_wrapper) as FrameLayout
+        titleLabel = v.findViewById<View>(R.id.title) as TextView
+        authorLabel = v.findViewById<View>(R.id.author) as TextView
+        previewTextLabel = v.findViewById<View>(R.id.description) as TextView
+        learnMoreButton = v.findViewById<View>(R.id.learn_more) as Button
+        shareButton = v.findViewById<View>(R.id.share) as Button
+        seekBar = v.findViewById<View>(R.id.mediacontroller_progress) as SeekBar
+        currentTimeView = v.findViewById<View>(R.id.current_time) as TextView
+        durationTimeView = v.findViewById<View>(R.id.end_time) as TextView
+        playPauseButton = v.findViewById<View>(R.id.play_pause) as ImageButton
+        exitFullScreenButton = v.findViewById<View>(R.id.exit_fullscreen) as ImageButton
+        moreInfoButton = v.findViewById<View>(R.id.more_info) as ImageButton
+        progressBar = v.findViewById(R.id.video_progress_bar)
     }
 
-    @Override
-    public View getAdContainerView() {
-        return adContainerView;
+    override fun getAdContainerView(): View? {
+        return adContainerView
     }
 
-    @Override
-    public int getLayout(Context context) {
-        return R.layout.full_screen_custom_controls;
+    override fun getLayout(context: Context): Int {
+        return R.layout.full_screen_custom_controls
     }
 
-    @Override
-    public int getLandscapeLayout(Context context) {
-        return R.layout.full_screen_custom_controls_landscape;
+    override fun getLandscapeLayout(context: Context): Int {
+        return R.layout.full_screen_custom_controls_landscape
     }
 
-    @Override
-    public TextureView getTextureView() {
-        return textureView;
+    override fun getTextureView(): TextureView? {
+        return textureView
     }
 
-    @Override
-    public FrameLayout getMediaControllerWrapper() {
-        return mediaControllerWrapper;
+    override fun getMediaControllerWrapper(): FrameLayout? {
+        return mediaControllerWrapper
     }
 
-    @Override
-    public TextView getTitleLabel() {
-        return titleLabel;
+    override fun getTitleLabel(): TextView? {
+        return titleLabel
     }
 
-    @Override
-    public TextView getAuthorLabel() {
-        return authorLabel;
+    override fun getAuthorLabel(): TextView? {
+        return authorLabel
     }
 
-    @Override
-    public TextView getPreviewTextLabel() {
-        return previewTextLabel;
+    override fun getPreviewTextLabel(): TextView? {
+        return previewTextLabel
     }
 
-    @Override
-    public Button getLearnMoreButton() {
-        return learnMoreButton;
+    override fun getLearnMoreButton(): Button? {
+        return learnMoreButton
     }
 
-    @Override
-    public Button getShareButton() {
-        return shareButton;
+    override fun getShareButton(): Button? {
+        return shareButton
     }
 
-    @Override
-    public SeekBar getSeekBar() {
-        return seekBar;
+    override fun getSeekBar(): SeekBar? {
+        return seekBar
     }
 
-    @Override
-    public TextView getCurrentTimeView() {
-        return currentTimeView;
+    override fun getCurrentTimeView(): TextView? {
+        return currentTimeView
     }
 
-    @Override
-    public TextView getDurationTimeView() {
-        return durationTimeView;
+    override fun getDurationTimeView(): TextView? {
+        return durationTimeView
     }
 
-    @Override
-    public ImageButton getPlayPauseButton() {
-        return playPauseButton;
+    override fun getPlayPauseButton(): ImageButton? {
+        return playPauseButton
     }
 
-    @Override
-    public ImageButton getExitButton() {
-        return exitFullScreenButton;
+    override fun getExitButton(): ImageButton? {
+        return exitFullScreenButton
     }
 
-    @Override
-    public ImageButton getInfoButton() {
-        return moreInfoButton;
+    override fun getInfoButton(): ImageButton? {
+        return moreInfoButton
     }
 
-    @Override
-    public ProgressBar getProgressBar() {
-        return progressBar;
+    override fun getProgressBar(): ProgressBar? {
+        return progressBar
     }
 }

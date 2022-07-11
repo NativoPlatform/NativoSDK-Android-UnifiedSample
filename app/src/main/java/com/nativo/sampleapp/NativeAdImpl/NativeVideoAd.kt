@@ -48,13 +48,13 @@ class NativeVideoAd : NtvVideoAdInterface {
 
     override fun bindViews(v: View) {
         view = v
-        layout = v.findViewById<View>(R.id.video_container) as RelativeLayout
-        textureView = v.findViewById<View>(R.id.video) as TextureView
-        previewImage = v.findViewById<View>(R.id.preview_image) as ImageView
-        playButton = v.findViewById<View>(R.id.play) as ImageView
-        restartButton = v.findViewById<View>(R.id.restart) as ImageView
-        titleLabel = v.findViewById<View>(R.id.article_title) as TextView
-        authorLabel = v.findViewById<View>(R.id.article_author) as TextView
+        layout = v.findViewById(R.id.video_container)
+        textureView = v.findViewById(R.id.video)
+        previewImage = v.findViewById(R.id.preview_image)
+        playButton = v.findViewById(R.id.play)
+        restartButton = v.findViewById(R.id.restart)
+        titleLabel = v.findViewById(R.id.article_title)
+        authorLabel = v.findViewById(R.id.article_author)
         progressBar = v.findViewById(R.id.video_progress_bar)
         muteIndicator = v.findViewById(R.id.mute_indicator)
         adChoicesIndicator = v.findViewById(R.id.adchoices_indicator)
