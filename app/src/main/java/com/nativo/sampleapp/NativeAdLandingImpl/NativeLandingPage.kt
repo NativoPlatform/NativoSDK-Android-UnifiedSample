@@ -1,117 +1,96 @@
-package com.nativo.sampleapp.NativeAdLandingImpl;
+package com.nativo.sampleapp.NativeAdLandingImpl
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.content.Context
+import net.nativo.sdk.ntvadtype.landing.NtvLandingPageInterface
+import android.webkit.WebView
+import android.widget.TextView
+import android.view.ViewGroup
+import com.nativo.sampleapp.R
+import android.content.Intent
+import android.view.View
+import android.widget.ImageView
+import net.nativo.sdk.NativoSDK
+import java.util.*
 
-import com.nativo.sampleapp.R;
+class NativeLandingPage : NtvLandingPageInterface {
+    private var webView: WebView? = null
+    private var titleLabel: TextView? = null
+    private var authorNameLabel: TextView? = null
+    private var adContainerView: View? = null
+    private var articleAuthorImage: ImageView? = null
+    private val boapIndex = 0
+    private var shareButton: ImageView? = null
+    private var scrollView: ViewGroup? = null
 
-import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.landing.NtvLandingPageInterface;
-
-import java.util.Date;
-
-public class NativeLandingPage implements NtvLandingPageInterface {
-
-    private WebView webView;
-    private TextView titleLabel;
-    private TextView authorNameLabel;
-    private View adContainerView;
-    private ImageView articleAuthorImage;
-    private int boapIndex = 0;
-    private ImageView shareButton;
-
-    private ViewGroup scrollView;
-
-    @Override
-    public WebView getContentWebView() {
-        return webView;
+    override fun getContentWebView(): WebView? {
+        return webView
     }
 
-    @Override
-    public TextView getTitleLabel() {
-        return titleLabel;
+    override fun getTitleLabel(): TextView? {
+        return titleLabel
     }
 
-    @Override
-    public TextView getAuthorNameLabel() {
-        return authorNameLabel;
+    override fun getAuthorNameLabel(): TextView? {
+        return authorNameLabel
     }
 
-    @Override
-    public ImageView getAuthorImageView() {
-        return articleAuthorImage;
+    override fun getAuthorImageView(): ImageView? {
+        return articleAuthorImage
     }
 
-    @Override
-    public ImageView getPreviewImageView() {
-        return null;
+    override fun getPreviewImageView(): ImageView? {
+        return null
     }
 
-    @Override
-    public TextView getPreviewTextLabel() {
-        return null;
+    override fun getPreviewTextLabel(): TextView? {
+        return null
     }
 
-    @Override
-    public TextView getDateLabel() {
-        return null;
+    override fun getDateLabel(): TextView? {
+        return null
     }
 
-    @Override
-    public String formatDate(Date date) {
-        return null;
+    override fun formatDate(date: Date): String? {
+        return null
     }
 
-    @Override
-    public boolean contentWebViewShouldScroll() {
-        return false;
+    override fun contentWebViewShouldScroll(): Boolean {
+        return false
     }
 
-    @Override
-    public void contentWebViewOnPageFinished() {
+    override fun contentWebViewOnPageFinished() {}
+    override fun contentWebViewOnReceivedError(s: String) {}
+    override fun getLayout(context: Context): Int {
+        return R.layout.activity_sponsored_content
     }
 
-    @Override
-    public void contentWebViewOnReceivedError(String s) {
-
-    }
-
-    @Override
-    public int getLayout(Context context) {
-        return R.layout.activity_sponsored_content;
-    }
-
-    @Override
-    public void setShareAndTrackingUrl(String shareUrl, String adUUID) {
-        shareButton = (ImageView) adContainerView.findViewById(R.id.share_icon);
-        if (shareButton != null) {
-            shareButton.setOnClickListener(v -> {
-                v.getContext().startActivity(Intent.createChooser(
-                        new Intent(Intent.ACTION_SEND)
-                                .setType("text/plain")
-                                .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
-                NativoSDK.trackShareAction(adUUID);
-            });
+    override fun setShareAndTrackingUrl(shareUrl: String, adUUID: String) {
+        val view = adContainerView?.findViewById<View>(R.id.share_icon)
+        if (view is ImageView) {
+            shareButton = view
+            shareButton?.setOnClickListener { v: View ->
+                v.context.startActivity(
+                    Intent.createChooser(
+                        Intent(Intent.ACTION_SEND)
+                            .setType("text/plain")
+                            .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."
+                    )
+                )
+                NativoSDK.trackShareAction(adUUID)
+            }
         }
     }
 
-    @Override
-    public void bindViews(View v) {
-        adContainerView = v;
-        webView = v.findViewById(R.id.web_view);
-        titleLabel = v.findViewById(R.id.title_label);
-        authorNameLabel = v.findViewById(R.id.article_author);
-        articleAuthorImage = v.findViewById(R.id.article_author_image);
-        scrollView = adContainerView.findViewById(R.id.landing_boap_container);
+    override fun bindViews(v: View) {
+        adContainerView = v
+        webView = v.findViewById(R.id.web_view)
+        titleLabel = v.findViewById(R.id.title_label)
+        authorNameLabel = v.findViewById(R.id.article_author)
+        articleAuthorImage = v.findViewById(R.id.article_author_image)
+        scrollView = adContainerView?.findViewById(R.id.landing_boap_container)
     }
 
-    @Override
-    public View getAdContainerView() {
-        return adContainerView;
+    override fun getAdContainerView(): View? {
+        return adContainerView
     }
 }

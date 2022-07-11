@@ -1,177 +1,151 @@
-package com.nativo.sampleapp.NativeAdImpl;
+package com.nativo.sampleapp.NativeAdImpl
 
-import android.content.Context;
-import android.graphics.Color;
-import android.util.Log;
-import android.view.TextureView;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.content.Context
+import android.graphics.Color
+import android.util.Log
+import android.view.TextureView
+import android.view.View
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.cardview.widget.CardView
+import com.nativo.sampleapp.R
+import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface
+import net.nativo.sdk.ntvadtype.video.VideoPlaybackError
+import java.util.*
 
-import androidx.cardview.widget.CardView;
+class NativeVideoAd : NtvVideoAdInterface {
 
-import com.nativo.sampleapp.R;
-
-import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface;
-import net.nativo.sdk.ntvadtype.video.VideoPlaybackError;
-
-import java.util.Date;
-
-public class NativeVideoAd implements NtvVideoAdInterface {
-
-    private static String TAG = NativeVideoAd.class.getName();
-    private RelativeLayout layout;
-    private TextureView textureView;
-    private ImageView previewImage;
-    private ImageView playButton;
-    private ImageView restartButton;
-    private ImageView muteIndicator;
-    private TextView titleLabel;
-    private TextView authorLabel;
-    private ImageView sponsoredIndicator;
-    private ImageView adChoicesIndicator;
-    private ProgressBar progressBar;
-    private View view;
-    private TextView articlePreviewLabel;
-    private ImageView articleAuthorImage;
-    private TextView articleDateLabel;
-    private CardView cardView;
-
-    @Override
-    public int getLayout(Context context) {
-        return R.layout.video_layout;
+    companion object {
+        private val TAG = NativeVideoAd::class.java.name
     }
 
-    @Override
-    public View getAdContainerView() {
-        return view;
+    private var layout: RelativeLayout? = null
+    private var textureView: TextureView? = null
+    private var previewImage: ImageView? = null
+    private var playButton: ImageView? = null
+    private var restartButton: ImageView? = null
+    private var muteIndicator: ImageView? = null
+    private var titleLabel: TextView? = null
+    private var authorLabel: TextView? = null
+    private val sponsoredIndicator: ImageView? = null
+    private var adChoicesIndicator: ImageView? = null
+    private var progressBar: ProgressBar? = null
+    private var view: View? = null
+    private var articlePreviewLabel: TextView? = null
+    private var articleAuthorImage: ImageView? = null
+    private var articleDateLabel: TextView? = null
+    private var cardView: CardView? = null
+
+    override fun getLayout(context: Context): Int {
+        return R.layout.video_layout
     }
 
-    @Override
-    public void bindViews(View v) {
-        view = v;
-        layout = (RelativeLayout) v.findViewById(R.id.video_container);
-        textureView = (TextureView) v.findViewById(R.id.video);
-        previewImage = (ImageView) v.findViewById(R.id.preview_image);
-        playButton = (ImageView) v.findViewById(R.id.play);
-        restartButton = (ImageView) v.findViewById(R.id.restart);
-        titleLabel = (TextView) v.findViewById(R.id.article_title);
-        authorLabel = (TextView) v.findViewById(R.id.article_author);
-        progressBar = v.findViewById(R.id.video_progress_bar);
-        muteIndicator = v.findViewById(R.id.mute_indicator);
-        adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
-        articlePreviewLabel = v.findViewById(R.id.article_description);
-        articleAuthorImage = v.findViewById(R.id.article_author_image);
-        articleDateLabel = v.findViewById(R.id.article_date);
-        cardView = v.findViewById(R.id.video_constraint_layout);
+    override fun getAdContainerView(): View? {
+        return view
     }
 
-    @Override
-    public View getRootView() {
-        return layout;
+    override fun bindViews(v: View) {
+        view = v
+        layout = v.findViewById<View>(R.id.video_container) as RelativeLayout
+        textureView = v.findViewById<View>(R.id.video) as TextureView
+        previewImage = v.findViewById<View>(R.id.preview_image) as ImageView
+        playButton = v.findViewById<View>(R.id.play) as ImageView
+        restartButton = v.findViewById<View>(R.id.restart) as ImageView
+        titleLabel = v.findViewById<View>(R.id.article_title) as TextView
+        authorLabel = v.findViewById<View>(R.id.article_author) as TextView
+        progressBar = v.findViewById(R.id.video_progress_bar)
+        muteIndicator = v.findViewById(R.id.mute_indicator)
+        adChoicesIndicator = v.findViewById(R.id.adchoices_indicator)
+        articlePreviewLabel = v.findViewById(R.id.article_description)
+        articleAuthorImage = v.findViewById(R.id.article_author_image)
+        articleDateLabel = v.findViewById(R.id.article_date)
+        cardView = v.findViewById(R.id.video_constraint_layout)
     }
 
-    @Override
-    public TextureView getTextureView() {
-        return textureView;
+    override fun getRootView(): View? {
+        return layout
     }
 
-    @Override
-    public ImageView getPreviewImage() {
-        return previewImage;
+    override fun getTextureView(): TextureView? {
+        return textureView
     }
 
-    @Override
-    public ImageView getPlayButton() {
-        return playButton;
+    override fun getPreviewImage(): ImageView? {
+        return previewImage
     }
 
-    @Override
-    public ImageView getRestartButton() {
-        return restartButton;
+    override fun getPlayButton(): ImageView? {
+        return playButton
     }
 
-    @Override
-    public TextView getTitleLabel() {
-        return titleLabel;
+    override fun getRestartButton(): ImageView? {
+        return restartButton
     }
 
-    @Override
-    public TextView getAuthorLabel() {
-        return authorLabel;
+    override fun getTitleLabel(): TextView? {
+        return titleLabel
     }
 
-    @Override
-    public TextView getPreviewTextLabel() {
-        return articlePreviewLabel;
+    override fun getAuthorLabel(): TextView? {
+        return authorLabel
     }
 
-    @Override
-    public ImageView getAuthorImageView() {
-        return articleAuthorImage;
+    override fun getPreviewTextLabel(): TextView? {
+        return articlePreviewLabel
     }
 
-    @Override
-    public TextView getDateLabel() {
-        return articleDateLabel;
+    override fun getAuthorImageView(): ImageView? {
+        return articleAuthorImage
     }
 
-    @Override
-    public void displaySponsoredIndicators(boolean isSponsored) {
-        if (cardView != null) {
-            cardView.setBackgroundColor(Color.LTGRAY);
-        }
+    override fun getDateLabel(): TextView? {
+        return articleDateLabel
     }
 
-    @Override
-    public ImageView getMuteIndicator() {
-        return muteIndicator;
+    override fun displaySponsoredIndicators(isSponsored: Boolean) {
+        cardView?.setBackgroundColor(Color.LTGRAY)
     }
 
-    @Override
-    public ImageView getAdChoicesImageView() {
-        return adChoicesIndicator;
+    override fun getMuteIndicator(): ImageView? {
+        return muteIndicator
     }
 
-    @Override
-    public String formatDate(Date date) {
-        return null;
+    override fun getAdChoicesImageView(): ImageView? {
+        return adChoicesIndicator
     }
 
-    @Override
-    public ProgressBar getProgressBar() {
-        return progressBar;
+    override fun formatDate(date: Date): String? {
+        return null
     }
 
-    @Override
-    public void onVideoEnteredFullscreen() {
-        Log.d(TAG, "onVideoEnteredFullscreen: ");
+    override fun getProgressBar(): ProgressBar? {
+        return progressBar
     }
 
-    @Override
-    public void onVideoExitedFullscreen() {
-        Log.d(TAG, "onVideoExitedFullscreen: ");
+    override fun onVideoEnteredFullscreen() {
+        Log.d(TAG, "onVideoEnteredFullscreen: ")
     }
 
-    @Override
-    public void onVideoPlay() {
-        Log.d(TAG, "onVideoPlay: ");
+    override fun onVideoExitedFullscreen() {
+        Log.d(TAG, "onVideoExitedFullscreen: ")
     }
 
-    @Override
-    public void onVideoPause() {
-        Log.d(TAG, "onVideoPause: ");
+    override fun onVideoPlay() {
+        Log.d(TAG, "onVideoPlay: ")
     }
 
-    @Override
-    public void onVideoPlaybackCompleted() {
-        Log.d(TAG, "onVideoPlaybackCompleted: ");
+    override fun onVideoPause() {
+        Log.d(TAG, "onVideoPause: ")
     }
 
-    @Override
-    public void onVideoPlaybackError(VideoPlaybackError videoPlaybackError) {
-        Log.d(TAG, "onVideoPlaybackError: ");
+    override fun onVideoPlaybackCompleted() {
+        Log.d(TAG, "onVideoPlaybackCompleted: ")
     }
+
+    override fun onVideoPlaybackError(videoPlaybackError: VideoPlaybackError) {
+        Log.d(TAG, "onVideoPlaybackError: ")
+    }
+
 }
