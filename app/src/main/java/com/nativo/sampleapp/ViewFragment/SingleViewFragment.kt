@@ -1,145 +1,108 @@
-package com.nativo.sampleapp.ViewFragment;
+package com.nativo.sampleapp.ViewFragment
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.nativo.sampleapp.R
+import com.nativo.sampleapp.activities.SponsoredContentActivity
+import com.nativo.sampleapp.databinding.FragmentSingleViewBinding
+import com.nativo.sampleapp.util.AppConstants
+import net.nativo.sdk.NativoSDK
+import net.nativo.sdk.ntvadtype.NtvBaseInterface
+import net.nativo.sdk.ntvcore.NtvAdData
+import net.nativo.sdk.ntvcore.NtvAdData.NtvAdTemplateType
+import net.nativo.sdk.ntvcore.NtvSectionAdapter
 
-import com.nativo.sampleapp.activities.SponsoredContentActivity;
-import com.nativo.sampleapp.R;
+class SingleViewFragment : Fragment(), NtvSectionAdapter {
+    private lateinit var binding: FragmentSingleViewBinding
 
-import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvcore.NtvAdData;
-import net.nativo.sdk.ntvcore.NtvSectionAdapter;
+    private var onClickListener = View.OnClickListener {
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(AppConstants.CLICK_OUT_URL)
+            )
+        )
+    }
+    private var loadAd = View.OnClickListener {
+        NativoSDK.clearAdsInSection(AppConstants.SECTION_URL, view as ViewGroup?)
+        NativoSDK.prefetchAdForSection(AppConstants.SECTION_URL, this@SingleViewFragment, null)
+    }
+    private var hideAd = View.OnClickListener { binding.articleContainer.visibility = View.INVISIBLE }
+    private var showAd = View.OnClickListener { binding.articleContainer.visibility = View.VISIBLE }
 
-import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
-import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
-import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
-
-public class SingleViewFragment extends Fragment implements NtvSectionAdapter {
-
-    private View nativoAdView;
-    SingleViewFragment viewFragment = null;
-
-    public SingleViewFragment() {
-        viewFragment = this;
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        NativoSDK.prefetchAdForSection(AppConstants.SECTION_URL, this, null)
+        binding = FragmentSingleViewBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
-        View view = inflater.inflate(R.layout.fragment_single_view, container, false);
-        return view;
+        binding.loadAd.setOnClickListener(loadAd)
+        binding.showAd.setOnClickListener(showAd)
+        binding.hideAd.setOnClickListener(hideAd)
+        bindViews()
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        nativoAdView = view.findViewById(R.id.article_container);
+    private fun bindViews() {
+        binding.articleImage.setImageResource(R.drawable.newsimage)
+        binding.sponsoredAdIndicator.visibility = View.INVISIBLE
+        binding.articleAuthor.setText(R.string.sample_author)
+        binding.articleTitle.setText(R.string.sample_title)
+        binding.sponsoredTag.visibility = View.INVISIBLE
 
-        view.findViewById(R.id.load_ad).setOnClickListener(loadAd);
-        view.findViewById(R.id.show_ad).setOnClickListener(showAd);
-        view.findViewById(R.id.hide_ad).setOnClickListener(hideAd);
+        binding.articleContainer.setBackgroundColor(Color.RED)
+        binding.root.setOnClickListener(onClickListener)
     }
 
-    private void bindView(View view, int i) {
-        if (view != null) {
-            if (((ImageView) view.findViewById(R.id.article_image)) != null) {
-                ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
-            }
-            if (((ImageView) view.findViewById(R.id.sponsored_ad_indicator)) != null) {
-                ((ImageView) view.findViewById(R.id.sponsored_ad_indicator)).setVisibility(View.INVISIBLE);
-            }
-            if (((TextView) view.findViewById(R.id.article_author)) != null) {
-                ((TextView) view.findViewById(R.id.article_author)).setText(R.string.sample_author);
-            }
-            if (((TextView) view.findViewById(R.id.article_title)) != null) {
-                ((TextView) view.findViewById(R.id.article_title)).setText(R.string.sample_title);
-            }
-            if (((TextView) view.findViewById(R.id.sponsored_tag)) != null) {
-                ((TextView) view.findViewById(R.id.sponsored_tag)).setVisibility(View.INVISIBLE);
-            }
-            view.findViewById(R.id.article_container).setBackgroundColor(Color.RED);
-            view.setOnClickListener(onClickListener);
+    override fun registerLayoutClassForIndex(
+        i: Int,
+        ntvAdTemplateType: NtvAdTemplateType
+    ): Class<*>? {
+        return null
+    }
+
+    override fun needsDisplayLandingPage(s: String, i: Int) {
+        Intent(context, SponsoredContentActivity::class.java).apply {
+            putExtra(AppConstants.SP_CAMPAIGN_ID, s)
+            putExtra(AppConstants.SP_CAMPAIGN_ID, i)
+            putExtra(AppConstants.SP_CONTAINER_HASH, view.hashCode())
+
+            startActivity(this)
         }
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(CLICK_OUT_URL)));
-        }
-    };
-
-    View.OnClickListener loadAd = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            NativoSDK.clearAdsInSection(SECTION_URL, (ViewGroup) getView());
-            NativoSDK.prefetchAdForSection(SECTION_URL, viewFragment, null);
-        }
-    };
-
-    View.OnClickListener hideAd = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            nativoAdView.setVisibility(View.INVISIBLE);
-        }
-    };
-
-    View.OnClickListener showAd = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            nativoAdView.setVisibility(View.VISIBLE);
-        }
-    };
-
-    @Override
-    public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
-        return null;
+    override fun needsDisplayClickOutURL(s: String, s1: String) {}
+    override fun hasbuiltView(
+        view: View,
+        ntvBaseInterface: NtvBaseInterface,
+        ntvAdData: NtvAdData
+    ) {
     }
 
-    @Override
-    public void needsDisplayLandingPage(String s, int i) {
-        getView().getContext().startActivity(new Intent(getContext(), SponsoredContentActivity.class)
-                .putExtra(SP_CAMPAIGN_ID, s)
-                .putExtra(SP_CAMPAIGN_ID, i)
-                .putExtra(SP_CONTAINER_HASH, getView().hashCode()));
-    }
-
-    @Override
-    public void needsDisplayClickOutURL(String s, String s1) {
-
-    }
-
-    @Override
-    public void hasbuiltView(View view, NtvBaseInterface ntvBaseInterface, NtvAdData ntvAdData) {
-
-    }
-
-    @Override
-    public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
-        Log.e(this.getClass().getName(), "Did receive ad: "+ntvAdData);
-        boolean didGetNativoAd = NativoSDK.placeAdInView(nativoAdView, (ViewGroup) getView(), SECTION_URL, 0, this, null);
+    override fun onReceiveAd(section: String, ntvAdData: NtvAdData, index: Int?) {
+        Log.e(this.javaClass.name, "Did receive ad: $ntvAdData")
+        val didGetNativoAd = NativoSDK.placeAdInView(binding.articleContainer, view as ViewGroup?, AppConstants.SECTION_URL, 0, this, null)
         if (didGetNativoAd) {
-            nativoAdView.setVisibility(View.VISIBLE);
+            binding.articleContainer.visibility = View.VISIBLE
         }
     }
 
-    @Override
-    public void onFail(String section, Integer index) {
-        nativoAdView.setVisibility(View.GONE);
+    override fun onFail(section: String, index: Int) {
+        binding.articleContainer.visibility = View.GONE
     }
+
 }

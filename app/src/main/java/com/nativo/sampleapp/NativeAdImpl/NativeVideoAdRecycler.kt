@@ -11,7 +11,6 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import com.nativo.sampleapp.NativeAdImpl.NativeVideoAdRecycler
 import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder
 import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface

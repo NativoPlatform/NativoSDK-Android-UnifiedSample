@@ -1,89 +1,85 @@
-package com.nativo.sampleapp.ViewFragment;
+package com.nativo.sampleapp.ViewFragment
 
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.os.Bundle
+import android.view.View
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import net.nativo.sdk.NativoSDK
+import android.webkit.WebChromeClient
+import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
+import com.nativo.sampleapp.databinding.FragmentMoapBinding
+import com.nativo.sampleapp.util.AppConstants
 
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
+class MOAPFragment : Fragment() {
 
-import com.nativo.sampleapp.R;
+    private lateinit var binding: FragmentMoapBinding
 
-import net.nativo.sdk.NativoSDK;
-
-import static com.nativo.sampleapp.util.AppConstants.MOAP_SECTION_URL;
-import static com.nativo.sampleapp.util.AppConstants.PUBLISHER_URL;
-
-public class MOAPFragment extends Fragment {
-
-    public MOAPFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_moap, container, false);
+        binding = FragmentMoapBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        WebView mWebView = view.findViewById(R.id.moap_webview);
-        WebView.setWebContentsDebuggingEnabled(true);
-        mWebView.clearCache(false);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setMediaPlaybackRequiresUserGesture(false);
-        mWebView.setWebChromeClient(new NativoChromeClient());
-        mWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                NativoSDK.placeAdInWebView(mWebView, MOAP_SECTION_URL);
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        WebView.setWebContentsDebuggingEnabled(true)
+        binding.moapWebview.apply {
+            clearCache(false)
+            settings.javaScriptEnabled = true
+            settings.mediaPlaybackRequiresUserGesture = false
+            webChromeClient = NativoChromeClient()
+            webViewClient = object : WebViewClient() {
+                override fun onPageFinished(view: WebView, url: String) {
+                    NativoSDK.placeAdInWebView(this@apply, AppConstants.MOAP_SECTION_URL)
+                }
             }
-        });
-        mWebView.loadUrl(PUBLISHER_URL);
+            loadUrl(AppConstants.PUBLISHER_URL)
+        }
     }
 
-    private class NativoChromeClient extends WebChromeClient {
-
-        private View mCustomView;
-        private WebChromeClient.CustomViewCallback mCustomViewCallback;
-        protected FrameLayout mFullscreenContainer;
-        private int mOriginalOrientation;
-        private int mOriginalSystemUiVisibility;
-
-        NativoChromeClient() {
+    private open inner class NativoChromeClient : WebChromeClient() {
+        private var mCustomView: View? = null
+        private var mCustomViewCallback: CustomViewCallback? = null
+        protected var mFullscreenContainer: FrameLayout? = null
+        private var mOriginalOrientation = 0
+        private var mOriginalSystemUiVisibility = 0
+        override fun onHideCustomView() {
+            (activity!!.window.decorView as FrameLayout).removeView(mCustomView)
+            mCustomView = null
+            activity!!.window.decorView.systemUiVisibility = mOriginalSystemUiVisibility
+            activity!!.requestedOrientation = mOriginalOrientation
+            mCustomViewCallback!!.onCustomViewHidden()
+            mCustomViewCallback = null
         }
 
-        public void onHideCustomView() {
-            ((FrameLayout) getActivity().getWindow().getDecorView()).removeView(this.mCustomView);
-            this.mCustomView = null;
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(this.mOriginalSystemUiVisibility);
-            getActivity().setRequestedOrientation(this.mOriginalOrientation);
-            this.mCustomViewCallback.onCustomViewHidden();
-            this.mCustomViewCallback = null;
-        }
-
-        public void onShowCustomView(View paramView, WebChromeClient.CustomViewCallback paramCustomViewCallback) {
-            if (this.mCustomView != null) {
-                onHideCustomView();
-                return;
+        override fun onShowCustomView(
+            paramView: View,
+            paramCustomViewCallback: CustomViewCallback
+        ) {
+            if (mCustomView != null) {
+                onHideCustomView()
+                return
             }
-            this.mCustomView = paramView;
-            this.mOriginalSystemUiVisibility = getActivity().getWindow().getDecorView().getSystemUiVisibility();
-            this.mOriginalOrientation = getActivity().getRequestedOrientation();
-            this.mCustomViewCallback = paramCustomViewCallback;
-            ((FrameLayout) getActivity().getWindow().getDecorView()).addView(this.mCustomView, new FrameLayout.LayoutParams(-1, -1));
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE |
-                    View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            mCustomView = paramView
+            mOriginalSystemUiVisibility = activity!!.window.decorView.systemUiVisibility
+            mOriginalOrientation = activity!!.requestedOrientation
+            mCustomViewCallback = paramCustomViewCallback
+            (activity!!.window.decorView as FrameLayout).addView(
+                mCustomView,
+                FrameLayout.LayoutParams(-1, -1)
+            )
+            activity!!.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE or
+                    View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         }
     }
 }

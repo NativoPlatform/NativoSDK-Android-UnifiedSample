@@ -1,159 +1,148 @@
-package com.nativo.sampleapp.ViewAdapter;
+package com.nativo.sampleapp.ViewAdapter
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.content.Context
+import android.widget.GridView
+import android.widget.BaseAdapter
+import net.nativo.sdk.ntvcore.NtvSectionAdapter
+import android.view.ViewGroup
+import net.nativo.sdk.ntvconstant.NativoAdType
+import net.nativo.sdk.NativoSDK
+import android.view.LayoutInflater
+import com.nativo.sampleapp.R
+import android.widget.TextView
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
+import android.view.View
+import android.widget.ImageView
+import net.nativo.sdk.ntvcore.NtvAdData.NtvAdTemplateType
+import com.nativo.sampleapp.activities.SponsoredContentActivity
+import com.nativo.sampleapp.util.AppConstants
+import net.nativo.sdk.ntvadtype.NtvBaseInterface
+import net.nativo.sdk.ntvcore.NtvAdData
+import java.util.ArrayList
 
-import com.nativo.sampleapp.activities.SponsoredContentActivity;
-import com.nativo.sampleapp.R;
+class GridViewAdapter(private val context: Context, private val gridView: GridView) : BaseAdapter(),
+    NtvSectionAdapter {
+    private val integerList: MutableList<Int> = ArrayList()
 
-import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.ntvadtype.NtvBaseInterface;
-import net.nativo.sdk.ntvconstant.NativoAdType;
-import net.nativo.sdk.ntvcore.NtvAdData;
-import net.nativo.sdk.ntvcore.NtvSectionAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
-import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
-import static com.nativo.sampleapp.util.AppConstants.SP_CAMPAIGN_ID;
-import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
-import static com.nativo.sampleapp.util.AppConstants.SP_SECTION_URL;
-
-public class GridViewAdapter extends BaseAdapter implements NtvSectionAdapter {
-
-    private Context context;
-    private GridView gridView;
-    List<Integer> integerList = new ArrayList<>();
-
-    public GridViewAdapter(Context context, GridView gridView) {
-        this.context = context;
-        this.gridView = gridView;
-        for (int i = 0; i < 10; i++) {
-            integerList.add(i);
+    init {
+        for (i in 0..9) {
+            integerList.add(i)
         }
     }
 
-    @Override
-    public int getCount() {
-        return integerList.size();
+    override fun getCount(): Int {
+        return integerList.size
     }
 
-    @Override
-    public Object getItem(int i) {
-        return null;
+    override fun getItem(i: Int): Any? {
+        return null
     }
 
-    @Override
-    public long getItemId(int i) {
-        return 0;
+    override fun getItemId(i: Int): Long {
+        return 0
     }
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-
+    override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
+        val myView: View
         if (shouldPlaceNativoAdAtIndex(i)) {
-            NativoAdType adType = NativoSDK.getAdTypeForIndex(SECTION_URL, gridView, i);
-            switch (adType) {
-                case AD_TYPE_NATIVE:
-                    view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
-                case AD_TYPE_VIDEO:
-                    view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.video_layout, viewGroup, false);
-                case AD_TYPE_STANDARD_DISPLAY:
-                    view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.standard_display, viewGroup, false);
-                default:
-                    view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.native_article, viewGroup, false);
+            val adType = NativoSDK.getAdTypeForIndex(AppConstants.SECTION_URL, gridView, i)
+            myView = when (adType) {
+                NativoAdType.AD_TYPE_NATIVE -> LayoutInflater.from(viewGroup.context)
+                    .inflate(R.layout.native_article, viewGroup, false)
+                NativoAdType.AD_TYPE_VIDEO -> LayoutInflater.from(viewGroup.context)
+                    .inflate(R.layout.video_layout, viewGroup, false)
+                NativoAdType.AD_TYPE_STANDARD_DISPLAY -> LayoutInflater.from(viewGroup.context)
+                    .inflate(R.layout.standard_display, viewGroup, false)
+                else -> LayoutInflater.from(viewGroup.context)
+                    .inflate(R.layout.native_article, viewGroup, false)
             }
-            boolean isNativoAdAvailable = NativoSDK.placeAdInView(view, gridView, SECTION_URL, i, this, null);
+            val isNativoAdAvailable =
+                NativoSDK.placeAdInView(myView, gridView, AppConstants.SECTION_URL, i, this, null)
 
             // Hide if ad could not be placed in view
             if (!isNativoAdAvailable) {
-                view.setVisibility(View.GONE);
+                myView.visibility = View.GONE
             } else {
-                view.setVisibility(View.VISIBLE);
+                myView.visibility = View.VISIBLE
             }
         } else {
             // Publisher article view
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.publisher_article, viewGroup, false);
-            bindView(view, i);
+            myView = LayoutInflater.from(viewGroup.context)
+                .inflate(R.layout.publisher_article, viewGroup, false)
+            bindView(myView, i)
         }
-        return view;
+
+        return myView
     }
 
-    private void bindView(View view, int i) {
-        if (view != null) {
-            if (((ImageView) view.findViewById(R.id.article_image)) != null) {
-                ((ImageView) view.findViewById(R.id.article_image)).setImageResource(R.drawable.newsimage);
-            }
-            if (((ImageView) view.findViewById(R.id.sponsored_ad_indicator)) != null) {
-                ((ImageView) view.findViewById(R.id.sponsored_ad_indicator)).setVisibility(View.INVISIBLE);
-            }
-            if (((TextView) view.findViewById(R.id.article_author)) != null) {
-                ((TextView) view.findViewById(R.id.article_author)).setText(R.string.sample_author);
-            }
-            if (((TextView) view.findViewById(R.id.article_title)) != null) {
-                ((TextView) view.findViewById(R.id.article_title)).setText(R.string.sample_title);
-            }
-            if (shouldPlaceNativoAdAtIndex(i)) {
-                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.RED);
-            } else {
-                view.findViewById(R.id.article_constraint_layout).setBackgroundColor(Color.WHITE);
-            }
-            view.setOnClickListener(onClickListener);
+    private fun bindView(view: View, i: Int) {
+        val articleImage: ImageView? = view.findViewById(R.id.article_image)
+        val sponsoredAdIndicator: ImageView? = view.findViewById(R.id.sponsored_ad_indicator)
+        val articleAuthor: TextView? = view.findViewById(R.id.article_author)
+        val articleTitle: TextView? = view.findViewById(R.id.article_title)
+
+        articleImage?.setImageResource(R.drawable.newsimage)
+        sponsoredAdIndicator?.visibility = View.INVISIBLE
+        articleAuthor?.setText(R.string.sample_author)
+        articleTitle?.setText(R.string.sample_title)
+
+        if (shouldPlaceNativoAdAtIndex(i)) {
+            view.findViewById<View>(R.id.article_constraint_layout)
+                .setBackgroundColor(Color.RED)
+        } else {
+            view.findViewById<View>(R.id.article_constraint_layout)
+                .setBackgroundColor(Color.WHITE)
         }
+        view.setOnClickListener(onClickListener)
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(CLICK_OUT_URL)));
-        }
-    };
-
-    public boolean shouldPlaceNativoAdAtIndex(int i) {
-        return i % 2 == 1;
+    private var onClickListener = View.OnClickListener { view ->
+        view.context.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(AppConstants.CLICK_OUT_URL)
+            )
+        )
     }
 
-    @Override
-    public Class<?> registerLayoutClassForIndex(int i, NtvAdData.NtvAdTemplateType ntvAdTemplateType) {
-        return null;
+    private fun shouldPlaceNativoAdAtIndex(i: Int): Boolean {
+        return i % 2 == 1
     }
 
-    @Override
-    public void needsDisplayLandingPage(String s, int i) {
-        context.startActivity(new Intent(context, SponsoredContentActivity.class)
-                .putExtra(SP_SECTION_URL, s)
-                .putExtra(SP_CAMPAIGN_ID, i)
-                .putExtra(SP_CONTAINER_HASH, gridView.hashCode()));
+    override fun registerLayoutClassForIndex(
+        i: Int,
+        ntvAdTemplateType: NtvAdTemplateType
+    ): Class<*>? {
+        return null
     }
 
-    @Override
-    public void needsDisplayClickOutURL(String s, String s1) {
-        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
+    override fun needsDisplayLandingPage(s: String, i: Int) {
+        context.startActivity(
+            Intent(context, SponsoredContentActivity::class.java)
+                .putExtra(AppConstants.SP_SECTION_URL, s)
+                .putExtra(AppConstants.SP_CAMPAIGN_ID, i)
+                .putExtra(AppConstants.SP_CONTAINER_HASH, gridView.hashCode())
+        )
     }
 
-    @Override
-    public void hasbuiltView(View view, NtvBaseInterface ntvBaseInterface, NtvAdData ntvAdData) {
-
+    override fun needsDisplayClickOutURL(s: String, s1: String) {
+        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(s1)))
     }
 
-    @Override
-    public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
-        notifyDataSetChanged();
+    override fun hasbuiltView(
+        view: View,
+        ntvBaseInterface: NtvBaseInterface,
+        ntvAdData: NtvAdData
+    ) {
     }
 
-    @Override
-    public void onFail(String section, Integer index) {
-        notifyDataSetChanged();
+    override fun onReceiveAd(section: String, ntvAdData: NtvAdData, index: Int) {
+        notifyDataSetChanged()
+    }
+
+    override fun onFail(section: String, index: Int) {
+        notifyDataSetChanged()
     }
 }
