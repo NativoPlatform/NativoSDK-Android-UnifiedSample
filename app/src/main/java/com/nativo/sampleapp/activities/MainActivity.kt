@@ -2,17 +2,16 @@ package com.nativo.sampleapp.activities
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.nativo.sampleapp.NativeAdImpl.NativeAd
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAd
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAd
@@ -29,10 +28,6 @@ import net.nativo.sdk.ntvcore.NtvAdData
 import net.nativo.sdk.ntvcore.NtvAdData.NtvAdTemplateType
 import net.nativo.sdk.ntvcore.NtvSectionAdapter
 
-internal enum class NtvFragmentType {
-    RECYCLE_LIST, GRID, TABLE, SINGLEVIEW, SINGLEVIEW_VIDEO, GAM_INTEGRATION, MIDDLE_OF_ARTICLE
-}
-
 class MainActivity : AppCompatActivity(), NtvSectionAdapter {
 
     companion object {
@@ -40,7 +35,16 @@ class MainActivity : AppCompatActivity(), NtvSectionAdapter {
     }
 
     private lateinit var binding: ActivityMainBinding
-    private var mainFragment: NtvFragmentType? = null
+
+    private val tabTitles = listOf(
+        R.string.recycle_list_tab,
+        R.string.grid_tab,
+        R.string.table_tab,
+        R.string.single_view,
+        R.string.single_view_video,
+        R.string.gam,
+        R.string.moap
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,18 +53,16 @@ class MainActivity : AppCompatActivity(), NtvSectionAdapter {
         nativoInit()
         //NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
 
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({ // Set desired fragment for app
-            setMainFragment(NtvFragmentType.RECYCLE_LIST)
-            setContentView(binding.root)
+        setContentView(binding.root)
 
-            binding.pager.apply {
-                adapter = FragmentViewAdapter(supportFragmentManager)
-                offscreenPageLimit = 0
-            }
+        binding.pager.apply {
+            adapter = FragmentViewAdapter(this@MainActivity)
+            isUserInputEnabled = false
+        }
 
-            binding.tabs.setupWithViewPager(binding.pager)
-        }, 2000)
+        TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
+            tab.setText(tabTitles[position])
+        }.attach()
     }
 
     private fun setPrivacyAndTransparencyKeys() {
@@ -83,40 +85,25 @@ class MainActivity : AppCompatActivity(), NtvSectionAdapter {
         NativoSDK.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO)
     }
 
-    private fun setMainFragment(fragmentType: NtvFragmentType) {
-        mainFragment = fragmentType
-    }
+    private inner class FragmentViewAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
 
-    private inner class FragmentViewAdapter(fm: FragmentManager) : FragmentPagerAdapter(
-        fm
-    ) {
-        override fun getItem(i: Int): Fragment {
-            return when (mainFragment) {
-                NtvFragmentType.RECYCLE_LIST -> RecyclerViewFragment()
-                NtvFragmentType.GRID -> GridFragment()
-                NtvFragmentType.TABLE -> ListViewFragment()
-                NtvFragmentType.SINGLEVIEW -> SingleViewFragment()
-                NtvFragmentType.SINGLEVIEW_VIDEO -> SingleViewVideoFragment()
-                NtvFragmentType.GAM_INTEGRATION -> DfpFragment()
-                else -> MOAPFragment()
+        override fun getItemCount(): Int {
+            return tabTitles.count()
+        }
+
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> RecyclerViewFragment()
+                1 -> GridFragment()
+                2 -> ListViewFragment()
+                3 -> SingleViewFragment()
+                4 -> SingleViewVideoFragment()
+                5 -> DfpFragment()
+                6 -> MOAPFragment()
+                else -> RecyclerViewFragment()
             }
         }
 
-        override fun getCount(): Int {
-            return 1
-        }
-
-        override fun getPageTitle(position: Int): CharSequence {
-            return when (mainFragment) {
-                NtvFragmentType.RECYCLE_LIST -> resources.getText(R.string.recycle_list_tab)
-                NtvFragmentType.GRID -> resources.getText(R.string.grid_tab)
-                NtvFragmentType.TABLE -> resources.getText(R.string.table_tab)
-                NtvFragmentType.SINGLEVIEW -> resources.getText(R.string.single_view)
-                NtvFragmentType.SINGLEVIEW_VIDEO -> resources.getText(R.string.single_view_video)
-                NtvFragmentType.GAM_INTEGRATION -> resources.getText(R.string.gam)
-                else -> resources.getText(R.string.moap)
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

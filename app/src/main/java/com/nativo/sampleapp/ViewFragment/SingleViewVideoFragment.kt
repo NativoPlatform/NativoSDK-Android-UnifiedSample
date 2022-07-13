@@ -132,5 +132,5 @@ class SingleViewVideoFragment : Fragment(), NtvSectionAdapter {
     }
 
     override fun onReceiveAd(section: String, ntvAdData: NtvAdData, index: Int?) {}
-    override fun onFail(section: String, index: Int) {}
+    override fun onFail(section: String, index: Int?) {}
 }
