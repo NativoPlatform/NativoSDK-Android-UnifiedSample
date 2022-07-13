@@ -86,7 +86,6 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
         if (shouldShowPlaceAd(item)) {
             val isAdContentAvailable =
                 NativoSDK.placeAdInView(view, listView, SECTION_URL, i, null)
-            Log.w(NtvTAG, "isAdContentAvailable = $isAdContentAvailable")
         } else {
             view.setOnClickListener {
                 itemClickListener.run()

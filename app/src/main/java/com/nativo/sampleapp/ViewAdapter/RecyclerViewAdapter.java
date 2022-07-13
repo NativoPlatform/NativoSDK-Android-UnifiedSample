@@ -133,11 +133,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof NativoViewHolder) {
             Log.d(NtvTAG, "placing ad at position "+position);
             isAdContentAvailable = NativoSDK.placeAdInView(holder.itemView, recyclerView, SECTION_URL, position, null);
-            Log.w(NtvTAG, "isAdContentAvailable = "+isAdContentAvailable);
         }
 
         // LEGACY
-/*        boolean isAdContentAvailable = false;
+        /*boolean isAdContentAvailable = false;
         if (holder instanceof NtvInjectable) {
             NtvInjectable nativoViewholder = (NtvInjectable) holder;
             isAdContentAvailable = NativoSDK.bindAdToInjectable(nativoViewholder, recyclerView, SECTION_URL, position, null);

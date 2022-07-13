@@ -1,6 +1,5 @@
 package com.nativo.sampleapp.activities
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -20,13 +19,7 @@ import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
-import net.nativo.sdk.NativoSDK.enableDevLogs
-import net.nativo.sdk.NativoSDK.enableTestAdvertisements
-import net.nativo.sdk.NativoSDK.registerClassForLandingPage
-import net.nativo.sdk.NativoSDK.registerClassForNativeAd
-import net.nativo.sdk.NativoSDK.registerClassForStandardDisplayAd
-import net.nativo.sdk.NativoSDK.registerClassForVideoAd
-import net.nativo.sdk.NativoSDK.registerFullscreenVideo
+import net.nativo.sdk.NtvTestAdType
 
 /**
  * Various of Fragment Types
@@ -76,30 +69,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun nativoInit() {
         // Register the class that will be used for Nativo Content Landing Page
-        registerClassForLandingPage(SponsoredContentActivity::class.java)
-        registerClassForNativeAd(NativeAd::class.java)
-        registerClassForVideoAd(NativeVideoAd::class.java)
-        registerClassForStandardDisplayAd(StandardDisplayAd::class.java)
-        registerFullscreenVideo(FullScreenVideoImpl())
+        NativoSDK.registerClassForLandingPage(SponsoredContentActivity::class.java)
+        NativoSDK.registerClassForNativeAd(NativeAd::class.java)
+        NativoSDK.registerClassForVideoAd(NativeVideoAd::class.java)
+        NativoSDK.registerClassForStandardDisplayAd(StandardDisplayAd::class.java)
+        NativoSDK.registerFullscreenVideo(FullScreenVideoImpl())
 
         // Force specific ad types if needed
-        enableTestAdvertisements()
-        enableDevLogs()
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        NativoSDK.onConfigurationChanged(newConfig)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        NativoSDK.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        NativoSDK.onResume()
+        NativoSDK.enableTestAdvertisements(NtvTestAdType.VIDEO_SCROLL_TO_PLAY_VIDEO)
+        NativoSDK.enableDevLogs()
     }
 
     private inner class FragmentViewAdapter(fm: FragmentManager) :

@@ -90,7 +90,6 @@ class GridViewAdapter(context: Context, private val gridView: GridView) :
             if (shouldShowPlaceAd(item)) {
                 val isAdContentAvailable =
                     NativoSDK.placeAdInView(view, gridView, SECTION_URL, position, null)
-                Log.w(NtvTAG, "isAdContentAvailable = $isAdContentAvailable")
             } else {
                 view.setOnClickListener {
                     itemClickListener.run()
