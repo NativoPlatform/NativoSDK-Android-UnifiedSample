@@ -19,7 +19,6 @@ import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
-import net.nativo.sdk.NtvTestAdType
 
 /**
  * Various of Fragment Types
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         NativoSDK.registerFullscreenVideo(FullScreenVideoImpl())
 
         // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements(NtvTestAdType.VIDEO_SCROLL_TO_PLAY_VIDEO)
+        NativoSDK.enableTestAdvertisements()
         NativoSDK.enableDevLogs()
     }
 
