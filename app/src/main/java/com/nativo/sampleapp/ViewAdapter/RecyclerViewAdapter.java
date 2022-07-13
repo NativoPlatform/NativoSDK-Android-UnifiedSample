@@ -19,11 +19,11 @@ import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.ViewHolders.ArticleViewHolder;
 
 import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NativoViewHolder;
 import net.nativo.sdk.NtvAdData;
 import net.nativo.sdk.NtvSectionAdapter;
 import net.nativo.sdk.injectable.NtvInjectable;
 import net.nativo.sdk.injectable.NtvInjectableType;
+import net.nativo.sdk.utils.NativoViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 
