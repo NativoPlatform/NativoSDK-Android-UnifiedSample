@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class NativeAd : NtvNativeAdInjectable {
-    private lateinit var _view: View
+    private var _view: View? = null
     private lateinit var _titleLabel: TextView
     private lateinit var _authorLabel: TextView
     private var _adChoicesIndicator: ImageView? = null
@@ -41,7 +41,7 @@ class NativeAd : NtvNativeAdInjectable {
 
     private var adChoicesIndicator: ImageView? = null
     private var sponsoredTag: TextView? = null
-    override var view: View = _view
+    override var view: View? = _view
 
     override fun displaySponsoredIndicators(isSponsored: Boolean) {
         cardView?.setBackgroundColor(Color.LTGRAY)
@@ -58,7 +58,7 @@ class NativeAd : NtvNativeAdInjectable {
     }
 
     override fun bindViews(v: View) {
-        view = v
+        _view = v
         layout = v.findViewById(R.id.article_layout)
         cardView = v.findViewById(R.id.article_constraint_layout)
         _titleLabel = v.findViewById(R.id.article_title)

@@ -13,8 +13,7 @@ import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewHolders.ArticleViewHolder
 import com.nativo.sampleapp.util.AppConstants
 import com.nativo.sampleapp.util.AppConstants.NtvTAG
-import net.nativo.sdk.NativoSDK.initSectionWithAdapter
-import net.nativo.sdk.NativoSDK.placeAdInView
+import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.NativoViewHolder
 import net.nativo.sdk.NtvAdData
 import net.nativo.sdk.NtvSectionAdapter
@@ -25,6 +24,8 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), NtvSectionAdapter {
 
     companion object {
+        private const val ITEM_COUNT = 40
+
         // Item View Type constants
         private const val ITEM_TYPE_ARTICLE = 0
         private const val ITEM_TYPE_NATIVO = 1
@@ -43,26 +44,22 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     }
 
     init {
-        initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
+        NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
 
-        // Create sudo articles datasource
-        for (i in 0..29) {
-            val title = "Publisher Article $i"
-            articleList.add(title)
-        }
-
-        // Add Nativo placeholders
-        for (i in 0..39) {
+        for ( i in 0 until ITEM_COUNT) {
             if (shouldPlaceNativoAdAtIndex(i)) {
-                val title = "Nativo Placeholder"
-                articleList.add(i, title)
+                val title = "Nativo Placeholder $i"
+                articleList.add(title)
+            } else {
+                val title = "Publisher Article $i"
+                articleList.add(title)
             }
         }
     }
 
     // Helper method to determine which indexes should be Nativo ads
     private fun shouldPlaceNativoAdAtIndex(i: Int): Boolean {
-        return i % 2 == 1
+        return i % 3 == 1
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -100,9 +97,9 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var isAdContentAvailable = false
         if (holder is NativoViewHolder) {
-            Log.d(NtvTAG, "placing ad at position $position")
             isAdContentAvailable =
-                placeAdInView(holder.itemView, recyclerView, AppConstants.SECTION_URL, position, null)
+                NativoSDK.placeAdInView(holder.itemView, recyclerView, AppConstants.SECTION_URL, position, null)
+            Log.d(NtvTAG, "placing ad at position $position, available: $isAdContentAvailable")
         } else if (holder is ArticleViewHolder) {
             val articleHolder = holder as ArticleViewHolder
             val articleTitle = articleList[position]
@@ -127,8 +124,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
         container: ViewGroup
     ) {
         Log.d(NtvTAG, "didAssignAdToLocation: $location")
-        articleList.add(location, "Nativo placeholder $location")
-        notifyItemInserted(location)
+        notifyItemChanged(location)
     }
 
     override fun didFailAd(
@@ -157,9 +153,8 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
         Log.d(NtvTAG, "didPlaceAdInView: $atLocation AdData: $adData")
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {
-        Log.d(NtvTAG, "Did receive ad: $didGetFill");
+        Log.d(NtvTAG, "Did receive ad: $didGetFill")
         if (didGetFill && initialNativoRequest) {
             Log.w(NtvTAG, "Needs Reload Everything")
             notifyDataSetChanged()
