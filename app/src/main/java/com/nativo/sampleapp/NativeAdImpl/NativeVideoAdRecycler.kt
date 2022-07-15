@@ -12,41 +12,63 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.nativo.sampleapp.R
-import com.nativo.sampleapp.ViewHolders.RecyclerListViewHolder
-import net.nativo.sdk.ntvadtype.video.NtvVideoAdInterface
-import net.nativo.sdk.ntvadtype.video.VideoPlaybackError
+import com.nativo.sampleapp.ViewHolders.ArticleViewHolder
+import net.nativo.sdk.injectable.NtvVideoAdInjectable
+import net.nativo.sdk.video.VideoPlaybackError
 import java.util.*
 
-class NativeVideoAdRecycler(private val view: View, viewGroup: ViewGroup) : RecyclerListViewHolder(
-    view, viewGroup
-), NtvVideoAdInterface {
+class NativeVideoAdRecycler(private val _view: View, viewGroup: ViewGroup) : ArticleViewHolder(
+    _view, viewGroup
+), NtvVideoAdInjectable {
 
     companion object {
         private val TAG = NativeVideoAdRecycler::class.java.name
     }
 
     private var layout: RelativeLayout? = null
-    private var textureView: TextureView? = null
-    private var previewImage: ImageView? = null
-    private var playButton: ImageView? = null
-    private var restartButton: ImageView? = null
-    private var muteIndicator: ImageView? = null
-    private var titleLabel: TextView? = null
-    private var authorLabel: TextView? = null
+    private lateinit var _textureView: TextureView
+    private lateinit var _previewImage: ImageView
+    private lateinit var _playButton: ImageView
+    private lateinit var _restartButton: ImageView
+    private var _muteIndicator: ImageView? = null
+    private lateinit var _titleLabel: TextView
+    private lateinit var _authorLabel: TextView
     private val sponsoredIndicator: ImageView? = null
-    private var adChoicesIndicator: ImageView? = null
-    private var articlePreviewLabel: TextView? = null
-    private var articleAuthorImage: ImageView? = null
-    private var articleDateLabel: TextView? = null
-    private var progressBar: ProgressBar? = null
+    private var _adChoicesIndicator: ImageView? = null
+    private var _articlePreviewLabel: TextView? = null
+    private var _articleAuthorImage: ImageView? = null
+    private var _articleDateLabel: TextView? = null
+    private lateinit var _progressBar: ProgressBar
     private var cardView: CardView? = null
+    
+    override val textureView: TextureView
+        get() = _textureView
+    override val previewImage: ImageView
+        get() = _previewImage
+    override val previewTextLabel: TextView?
+        get() = _articlePreviewLabel
+    override val playButton: ImageView
+        get() = _playButton
+    override val restartButton: ImageView
+        get() = _restartButton
+    override val muteIndicator: ImageView? = null
+    override val titleLabel: TextView
+        get() = _titleLabel
+    override val adChoicesImageView: ImageView?
+        get() = _adChoicesIndicator
+    override val authorImageView: ImageView?
+        get() = _articleAuthorImage
+    override val authorLabel: TextView
+        get() = _authorLabel
+    override val dateLabel: TextView?
+        get() = _articleDateLabel
+    override val progressBar: ProgressBar
+        get() = _progressBar
+    override val view: View
+        get() = _view
 
     override fun getLayout(context: Context): Int {
         return 0
-    }
-
-    override fun getAdContainerView(): View {
-        return view
     }
 
     override fun toString(): String {
@@ -55,59 +77,19 @@ class NativeVideoAdRecycler(private val view: View, viewGroup: ViewGroup) : Recy
 
     override fun bindViews(v: View) {
         layout = v.findViewById<View>(R.id.video_container) as RelativeLayout
-        textureView = v.findViewById<View>(R.id.video) as TextureView
-        previewImage = v.findViewById<View>(R.id.preview_image) as ImageView
-        playButton = v.findViewById<View>(R.id.play) as ImageView
-        restartButton = v.findViewById<View>(R.id.restart) as ImageView
-        titleLabel = v.findViewById<View>(R.id.article_title) as TextView
-        authorLabel = v.findViewById<View>(R.id.article_author) as TextView
-        progressBar = v.findViewById(R.id.video_progress_bar)
-        muteIndicator = v.findViewById(R.id.mute_indicator)
-        adChoicesIndicator = v.findViewById(R.id.adchoices_indicator)
-        articlePreviewLabel = v.findViewById(R.id.article_description)
-        articleAuthorImage = v.findViewById(R.id.article_author_image)
-        articleDateLabel = v.findViewById(R.id.article_date)
+        _textureView = v.findViewById<View>(R.id.video) as TextureView
+        _previewImage = v.findViewById<View>(R.id.preview_image) as ImageView
+        _playButton = v.findViewById<View>(R.id.play) as ImageView
+        _restartButton = v.findViewById<View>(R.id.restart) as ImageView
+        _titleLabel = v.findViewById<View>(R.id.article_title) as TextView
+        _authorLabel = v.findViewById<View>(R.id.article_author) as TextView
+        _progressBar = v.findViewById(R.id.video_progress_bar)
+        _muteIndicator = v.findViewById(R.id.mute_indicator)
+        _adChoicesIndicator = v.findViewById(R.id.adchoices_indicator)
+        _articlePreviewLabel = v.findViewById(R.id.article_description)
+        _articleAuthorImage = v.findViewById(R.id.article_author_image)
+        _articleDateLabel = v.findViewById(R.id.article_date)
         cardView = v.findViewById(R.id.video_constraint_layout)
-    }
-
-    override fun getRootView(): View? {
-        return layout
-    }
-
-    override fun getTextureView(): TextureView? {
-        return textureView
-    }
-
-    override fun getPreviewImage(): ImageView? {
-        return previewImage
-    }
-
-    override fun getPlayButton(): ImageView? {
-        return playButton
-    }
-
-    override fun getRestartButton(): ImageView? {
-        return restartButton
-    }
-
-    override fun getTitleLabel(): TextView? {
-        return titleLabel
-    }
-
-    override fun getAuthorLabel(): TextView? {
-        return authorLabel
-    }
-
-    override fun getPreviewTextLabel(): TextView? {
-        return articlePreviewLabel
-    }
-
-    override fun getAuthorImageView(): ImageView? {
-        return articleAuthorImage
-    }
-
-    override fun getDateLabel(): TextView? {
-        return articleDateLabel
     }
 
     override fun displaySponsoredIndicators(isSponsored: Boolean) {
@@ -116,20 +98,8 @@ class NativeVideoAdRecycler(private val view: View, viewGroup: ViewGroup) : Recy
         }
     }
 
-    override fun getMuteIndicator(): ImageView? {
-        return muteIndicator
-    }
-
-    override fun getAdChoicesImageView(): ImageView? {
-        return adChoicesIndicator
-    }
-
-    override fun formatDate(date: Date): String? {
+    override fun formatDate(date: Date?): String? {
         return null
-    }
-
-    override fun getProgressBar(): ProgressBar? {
-        return progressBar
     }
 
     override fun onVideoEnteredFullscreen() {
@@ -152,7 +122,7 @@ class NativeVideoAdRecycler(private val view: View, viewGroup: ViewGroup) : Recy
         Log.d(TAG, "onVideoPlaybackCompleted: ")
     }
 
-    override fun onVideoPlaybackError(videoPlaybackError: VideoPlaybackError) {
-        Log.d(TAG, "onVideoPlaybackError: ")
+    override fun onVideoPlaybackError(error: VideoPlaybackError?) {
+        Log.d(TAG, "onVideoPlaybackError: $error")
     }
 }

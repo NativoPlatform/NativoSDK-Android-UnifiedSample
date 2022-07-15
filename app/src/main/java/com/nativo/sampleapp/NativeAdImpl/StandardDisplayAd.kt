@@ -2,33 +2,33 @@ package com.nativo.sampleapp.NativeAdImpl
 
 import android.content.Context
 import android.view.View
-import net.nativo.sdk.ntvadtype.display.NtvStandardDisplayInterface
-import androidx.cardview.widget.CardView
 import android.webkit.WebView
+import androidx.cardview.widget.CardView
 import com.nativo.sampleapp.R
+import net.nativo.sdk.injectable.NtvStandardDisplayInjectable
 
-class StandardDisplayAd : NtvStandardDisplayInterface {
+class StandardDisplayAd : NtvStandardDisplayInjectable {
+
+    private lateinit var _view: View
     private var layout: CardView? = null
-    private var webView: WebView? = null
-    private var view: View? = null
+    private lateinit var _webView: WebView
 
-    override fun getContentWebView(): WebView? {
-        return webView
-    }
+    override val contentWebView: WebView
+        get() = _webView
+
+    override val view: View
+        get() = _view
 
     override fun contentWebViewOnPageFinished() {}
-    override fun contentWebViewOnReceivedError(s: String) {}
+    override fun contentWebViewOnReceivedError(description: String?) {}
+
     override fun getLayout(context: Context): Int {
         return R.layout.standard_display
     }
 
     override fun bindViews(v: View) {
-        view = v
+        _view = v
         layout = v.findViewById(R.id.standard_display_layout)
-        webView = v.findViewById(R.id.standard_display_webview)
-    }
-
-    override fun getAdContainerView(): View? {
-        return null
+        _webView = v.findViewById(R.id.standard_display_webview)
     }
 }
