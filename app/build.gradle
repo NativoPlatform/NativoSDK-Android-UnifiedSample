@@ -36,7 +36,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation 'net.nativo.sdk:nativo-sdk:6.0.5'
+    implementation 'net.nativo.sdk:nativo-sdk:7.0.0-SNAPSHOT'
 
     implementation 'com.google.android.gms:play-services-ads:19.1.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'

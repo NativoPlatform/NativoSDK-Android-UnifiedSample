@@ -13,11 +13,15 @@ object AppConstants {
     const val SP_SECTION_URL = "SECTION_URL"
     const val SP_CONTAINER_HASH = "CONTAINER_HASH"
 
-    //
+    const val CCPA_SHARED_PREFERENCE_STRING = "IABUSPrivacy_String"
+    const val GDPR_SHARED_PREFERENCE_STRING = "IABTCF_TCString"
     const val SAMPLE_GDPR_CONSENT = "BOqm1JLOqm1JLAPABBAAABAAAAAsuABgACBZYA"
 
     //changed last few chars of valid string
     const val SAMPLE_GDPR_INVALID_CONSENT = "BOqm1JLOqm1JLAPABBAAABAAAAAsuABgA"
     const val SAMPLE_CCPA_VALID_CONSENT = "1YNY"
     const val SAMPLE_CCPA_INVALID_CONSENT = "1YYY"
+
+    // Nativo STK Tag
+    const val NtvTAG = "SampleApp"
 }

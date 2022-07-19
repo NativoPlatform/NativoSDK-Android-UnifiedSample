@@ -24,7 +24,7 @@ class ListViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.listTable.apply {
-            adapter = ListViewAdapter(this)
+            adapter = ListViewAdapter(requireContext(), this)
         }
     }
 }

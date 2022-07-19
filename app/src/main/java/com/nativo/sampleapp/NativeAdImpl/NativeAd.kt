@@ -4,66 +4,52 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
-import net.nativo.sdk.ntvadtype.nativead.NtvNativeAdInterface
 import android.widget.LinearLayout
 import androidx.cardview.widget.CardView
 import android.widget.TextView
 import com.nativo.sampleapp.R
+import net.nativo.sdk.injectable.NtvNativeAdInjectable
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NativeAd : NtvNativeAdInterface {
+class NativeAd : NtvNativeAdInjectable {
+    private var _view: View? = null
+    private lateinit var _titleLabel: TextView
+    private lateinit var _authorLabel: TextView
+    private var _adChoicesIndicator: ImageView? = null
+    private var _articleDateLabel: TextView? = null
+    private var _articlePreviewLabel: TextView? = null
+    private var _articleAuthorImage: ImageView? = null
+    private var _articleImage: ImageView? = null
+
     private var layout: LinearLayout? = null
     private var cardView: CardView? = null
-    private var titleLabel: TextView? = null
-    private var authorLabel: TextView? = null
-    private var articlePreviewLabel: TextView? = null
-    private var articleDateLabel: TextView? = null
-    private var articleAuthorImage: ImageView? = null
-    private var image: ImageView? = null
+    override val titleLabel: TextView
+        get() = _titleLabel
+    override val adChoicesImageView: ImageView?
+        get() = _adChoicesIndicator
+    override val authorImageView: ImageView?
+        get() = _articleAuthorImage
+    override val authorLabel: TextView
+        get() = _authorLabel
+    override val dateLabel: TextView?
+        get() = _articleDateLabel
+    override val previewImageView: ImageView?
+        get() = _articleImage
+    override val previewTextLabel: TextView?
+        get() = _articlePreviewLabel
+
     private var adChoicesIndicator: ImageView? = null
     private var sponsoredTag: TextView? = null
-    private var view: View? = null
-    private var adContainerView: View? = null
+    override var view: View? = _view
 
-    override fun getTitleLabel(): TextView? {
-        if (titleLabel == null) {
-            titleLabel = view?.findViewById<View>(R.id.article_title) as TextView
-        }
-
-        return titleLabel
-    }
-
-    override fun getAdContainerView(): View? {
-        return adContainerView
-    }
-
-    override fun getAuthorLabel(): TextView? {
-        return authorLabel
-    }
-
-    override fun getPreviewTextLabel(): TextView? {
-        return articlePreviewLabel
-    }
-
-    override fun getPreviewImageView(): ImageView? {
-        return image
-    }
-
-    override fun getAuthorImageView(): ImageView? {
-        return articleAuthorImage
-    }
-
-    override fun getDateLabel(): TextView? {
-        return articleDateLabel
-    }
-
-    override fun displaySponsoredIndicators(b: Boolean) {
+    override fun displaySponsoredIndicators(isSponsored: Boolean) {
         cardView?.setBackgroundColor(Color.LTGRAY)
         sponsoredTag?.visibility = View.VISIBLE
     }
 
-    override fun formatDate(date: Date): String {
+    override fun formatDate(date: Date?): String? {
+        if (date == null) return null
         return SimpleDateFormat("dd/MM/yyyy", Locale.US).format(date)
     }
 
@@ -72,21 +58,16 @@ class NativeAd : NtvNativeAdInterface {
     }
 
     override fun bindViews(v: View) {
-        view = v
-        adContainerView = v
+        _view = v
         layout = v.findViewById(R.id.article_layout)
         cardView = v.findViewById(R.id.article_constraint_layout)
-        titleLabel = v.findViewById(R.id.article_title)
-        authorLabel = v.findViewById(R.id.article_author)
-        image = v.findViewById(R.id.article_image)
-        articleDateLabel = v.findViewById(R.id.article_date)
-        articlePreviewLabel = v.findViewById(R.id.article_description)
-        articleAuthorImage = v.findViewById(R.id.article_author_image)
+        _titleLabel = v.findViewById(R.id.article_title)
+        _authorLabel = v.findViewById(R.id.article_author)
+        _articleImage = v.findViewById(R.id.article_image)
+        _articleDateLabel = v.findViewById(R.id.article_date)
+        _articlePreviewLabel = v.findViewById(R.id.article_description)
+        _articleAuthorImage = v.findViewById(R.id.article_author_image)
         sponsoredTag = v.findViewById(R.id.sponsored_tag)
         adChoicesIndicator = v.findViewById(R.id.adchoices_indicator)
-    }
-
-    override fun getAdChoicesImageView(): ImageView? {
-        return adChoicesIndicator
     }
 }

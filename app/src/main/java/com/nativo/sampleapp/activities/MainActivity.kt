@@ -2,10 +2,8 @@ package com.nativo.sampleapp.activities
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -15,20 +13,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.nativo.sampleapp.NativeAdImpl.NativeAd
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAd
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAd
-import com.nativo.sampleapp.NativeAdLandingImpl.NativeLandingPage
 import com.nativo.sampleapp.NativeAdVideo.FullScreenVideoImpl
 import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
-import net.nativo.sdk.ntvadtype.NtvBaseInterface
-import net.nativo.sdk.ntvconstant.NtvConstants
-import net.nativo.sdk.ntvcore.NtvAdData
-import net.nativo.sdk.ntvcore.NtvAdData.NtvAdTemplateType
-import net.nativo.sdk.ntvcore.NtvSectionAdapter
 
-class MainActivity : AppCompatActivity(), NtvSectionAdapter {
+class MainActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = MainActivity::class.java.simpleName
@@ -67,22 +59,22 @@ class MainActivity : AppCompatActivity(), NtvSectionAdapter {
 
     private fun setPrivacyAndTransparencyKeys() {
         val editor = editor
-        editor.putString(NtvConstants.GDPR_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_GDPR_CONSENT)
-        editor.putString(NtvConstants.CCPA_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_CCPA_VALID_CONSENT)
+        editor.putString(AppConstants.GDPR_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_GDPR_CONSENT)
+        editor.putString(AppConstants.CCPA_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_CCPA_VALID_CONSENT)
         editor.apply()
     }
 
     private fun nativoInit() {
-        NativoSDK.init(this)
-        NativoSDK.registerNativeAd(NativeAd())
-        NativoSDK.registerLandingPage(NativeLandingPage())
-        NativoSDK.registerVideoAd(NativeVideoAd())
+        // Register the class that will be used for Nativo Content Landing Page
+        NativoSDK.registerClassForLandingPage(SponsoredContentActivity::class.java)
+        NativoSDK.registerClassForNativeAd(NativeAd::class.java)
+        NativoSDK.registerClassForVideoAd(NativeVideoAd::class.java)
+        NativoSDK.registerClassForStandardDisplayAd(StandardDisplayAd::class.java)
         NativoSDK.registerFullscreenVideo(FullScreenVideoImpl())
-        NativoSDK.registerStandardDisplayAd(StandardDisplayAd())
-        NativoSDK.enableDevLogs()
 
         // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO)
+        NativoSDK.enableTestAdvertisements()
+        NativoSDK.enableDevLogs()
     }
 
     private inner class FragmentViewAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
@@ -132,8 +124,8 @@ class MainActivity : AppCompatActivity(), NtvSectionAdapter {
 
     private fun invalidPrivacyAndTransparencyKeys() {
         val editor = editor
-        editor.putString(NtvConstants.GDPR_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_GDPR_INVALID_CONSENT)
-        editor.putString(NtvConstants.CCPA_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_CCPA_INVALID_CONSENT)
+        editor.putString(AppConstants.GDPR_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_GDPR_INVALID_CONSENT)
+        editor.putString(AppConstants.CCPA_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_CCPA_INVALID_CONSENT)
         editor.apply()
     }
 
@@ -145,34 +137,8 @@ class MainActivity : AppCompatActivity(), NtvSectionAdapter {
 
     private fun removePrivacyAndTransparencyKeys() {
         val editor = editor
-        editor.remove(NtvConstants.GDPR_SHARED_PREFERENCE_STRING)
-        editor.remove(NtvConstants.CCPA_SHARED_PREFERENCE_STRING)
+        editor.remove(AppConstants.GDPR_SHARED_PREFERENCE_STRING)
+        editor.remove(AppConstants.CCPA_SHARED_PREFERENCE_STRING)
         editor.apply()
     }
-
-    /**
-     *
-     * THIS IS NATIVE SECTION ADAPTER INTERFACE
-     */
-    override fun registerLayoutClassForIndex(
-        i: Int,
-        ntvAdTemplateType: NtvAdTemplateType
-    ): Class<*>? {
-        return null
-    }
-
-    override fun needsDisplayLandingPage(s: String, i: Int) {}
-    override fun needsDisplayClickOutURL(s: String, s1: String) {}
-    override fun hasbuiltView(
-        view: View,
-        ntvBaseInterface: NtvBaseInterface,
-        ntvAdData: NtvAdData
-    ) {
-    }
-
-    override fun onReceiveAd(s: String, ntvAdData: NtvAdData, index: Int) {
-        Log.e(TAG, "Did receive ad at index: $index")
-    }
-
-    override fun onFail(s: String, integer: Int) {}
 }

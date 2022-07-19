@@ -1,33 +1,54 @@
 package com.nativo.sampleapp.ViewAdapter
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.widget.GridView
-import android.widget.BaseAdapter
-import net.nativo.sdk.ntvcore.NtvSectionAdapter
-import android.view.ViewGroup
-import net.nativo.sdk.ntvconstant.NativoAdType
-import net.nativo.sdk.NativoSDK
-import android.view.LayoutInflater
-import com.nativo.sampleapp.R
-import android.widget.TextView
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import net.nativo.sdk.ntvcore.NtvAdData.NtvAdTemplateType
-import com.nativo.sampleapp.activities.SponsoredContentActivity
+import android.view.ViewGroup
+import android.widget.*
+import com.nativo.sampleapp.R
 import com.nativo.sampleapp.util.AppConstants
-import net.nativo.sdk.ntvadtype.NtvBaseInterface
-import net.nativo.sdk.ntvcore.NtvAdData
-import java.util.ArrayList
+import com.nativo.sampleapp.util.AppConstants.NtvTAG
+import net.nativo.sdk.*
+import net.nativo.sdk.injectable.NtvInjectable
+import net.nativo.sdk.injectable.NtvInjectableType
 
-class GridViewAdapter(private val context: Context, private val gridView: GridView) : BaseAdapter(),
-    NtvSectionAdapter {
-    private val integerList: MutableList<Int> = ArrayList()
+/**
+ * Example of Nativo SDK implemented using [GridView]
+ * Ads are placed according to rule in link`shouldPlaceAdAtIndex()`.
+ * If an ad is not placed(eg no fill scenario) the cell is marked with red
+ */
+class GridViewAdapter(
+    val context: Context, private val gridView: GridView
+) : BaseAdapter(), NtvSectionAdapter {
+
+    companion object {
+        const val ITEM_COUNT = 40
+    }
+
+    private var integerList: MutableList<Int> = ArrayList()
+    private var initialNativoRequest = true
+
+    /**
+     * Show [AppConstants.CLICK_OUT_URL]
+     */
+    private var itemClickListener = Runnable {
+        context.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(AppConstants.CLICK_OUT_URL)
+            )
+        )
+    }
 
     init {
-        for (i in 0..9) {
+        // Nativo init
+        NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
+
+        for (i in 0..ITEM_COUNT) {
             integerList.add(i)
         }
     }
@@ -36,113 +57,137 @@ class GridViewAdapter(private val context: Context, private val gridView: GridVi
         return integerList.size
     }
 
-    override fun getItem(i: Int): Any? {
+    override fun getItem(p0: Int): Any? {
         return null
     }
 
-    override fun getItemId(i: Int): Long {
+    override fun getItemId(p0: Int): Long {
         return 0
     }
 
     override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
-        val myView: View
-        if (shouldPlaceNativoAdAtIndex(i)) {
-            val adType = NativoSDK.getAdTypeForIndex(AppConstants.SECTION_URL, gridView, i)
-            myView = when (adType) {
-                NativoAdType.AD_TYPE_NATIVE -> LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.native_article, viewGroup, false)
-                NativoAdType.AD_TYPE_VIDEO -> LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.video_layout, viewGroup, false)
-                NativoAdType.AD_TYPE_STANDARD_DISPLAY -> LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.standard_display, viewGroup, false)
-                else -> LayoutInflater.from(viewGroup.context)
-                    .inflate(R.layout.native_article, viewGroup, false)
-            }
-            val isNativoAdAvailable =
-                NativoSDK.placeAdInView(myView, gridView, AppConstants.SECTION_URL, i, this, null)
+        val item = integerList[i]
+        val convertView: View
+        if (view != null) {
+            if (shouldShowPlaceAd(item)) {
+                convertView = if (view !is NativoLayout) {
+                    NativoLayout(context)
+                } else {
+                    view
+                }
 
-            // Hide if ad could not be placed in view
-            if (!isNativoAdAvailable) {
-                myView.visibility = View.GONE
+                NativoSDK.placeAdInView(convertView, gridView, AppConstants.SECTION_URL, i, null)
+                return convertView
             } else {
-                myView.visibility = View.VISIBLE
+                // Publisher article view
+                convertView = if (view is NativoLayout) {
+                    LayoutInflater.from(context)
+                        .inflate(R.layout.publisher_article, viewGroup, false)
+                } else {
+                    view
+                }
+                bindView(convertView, integerList[i])
             }
         } else {
-            // Publisher article view
-            myView = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.publisher_article, viewGroup, false)
-            bindView(myView, i)
+            if (shouldShowPlaceAd(item)) {
+                convertView = NativoLayout(context)
+                NativoSDK.placeAdInView(convertView, gridView, AppConstants.SECTION_URL, i, null)
+            } else {
+                // Publisher article view
+                convertView = LayoutInflater.from(context)
+                    .inflate(R.layout.publisher_article, viewGroup, false)
+                bindView(convertView, integerList[i])
+            }
         }
 
-        return myView
+        return convertView
     }
 
-    private fun bindView(view: View, i: Int) {
+    @SuppressLint("SetTextI18n")
+    private fun bindView(view: View, item: Int) {
         val articleImage: ImageView? = view.findViewById(R.id.article_image)
-        val sponsoredAdIndicator: ImageView? = view.findViewById(R.id.sponsored_ad_indicator)
-        val articleAuthor: TextView? = view.findViewById(R.id.article_author)
         val articleTitle: TextView? = view.findViewById(R.id.article_title)
+        val articleAuthor: TextView? = view.findViewById(R.id.article_description)
+        val articleSponsor: ImageView? = view.findViewById(R.id.sponsored_ad_indicator)
 
         articleImage?.setImageResource(R.drawable.newsimage)
-        sponsoredAdIndicator?.visibility = View.INVISIBLE
+        articleSponsor?.visibility = View.INVISIBLE
         articleAuthor?.setText(R.string.sample_author)
-        articleTitle?.setText(R.string.sample_title)
+        articleTitle?.text = context.getString(R.string.sample_title) + " :" + item
 
-        if (shouldPlaceNativoAdAtIndex(i)) {
-            view.findViewById<View>(R.id.article_constraint_layout)
-                .setBackgroundColor(Color.RED)
-        } else {
-            view.findViewById<View>(R.id.article_constraint_layout)
-                .setBackgroundColor(Color.WHITE)
+        view.setOnClickListener {
+            itemClickListener.run()
         }
-        view.setOnClickListener(onClickListener)
     }
 
-    private var onClickListener = View.OnClickListener { view ->
-        view.context.startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(AppConstants.CLICK_OUT_URL)
-            )
-        )
+    private fun shouldShowPlaceAd(item: Int): Boolean {
+        return item % 3 == 1
     }
 
-    private fun shouldPlaceNativoAdAtIndex(i: Int): Boolean {
-        return i % 2 == 1
+    override fun didReceiveAd(didGetFill: Boolean, inSection: String) {
+        Log.d(NtvTAG, "Did receive ad: $didGetFill")
+
+        if (didGetFill && initialNativoRequest) {
+            Log.w(NtvTAG, "Needs Reload Everything")
+            notifyDataSetChanged()
+        }
+
+        initialNativoRequest = false
     }
 
-    override fun registerLayoutClassForIndex(
-        i: Int,
-        ntvAdTemplateType: NtvAdTemplateType
-    ): Class<*>? {
-        return null
-    }
-
-    override fun needsDisplayLandingPage(s: String, i: Int) {
-        context.startActivity(
-            Intent(context, SponsoredContentActivity::class.java)
-                .putExtra(AppConstants.SP_SECTION_URL, s)
-                .putExtra(AppConstants.SP_CAMPAIGN_ID, i)
-                .putExtra(AppConstants.SP_CONTAINER_HASH, gridView.hashCode())
-        )
-    }
-
-    override fun needsDisplayClickOutURL(s: String, s1: String) {
-        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(s1)))
-    }
-
-    override fun hasbuiltView(
-        view: View,
-        ntvBaseInterface: NtvBaseInterface,
-        ntvAdData: NtvAdData
+    override fun didAssignAdToLocation(
+        location: Int,
+        adData: NtvAdData,
+        inSection: String,
+        container: ViewGroup
     ) {
-    }
-
-    override fun onReceiveAd(section: String, ntvAdData: NtvAdData, index: Int) {
+        Log.d(NtvTAG, "didAssignAdToLocation: $location")
         notifyDataSetChanged()
     }
 
-    override fun onFail(section: String, index: Int) {
-        notifyDataSetChanged()
+    override fun didPlaceAdInView(
+        view: View,
+        adData: NtvAdData,
+        injectable: NtvInjectable,
+        atLocation: Int,
+        inSection: String,
+        container: ViewGroup
+    ) {
+        Log.d(NtvTAG, "didPlaceAdInView: $atLocation AdData: $adData")
+    }
+
+    override fun didFailAd(
+        inSection: String,
+        atLocation: Int?,
+        inView: View?,
+        container: ViewGroup?,
+        error: Throwable?
+    ) {
+        Log.d(NtvTAG, "onFail at location: $atLocation Error: $error")
+        if (atLocation != null && inView != null) {
+            Log.w(NtvTAG, "Removing Nativo Ad!")
+            integerList.removeAt(atLocation.toInt())
+            notifyDataSetChanged()
+        }
+    }
+
+    override fun needsDisplayLandingPage(
+        landingPageIntent: Intent,
+        inSection: String,
+        container: ViewGroup
+    ) {
+        context.startActivity(landingPageIntent)
+    }
+
+    override fun needsDisplayClickOutURL(url: String, inSection: String, container: ViewGroup) {
+        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+
+    override fun <T : NtvInjectable> registerInjectableClassForTemplateType(
+        injectableType: NtvInjectableType,
+        atLocation: Int?,
+        inSection: String?
+    ): Class<T>? {
+        return null
     }
 }

@@ -1,44 +1,89 @@
 package com.nativo.sampleapp.activities
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.webkit.WebView
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.nativo.sampleapp.NativeAdLandingImpl.NativeLandingPage
-import com.nativo.sampleapp.databinding.ActivitySponsoredContentBinding
-import com.nativo.sampleapp.util.AppConstants
+import com.nativo.sampleapp.R
 import net.nativo.sdk.NativoSDK
+import net.nativo.sdk.injectable.NtvLandingPageInjectable
+import java.util.*
 
-class SponsoredContentActivity : AppCompatActivity() {
+class SponsoredContentActivity : AppCompatActivity(), NtvLandingPageInjectable {
 
-    private lateinit var binding: ActivitySponsoredContentBinding
     private var withView = true
+
+    /**
+     * NtvLandingPageInterface
+     */
+    private lateinit var _webView: WebView
+    private var _titleLabel: TextView? = null
+    private var _authorNameLabel: TextView? = null
+    private var _articleAuthorImage: ImageView? = null
+    private var shareButton: ImageView? = null
+    private lateinit var _view: View
+
+    override val authorImageView: ImageView?
+        get() = _articleAuthorImage
+    override val authorNameLabel: TextView?
+        get() = _authorNameLabel
+    override val contentWebView: WebView
+        get() = _webView
+    override val dateLabel: TextView? = null
+    override val previewImageView: ImageView? = null
+    override val previewTextLabel: TextView? = null
+    override val titleLabel: TextView?
+        get() = _titleLabel
+    override val view: View
+        get() = _view
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        NativoSDK.initLandingPage(this)
+    }
 
-        binding = ActivitySponsoredContentBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun bindViews(v: View) {
+        _view = v
+        _webView = v.findViewById(R.id.web_view)
+        _titleLabel = v.findViewById(R.id.title_label)
+        _authorNameLabel = v.findViewById(R.id.article_author)
+        _articleAuthorImage = v.findViewById(R.id.article_author_image)
+    }
 
-        val sectionUrl = intent.getStringExtra(AppConstants.SP_SECTION_URL)
-        val campaignId = intent.getIntExtra(AppConstants.SP_CAMPAIGN_ID, 0)
-        val containerHash = intent.getIntExtra(AppConstants.SP_CONTAINER_HASH, 0)
+    override fun contentWebViewOnPageFinished() {
+    }
 
-        // Pass in the class that implemented the NtvLandingPageInterface. Can be different layout classes that you switch between
-        if (withView) {
-            NativoSDK.initLandingPage(
-                binding.landingPageContainer,
-                sectionUrl,
-                containerHash,
-                campaignId,
-                NativeLandingPage::class.java
-            )
-        } else {
-            NativoSDK.initLandingPage(
-                this,
-                sectionUrl,
-                containerHash,
-                campaignId,
-                NativeLandingPage::class.java
-            )
+    override fun contentWebViewOnReceivedError(description: String?) {
+    }
+
+    override fun contentWebViewShouldScroll(): Boolean {
+        return false
+    }
+
+    override fun formatDate(date: Date?): String? {
+        return null
+    }
+
+    override fun getLayout(context: Context): Int {
+        return R.layout.activity_sponsored_content
+    }
+
+    override fun setShareAndTrackingUrl(shareUrl: String?, adUUID: String?) {
+        shareButton = findViewById<View>(R.id.share_icon) as ImageView
+        shareButton?.let {
+            it.setOnClickListener {
+                startActivity(
+                    Intent.createChooser(
+                        Intent(Intent.ACTION_SEND)
+                            .setType("text/plain")
+                            .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."
+                    )
+                )
+            }
         }
     }
 }
