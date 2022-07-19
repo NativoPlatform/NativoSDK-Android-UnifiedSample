@@ -1,5 +1,6 @@
 package com.nativo.sampleapp.ViewAdapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -9,10 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
+import android.widget.ListView
 import android.widget.TextView
 import com.nativo.sampleapp.R
 import com.nativo.sampleapp.util.AppConstants
 import com.nativo.sampleapp.util.AppConstants.NtvTAG
+import net.nativo.sdk.NativoLayout
 import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.NtvAdData
 import net.nativo.sdk.NtvSectionAdapter
@@ -20,20 +23,25 @@ import net.nativo.sdk.injectable.NtvInjectable
 import net.nativo.sdk.injectable.NtvInjectableType
 
 /**
- * Example of Nativo SDK implemented using ListView
+ * Example of Nativo SDK implemented using [ListView]
  * Ads are placed according to rule in link`shouldPlaceAdAtIndex()`.
  * If an ad is not placed(eg no fill scenario) the cell is marked with red
  */
-class ListViewAdapter(private val context: Context, private val listView: ViewGroup) : BaseAdapter(), NtvSectionAdapter {
+class ListViewAdapter(
+    private val context: Context, private val listView: ListView
+) : BaseAdapter(), NtvSectionAdapter {
 
     companion object {
-        const val ITEM_COUNT = 30
+        const val ITEM_COUNT = 40
     }
 
     private var integerList: MutableList<Int> = ArrayList()
     private var initialNativoRequest = true
 
-    private var onClickListener = Runnable {
+    /**
+     * Show [AppConstants.CLICK_OUT_URL]
+     */
+    private var itemClickListener = Runnable {
         context.startActivity(
             Intent(
                 Intent.ACTION_VIEW,
@@ -55,42 +63,66 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
         return integerList.size
     }
 
-    override fun getItem(i: Int): Any? {
+    override fun getItem(p0: Int): Any? {
         return null
     }
 
-    override fun getItemId(i: Int): Long {
+    override fun getItemId(p0: Int): Long {
         return 0
     }
 
     override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
-        val convertView: View = view
-            ?: LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.publisher_article, viewGroup, false)
-        bindView(convertView, integerList[i], i)
+        val item = integerList[i]
+        val convertView: View
+        if (view != null) {
+            if (shouldShowPlaceAd(item)) {
+                convertView = if (view !is NativoLayout) {
+                    NativoLayout(context)
+                } else {
+                    view
+                }
+
+                NativoSDK.placeAdInView(convertView, listView, AppConstants.SECTION_URL, i, null)
+                return convertView
+            } else {
+                // Publisher article view
+                convertView = if (view is NativoLayout) {
+                    LayoutInflater.from(context)
+                        .inflate(R.layout.publisher_article, viewGroup, false)
+                } else {
+                    view
+                }
+                bindView(convertView, integerList[i])
+            }
+        } else {
+            if (shouldShowPlaceAd(item)) {
+                convertView = NativoLayout(context)
+                NativoSDK.placeAdInView(convertView, listView, AppConstants.SECTION_URL, i, null)
+            } else {
+                // Publisher article view
+                convertView = LayoutInflater.from(context)
+                    .inflate(R.layout.publisher_article, viewGroup, false)
+                bindView(convertView, integerList[i])
+            }
+        }
+
         return convertView
     }
 
-    private fun bindView(view: View, item: Int, i: Int) {
-        val articleImage = view.findViewById<ImageView>(R.id.article_image)
-        val sponsoredIndicator = view.findViewById<ImageView>(R.id.sponsored_ad_indicator)
-        val articleAuthor = view.findViewById<TextView>(R.id.article_author)
-        val articleTitle = view.findViewById<TextView>(R.id.article_title)
-        val sponsoredTag = view.findViewById<TextView>(R.id.sponsored_tag)
+    @SuppressLint("SetTextI18n")
+    private fun bindView(view: View, item: Int) {
+        val articleImage: ImageView? = view.findViewById(R.id.article_image)
+        val articleTitle: TextView? = view.findViewById(R.id.article_title)
+        val articleAuthor: TextView? = view.findViewById(R.id.article_description)
+        val articleSponsor: ImageView? = view.findViewById(R.id.sponsored_ad_indicator)
 
         articleImage?.setImageResource(R.drawable.newsimage)
-        sponsoredIndicator?.visibility = View.INVISIBLE
+        articleSponsor?.visibility = View.INVISIBLE
         articleAuthor?.setText(R.string.sample_author)
-        articleTitle?.setText(R.string.sample_title)
-        sponsoredTag?.visibility = View.INVISIBLE
+        articleTitle?.text = context.getString(R.string.sample_title) + " :" + item
 
-        if (shouldShowPlaceAd(item)) {
-            val isAdContentAvailable =
-                NativoSDK.placeAdInView(view, listView, AppConstants.SECTION_URL, i, null)
-        } else {
-            view.setOnClickListener {
-                onClickListener.run()
-            }
+        view.setOnClickListener {
+            itemClickListener.run()
         }
     }
 
@@ -116,6 +148,7 @@ class ListViewAdapter(private val context: Context, private val listView: ViewGr
         container: ViewGroup
     ) {
         Log.d(NtvTAG, "didAssignAdToLocation: $location")
+        notifyDataSetChanged()
     }
 
     override fun didPlaceAdInView(

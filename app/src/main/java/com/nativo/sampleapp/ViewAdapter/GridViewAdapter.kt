@@ -16,13 +16,17 @@ import net.nativo.sdk.*
 import net.nativo.sdk.injectable.NtvInjectable
 import net.nativo.sdk.injectable.NtvInjectableType
 
+/**
+ * Example of Nativo SDK implemented using [GridView]
+ * Ads are placed according to rule in link`shouldPlaceAdAtIndex()`.
+ * If an ad is not placed(eg no fill scenario) the cell is marked with red
+ */
 class GridViewAdapter(
     val context: Context, private val gridView: GridView
-) : BaseAdapter(),
-    NtvSectionAdapter {
+) : BaseAdapter(), NtvSectionAdapter {
 
     companion object {
-        const val ITEM_COUNT = 30
+        const val ITEM_COUNT = 40
     }
 
     private var integerList: MutableList<Int> = ArrayList()
@@ -62,38 +66,57 @@ class GridViewAdapter(
     }
 
     override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
-        // Publisher article view
-        val convertView: View = view
-            ?: if(shouldShowPlaceAd(i)) {
-                NativoLayout(context)
-            } else {
-                LayoutInflater.from(context).inflate(R.layout.publisher_article, viewGroup, false)
-            }/* = view?: LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.publisher_article, viewGroup, false)*/
+        val item = integerList[i]
+        val convertView: View
+        if (view != null) {
+            if (shouldShowPlaceAd(item)) {
+                convertView = if (view !is NativoLayout) {
+                    NativoLayout(context)
+                } else {
+                    view
+                }
 
-        bindView(convertView, integerList[i], i)
-        Log.w("GridViewAdapter-Bind", "i: $i")
+                NativoSDK.placeAdInView(convertView, gridView, AppConstants.SECTION_URL, i, null)
+                return convertView
+            } else {
+                // Publisher article view
+                convertView = if (view is NativoLayout) {
+                    LayoutInflater.from(context)
+                        .inflate(R.layout.publisher_article, viewGroup, false)
+                } else {
+                    view
+                }
+                bindView(convertView, integerList[i])
+            }
+        } else {
+            if (shouldShowPlaceAd(item)) {
+                convertView = NativoLayout(context)
+                NativoSDK.placeAdInView(convertView, gridView, AppConstants.SECTION_URL, i, null)
+            } else {
+                // Publisher article view
+                convertView = LayoutInflater.from(context)
+                    .inflate(R.layout.publisher_article, viewGroup, false)
+                bindView(convertView, integerList[i])
+            }
+        }
+
         return convertView
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindView(view: View, item: Int, position: Int) {
+    private fun bindView(view: View, item: Int) {
         val articleImage: ImageView? = view.findViewById(R.id.article_image)
         val articleTitle: TextView? = view.findViewById(R.id.article_title)
         val articleAuthor: TextView? = view.findViewById(R.id.article_description)
         val articleSponsor: ImageView? = view.findViewById(R.id.sponsored_ad_indicator)
 
-        if (shouldShowPlaceAd(item)) {
-            val isAdContentAvailable =
-                NativoSDK.placeAdInView(view, gridView, AppConstants.SECTION_URL, position, null)
-        } else {
-            articleImage?.setImageResource(R.drawable.newsimage)
-            articleSponsor?.visibility = View.INVISIBLE
-            articleAuthor?.setText(R.string.sample_author)
-            articleTitle?.text = context.getString(R.string.sample_title) + " :" + position
-            view.setOnClickListener {
-                itemClickListener.run()
-            }
+        articleImage?.setImageResource(R.drawable.newsimage)
+        articleSponsor?.visibility = View.INVISIBLE
+        articleAuthor?.setText(R.string.sample_author)
+        articleTitle?.text = context.getString(R.string.sample_title) + " :" + item
+
+        view.setOnClickListener {
+            itemClickListener.run()
         }
     }
 
@@ -119,6 +142,7 @@ class GridViewAdapter(
         container: ViewGroup
     ) {
         Log.d(NtvTAG, "didAssignAdToLocation: $location")
+        notifyDataSetChanged()
     }
 
     override fun didPlaceAdInView(
@@ -142,8 +166,8 @@ class GridViewAdapter(
         Log.d(NtvTAG, "onFail at location: $atLocation Error: $error")
         if (atLocation != null && inView != null) {
             Log.w(NtvTAG, "Removing Nativo Ad!")
-//            integerList.removeAt(atLocation.toInt())
-//            notifyDataSetChanged()
+            integerList.removeAt(atLocation.toInt())
+            notifyDataSetChanged()
         }
     }
 
