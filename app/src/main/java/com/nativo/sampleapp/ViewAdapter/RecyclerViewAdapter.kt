@@ -101,9 +101,8 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
                 NativoSDK.placeAdInView(holder.itemView, recyclerView, AppConstants.SECTION_URL, position, null)
             Log.d(NtvTAG, "placing ad at position $position, available: $isAdContentAvailable")
         } else if (holder is ArticleViewHolder) {
-            val articleHolder = holder as ArticleViewHolder
             val articleTitle = articleList[position]
-            articleHolder.bindData(position, articleTitle)
+            holder.bindData(position, articleTitle)
         }
 
         Log.d("onBindViewHolder", "At pos: $position")
@@ -153,6 +152,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
         Log.d(NtvTAG, "didPlaceAdInView: $atLocation AdData: $adData")
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {
         Log.d(NtvTAG, "Did receive ad: $didGetFill")
         if (didGetFill && initialNativoRequest) {
