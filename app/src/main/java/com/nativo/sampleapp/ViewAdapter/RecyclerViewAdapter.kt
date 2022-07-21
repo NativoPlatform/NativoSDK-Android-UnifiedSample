@@ -14,7 +14,7 @@ import com.nativo.sampleapp.ViewHolders.ArticleViewHolder
 import com.nativo.sampleapp.util.AppConstants
 import com.nativo.sampleapp.util.AppConstants.NtvTAG
 import net.nativo.sdk.NativoSDK
-import net.nativo.sdk.NativoViewHolder
+import net.nativo.sdk.utils.NativoViewHolder
 import net.nativo.sdk.NtvAdData
 import net.nativo.sdk.NtvSectionAdapter
 import net.nativo.sdk.injectable.NtvInjectable

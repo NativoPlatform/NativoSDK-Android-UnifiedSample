@@ -10,9 +10,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import com.nativo.sampleapp.NativeAdImpl.NativeAd
-import com.nativo.sampleapp.NativeAdImpl.NativeVideoAd
-import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAd
+import com.nativo.sampleapp.NativoAds.NativeAd
+import com.nativo.sampleapp.NativoAds.NativeVideoAd
+import com.nativo.sampleapp.NativoAds.StandardDisplayAd
 import com.nativo.sampleapp.NativeAdVideo.FullScreenVideoImpl
 import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewFragment.*
