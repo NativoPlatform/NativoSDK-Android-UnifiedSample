@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.NativeAdVideo
+package com.nativo.sampleapp.CustomVideoPlayer
 
 import android.content.Context
 import android.view.TextureView
@@ -7,7 +7,7 @@ import android.widget.*
 import com.nativo.sampleapp.R
 import net.nativo.sdk.injectable.NtvFullscreenVideoInjectable
 
-class FullScreenVideoImpl : NtvFullscreenVideoInjectable {
+class FullScreenVideoPlayer : NtvFullscreenVideoInjectable {
 
     private var _textureView: TextureView? = null
     private var _mediaControllerWrapper: FrameLayout? = null

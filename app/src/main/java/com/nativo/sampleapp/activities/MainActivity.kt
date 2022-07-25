@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.nativo.sampleapp.NativoAds.NativeAd
 import com.nativo.sampleapp.NativoAds.NativeVideoAd
 import com.nativo.sampleapp.NativoAds.StandardDisplayAd
-import com.nativo.sampleapp.NativeAdVideo.FullScreenVideoImpl
+import com.nativo.sampleapp.CustomVideoPlayer.FullScreenVideoPlayer
 import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
@@ -21,10 +21,6 @@ import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
 
 class MainActivity : AppCompatActivity() {
-
-    companion object {
-        private val TAG = MainActivity::class.java.simpleName
-    }
 
     private lateinit var binding: ActivityMainBinding
 
@@ -41,12 +37,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Nativo Setup
+        NativoSDK.enableDevLogs()
+        NativoSDK.enableTestAdvertisements()
+        NativoSDK.registerClassForLandingPage(SponsoredContentActivity::class.java)
+        NativoSDK.registerClassForNativeAd(NativeAd::class.java)
+        NativoSDK.registerClassForVideoAd(NativeVideoAd::class.java)
+        NativoSDK.registerClassForStandardDisplayAd(StandardDisplayAd::class.java)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
-        nativoInit()
-        //NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
-
         setContentView(binding.root)
-
         binding.pager.apply {
             adapter = FragmentViewAdapter(this@MainActivity)
             isUserInputEnabled = false
@@ -62,19 +62,6 @@ class MainActivity : AppCompatActivity() {
         editor.putString(AppConstants.GDPR_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_GDPR_CONSENT)
         editor.putString(AppConstants.CCPA_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_CCPA_VALID_CONSENT)
         editor.apply()
-    }
-
-    private fun nativoInit() {
-        // Register the class that will be used for Nativo Content Landing Page
-        NativoSDK.registerClassForLandingPage(SponsoredContentActivity::class.java)
-        NativoSDK.registerClassForNativeAd(NativeAd::class.java)
-        NativoSDK.registerClassForVideoAd(NativeVideoAd::class.java)
-        NativoSDK.registerClassForStandardDisplayAd(StandardDisplayAd::class.java)
-        NativoSDK.registerFullscreenVideo(FullScreenVideoImpl())
-
-        // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements()
-        NativoSDK.enableDevLogs()
     }
 
     private inner class FragmentViewAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
