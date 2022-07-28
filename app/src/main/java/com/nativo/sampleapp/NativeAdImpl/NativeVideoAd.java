@@ -167,4 +167,9 @@ public class NativeVideoAd implements NtvVideoAdInjectable {
     public void onVideoPlaybackError(VideoPlaybackError videoPlaybackError) {
         Log.e("NativoSDK", "onVideoPlaybackError: "+ videoPlaybackError);
     }
+
+    @Override
+    public boolean getShouldPrependAuthorByline() {
+        return true;
+    }
 }

@@ -31,7 +31,6 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements NtvSectionAdapter {
 
-    private static String TAG = RecyclerViewAdapter.class.getName();
     private final Context context;
     private final RecyclerView recyclerView;
     ArrayList<String> articleList = new ArrayList<>();

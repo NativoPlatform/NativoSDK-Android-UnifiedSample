@@ -106,4 +106,9 @@ public class NativeAd implements NtvNativeAdInjectable {
     public ImageView getAdChoicesImageView() {
         return adChoicesIndicator;
     }
+
+    @Override
+    public boolean getShouldPrependAuthorByline() {
+        return true;
+    }
 }

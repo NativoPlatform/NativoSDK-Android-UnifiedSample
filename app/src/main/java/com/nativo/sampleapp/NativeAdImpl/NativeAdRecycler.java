@@ -117,4 +117,9 @@ public class NativeAdRecycler extends ArticleViewHolder implements NtvNativeAdIn
         sponsoredTag = v.findViewById(R.id.sponsored_tag);
         adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
     }
+
+    @Override
+    public boolean getShouldPrependAuthorByline() {
+        return false;
+    }
 }

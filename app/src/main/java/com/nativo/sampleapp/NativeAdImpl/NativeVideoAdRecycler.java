@@ -177,4 +177,9 @@ public class NativeVideoAdRecycler extends ArticleViewHolder implements NtvVideo
     public void onVideoPlaybackError(VideoPlaybackError videoPlaybackError) {
         Log.d(TAG, "onVideoPlaybackError: ");
     }
+
+    @Override
+    public boolean getShouldPrependAuthorByline() {
+        return false;
+    }
 }
