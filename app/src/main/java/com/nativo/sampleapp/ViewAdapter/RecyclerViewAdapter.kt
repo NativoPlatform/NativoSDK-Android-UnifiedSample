@@ -41,6 +41,8 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     init {
         // This initializes the NativoSDK and starts prefetching ads for your section URL
         NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
+        // Enable this since we have placeholders for Nativo in our data set
+        NativoSDK.enablePlaceholderMode(true)
     }
 
     /**
@@ -48,7 +50,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
      * Wait until we have response from Nativo before creating
      */
     @SuppressLint("NotifyDataSetChanged")
-    private fun createArticlesDatasource() {
+    private fun createArticlesDataSet() {
         // Create artificial datasource with both article and Nativo ad items
         for ( i in 0 until ITEM_COUNT) {
             if (shouldPlaceNativoAdAtIndex(i)) {
@@ -123,7 +125,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
 
         // Wait until we have response from Nativo to create articleList
         if (articleList.size == 0) {
-            createArticlesDatasource()
+            createArticlesDataSet()
         }
     }
 
@@ -141,7 +143,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
 
         // Add this here in case Nativo fails, we still create our article list
         if (articleList.size == 0) {
-            createArticlesDatasource()
+            createArticlesDataSet()
         }
     }
 
