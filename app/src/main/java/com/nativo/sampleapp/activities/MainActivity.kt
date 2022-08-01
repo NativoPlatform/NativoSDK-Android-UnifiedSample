@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
 
         // Nativo Setup
         NativoSDK.enableDevLogs()
-        //NativoSDK.enableTestAdvertisements(NtvTestAdType.NATIVE)
         NativoSDK.registerClassForLandingPage(SponsoredContentActivity::class.java)
         NativoSDK.registerClassForNativeAd(NativeAd::class.java)
         NativoSDK.registerClassForVideoAd(NativeVideoAd::class.java)
