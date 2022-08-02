@@ -15,9 +15,7 @@ import java.util.*
 
 class SponsoredContentActivity : AppCompatActivity(), NtvLandingPageInjectable {
 
-    /**
-     * NtvLandingPageInterface
-     */
+    // NtvLandingPageInjectable
     override lateinit var view: View
     override lateinit var titleLabel: TextView
     override lateinit var authorImageView: ImageView
@@ -26,7 +24,6 @@ class SponsoredContentActivity : AppCompatActivity(), NtvLandingPageInjectable {
     override val dateLabel: TextView? = null
     override val previewImageView: ImageView? = null
     override val previewTextLabel: TextView? = null
-    private var shareButton: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,8 +56,8 @@ class SponsoredContentActivity : AppCompatActivity(), NtvLandingPageInjectable {
         return null
     }
 
-    override fun setShareAndTrackingUrl(shareUrl: String?, adUUID: String?) {
-        shareButton = findViewById<View>(R.id.share_icon) as ImageView
+    override fun setShareUrl(shareUrl: String?) {
+        val shareButton = findViewById<View>(R.id.share_icon) as ImageView?
         shareButton?.let {
             it.setOnClickListener {
                 startActivity(
@@ -70,7 +67,10 @@ class SponsoredContentActivity : AppCompatActivity(), NtvLandingPageInjectable {
                             .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."
                     )
                 )
+                // Track share event on click
+                NativoSDK.trackShareAction(shareUrl)
             }
         }
     }
+
 }
