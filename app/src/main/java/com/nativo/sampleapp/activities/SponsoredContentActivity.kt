@@ -15,43 +15,34 @@ import java.util.*
 
 class SponsoredContentActivity : AppCompatActivity(), NtvLandingPageInjectable {
 
-    private var withView = true
-
     /**
      * NtvLandingPageInterface
      */
-    private lateinit var _webView: WebView
-    private var _titleLabel: TextView? = null
-    private var _authorNameLabel: TextView? = null
-    private var _articleAuthorImage: ImageView? = null
-    private var shareButton: ImageView? = null
-    private lateinit var _view: View
-
-    override val authorImageView: ImageView?
-        get() = _articleAuthorImage
-    override val authorNameLabel: TextView?
-        get() = _authorNameLabel
-    override val contentWebView: WebView
-        get() = _webView
+    override lateinit var view: View
+    override lateinit var titleLabel: TextView
+    override lateinit var authorImageView: ImageView
+    override lateinit var authorNameLabel: TextView
+    override lateinit var contentWebView: WebView
     override val dateLabel: TextView? = null
     override val previewImageView: ImageView? = null
     override val previewTextLabel: TextView? = null
-    override val titleLabel: TextView?
-        get() = _titleLabel
-    override val view: View
-        get() = _view
+    private var shareButton: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         NativoSDK.initLandingPage(this)
     }
 
+    override fun getLayout(context: Context): Int {
+        return R.layout.activity_sponsored_content
+    }
+
     override fun bindViews(v: View) {
-        _view = v
-        _webView = v.findViewById(R.id.web_view)
-        _titleLabel = v.findViewById(R.id.title_label)
-        _authorNameLabel = v.findViewById(R.id.article_author)
-        _articleAuthorImage = v.findViewById(R.id.article_author_image)
+        view = v
+        contentWebView = v.findViewById(R.id.web_view)
+        titleLabel = v.findViewById(R.id.title_label)
+        authorNameLabel = v.findViewById(R.id.article_author)
+        authorImageView = v.findViewById(R.id.article_author_image)
     }
 
     override fun contentWebViewOnPageFinished() {
@@ -66,10 +57,6 @@ class SponsoredContentActivity : AppCompatActivity(), NtvLandingPageInjectable {
 
     override fun formatDate(date: Date?): String? {
         return null
-    }
-
-    override fun getLayout(context: Context): Int {
-        return R.layout.activity_sponsored_content
     }
 
     override fun setShareAndTrackingUrl(shareUrl: String?, adUUID: String?) {
