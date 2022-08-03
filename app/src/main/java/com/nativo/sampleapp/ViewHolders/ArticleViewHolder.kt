@@ -18,7 +18,7 @@ open class ArticleViewHolder(container: View, var parent: ViewGroup) :
     private var articleTitle: TextView?
     private var articleDescription: TextView?
     private var articleAuthor: TextView?
-    private var articleSponsor: ImageView?
+    //private var articleSponsor: ImageView?
 
     private var onClickListener = View.OnClickListener {
         it.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.CLICK_OUT_URL)))
@@ -29,7 +29,7 @@ open class ArticleViewHolder(container: View, var parent: ViewGroup) :
         articleTitle = container.findViewById(R.id.article_title)
         articleDescription = container.findViewById(R.id.article_description)
         articleAuthor = container.findViewById(R.id.article_author)
-        articleSponsor = container.findViewById(R.id.sponsored_ad_indicator)
+        //articleSponsor = container.findViewById(R.id.sponsored_ad_indicator)
     }
 
     @SuppressLint("SetTextI18n")

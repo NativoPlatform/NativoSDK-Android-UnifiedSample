@@ -75,9 +75,8 @@ class MainActivity : AppCompatActivity() {
                 1 -> GridFragment()
                 2 -> ListViewFragment()
                 3 -> SingleViewFragment()
-                4 -> SingleViewVideoFragment()
-                5 -> DfpFragment()
-                6 -> MOAPFragment()
+                4 -> DfpFragment()
+                5 -> MOAPFragment()
                 else -> RecyclerViewFragment()
             }
         }

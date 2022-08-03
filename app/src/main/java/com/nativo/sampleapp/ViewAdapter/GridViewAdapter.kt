@@ -109,10 +109,10 @@ class GridViewAdapter(
         val articleImage: ImageView? = view.findViewById(R.id.article_image)
         val articleTitle: TextView? = view.findViewById(R.id.article_title)
         val articleAuthor: TextView? = view.findViewById(R.id.article_description)
-        val articleSponsor: ImageView? = view.findViewById(R.id.sponsored_ad_indicator)
+        //val articleSponsor: ImageView? = view.findViewById(R.id.sponsored_ad_indicator)
 
         articleImage?.setImageResource(R.drawable.newsimage)
-        articleSponsor?.visibility = View.INVISIBLE
+        //articleSponsor?.visibility = View.INVISIBLE
         articleAuthor?.setText(R.string.sample_author)
         articleTitle?.text = context.getString(R.string.sample_title) + " :" + item
 

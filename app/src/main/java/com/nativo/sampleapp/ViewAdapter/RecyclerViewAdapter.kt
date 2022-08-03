@@ -52,14 +52,17 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     @SuppressLint("NotifyDataSetChanged")
     private fun createArticlesDataSet() {
         // Create artificial datasource with both article and Nativo ad items
+        var articleNum = 0
+        var adNum = 0
         for ( i in 0 until ITEM_COUNT) {
-            if (shouldPlaceNativoAdAtIndex(i)) {
-                val title = "Nativo Placeholder $i"
-                articleList.add(title)
+            val title = if (shouldPlaceNativoAdAtIndex(i)) {
+                adNum++
+                "Nativo Placeholder $adNum"
             } else {
-                val title = "Publisher Article $i"
-                articleList.add(title)
+                articleNum++
+                "Publisher Article $articleNum"
             }
+            articleList.add(title)
         }
         notifyDataSetChanged()
     }
@@ -152,9 +155,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     }
 
     override fun needsDisplayClickOutURL(url: String, inSection: String, container: ViewGroup) {
-        Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
-            context.startActivity(this)
-        }
+        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
     override fun needsDisplayLandingPage(
