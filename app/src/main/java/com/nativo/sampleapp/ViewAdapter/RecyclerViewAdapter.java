@@ -38,6 +38,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
         // Nativo init
         NativoSDK.initSectionWithAdapter(this, SECTION_URL, context);
+        NativoSDK.enablePlaceholderMode(true);
+
         this.context = context;
         this.recyclerView = recyclerView;
 
@@ -132,7 +134,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof NativoViewHolder) {
             Log.d(NtvTAG, "placing ad at position "+position);
             isAdContentAvailable = NativoSDK.placeAdInView(holder.itemView, recyclerView, SECTION_URL, position, null);
+            if (!isAdContentAvailable) {
+                Log.d(NtvTAG, "Couldn't place ad! at "+position);
+            }
         }
+
+
 
         // LEGACY
         /*boolean isAdContentAvailable = false;
@@ -191,7 +198,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void didFailAd(@NotNull String inSection, @org.jetbrains.annotations.Nullable Integer atLocation, @org.jetbrains.annotations.Nullable View inView, @org.jetbrains.annotations.Nullable ViewGroup container, @org.jetbrains.annotations.Nullable Throwable error) {
         Log.d(NtvTAG, "onFail at location: "+atLocation+" Error: "+ error);
-        if (atLocation != null && inView != null) {
+        if (atLocation != null) {
             Log.w(NtvTAG,"Removing Nativo Ad!");
             articleList.remove(atLocation.intValue());
             notifyItemRemoved(atLocation);

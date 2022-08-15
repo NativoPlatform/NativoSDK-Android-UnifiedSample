@@ -3,6 +3,8 @@ package com.nativo.sampleapp.NativeAdImpl;
 import android.content.Context;
 import android.view.View;
 import android.webkit.WebView;
+
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import com.nativo.sampleapp.R;
 
@@ -14,6 +16,7 @@ public class StandardDisplayAd implements NtvStandardDisplayInjectable {
     private WebView webView;
     private View view;
 
+    @NonNull
     @Override
     public WebView getContentWebView() {
         return webView;
@@ -41,6 +44,7 @@ public class StandardDisplayAd implements NtvStandardDisplayInjectable {
         webView = v.findViewById(R.id.standard_display_webview);
     }
 
+    @NonNull
     @Override
     public View getView() {
         return view;

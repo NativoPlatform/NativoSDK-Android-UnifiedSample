@@ -21,12 +21,6 @@ import androidx.fragment.app.Fragment;
 
 import com.nativo.sampleapp.R;
 
-import net.nativo.sdk.NativoSDK;
-import net.nativo.sdk.NtvAdData;
-import net.nativo.sdk.NtvSectionAdapter;
-import net.nativo.sdk.injectable.NtvInjectable;
-import net.nativo.sdk.injectable.NtvInjectableType;
-
 /**
  * A simple {@link Fragment} subclass.
  */

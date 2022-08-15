@@ -7,6 +7,8 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +20,6 @@ import java.util.Date;
 
 public class SponsoredContentActivity extends AppCompatActivity implements NtvLandingPageInjectable {
 
-    boolean withView = true;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,6 @@ public class SponsoredContentActivity extends AppCompatActivity implements NtvLa
     private TextView titleLabel;
     private TextView authorNameLabel;
     private ImageView articleAuthorImage;
-    private ImageView shareButton;
     private View view;
 
     @Override
@@ -44,6 +44,25 @@ public class SponsoredContentActivity extends AppCompatActivity implements NtvLa
         articleAuthorImage = v.findViewById(R.id.article_author_image);
     }
 
+    @Override
+    public void setShareUrl(String shareUrl) {
+        ImageView shareButton = findViewById(R.id.share_icon);
+        if (shareButton != null) {
+            if (shareUrl != null) {
+                shareButton.setOnClickListener(view -> {
+                    view.getContext().startActivity(Intent.createChooser(
+                            new Intent(Intent.ACTION_SEND)
+                                    .setType("text/plain")
+                                    .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
+                    NativoSDK.trackShareAction(shareUrl);
+                });
+            } else {
+                shareButton.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    @NonNull
     @Override
     public WebView getContentWebView() {
         return webView;
@@ -103,24 +122,11 @@ public class SponsoredContentActivity extends AppCompatActivity implements NtvLa
         return R.layout.activity_sponsored_content;
     }
 
-    @Override
-    public void setShareAndTrackingUrl(String shareUrl, String adUUID) {
-        shareButton = (ImageView) findViewById(R.id.share_icon);
-        if (shareButton != null) {
-            shareButton.setOnClickListener(v -> {
-                v.getContext().startActivity(Intent.createChooser(
-                        new Intent(Intent.ACTION_SEND)
-                                .setType("text/plain")
-                                .putExtra(Intent.EXTRA_TEXT, shareUrl), "Share to..."));
 
-                // TODO: track share action
-                //NativoSDK.trackShareAction(adUUID);
-            });
-        }
-    }
-
+    @NonNull
     @Override
     public View getView() {
         return view;
     }
+
 }

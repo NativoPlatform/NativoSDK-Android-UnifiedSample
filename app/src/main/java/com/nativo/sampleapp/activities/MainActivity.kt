@@ -19,6 +19,7 @@ import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
+import net.nativo.sdk.NtvTestAdType
 
 /**
  * Various of Fragment Types
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             binding.tabs.setupWithViewPager(binding.pager)
 
             // Set desired fragment for app
-            setMainFragment(NtvFragmentType.RECYCLE_LIST)
+            setMainFragment(NtvFragmentType.GAM_INTEGRATION)
         }, DELAY_DURATION)
     }
 
@@ -139,8 +140,8 @@ class MainActivity : AppCompatActivity() {
     private fun setPrivacyAndTransparencyKeys() {
         getEditor().apply {
             putString(
-                AppConstants.GDPR_SHARED_PREFERENCE_STRING,
-                AppConstants.SAMPLE_GDPR_CONSENT
+                "IABTCF_TCString",
+                "BOqm1JLOqm1JLAPABBAAABAAAAAsuABgACBZYA"
             )
             putString(
                 AppConstants.CCPA_SHARED_PREFERENCE_STRING,

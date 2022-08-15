@@ -1,3 +1,19 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://nativo.jfrog.io/nativo/libs-release' } // Used for OM SDK
+        maven { url 'https://nativo.jfrog.io/nativo/libs-snapshot'}
+    }
+}
+
 include ':app'
 
 def nativoSdkDir = file("../NativoSDK-Android")

@@ -23,6 +23,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.nativo.sampleapp.R;
+import com.nativo.sampleapp.util.AppConstants;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
@@ -37,14 +38,10 @@ import net.nativo.sdk.injectable.NtvInjectableType;
 * LineItem -> "Mobile Test Line Item"
 * Creative -> "Nativo Tag Creative"
 * Campaign ID "c" -> 114921*/
-public class DfpFragment extends Fragment /*implements NtvSectionAdapter*/ {
+public class DfpFragment extends Fragment implements NtvSectionAdapter {
 
     PublisherAdView mPublisherAdView;
-    private NativoSDK mNativoSDK;
-    AdLoader mAdLoader;
-    String mMesssage;
     View nativoView;
-    View nativoVideoView;
     ViewGroup parentView;
 
     public DfpFragment() {
@@ -64,27 +61,26 @@ public class DfpFragment extends Fragment /*implements NtvSectionAdapter*/ {
         super.onViewCreated(view, savedInstanceState);
 
         // Nativo init
-        //NativoSDK.initSectionWithAdapter(this, DFP_SECTION_URL, getContext());
         NativoSDK.enableGAMwithVersion("19.1.0");
+        NativoSDK.initSectionWithAdapter(this, DFP_SECTION_URL, requireContext());
 
         parentView = (ViewGroup) view;
-        nativoView = view.findViewById(R.id.article_constraint_layout);
-        nativoView.setVisibility(View.GONE);
-        nativoVideoView = view.findViewById(R.id.video_constraint_layout);
-        nativoVideoView.setVisibility(View.GONE);
-
+        nativoView = view.findViewById(R.id.nativo_holder);
         View loadAd = view.findViewById(R.id.load_ad);
         loadAd.setOnClickListener(loadClick);
         loadGAMAd();
     }
 
     private void loadGAMAd() {
-        mPublisherAdView = getView().findViewById(R.id.publisherAdView);
+
         final AdSize ntvAdSize = new AdSize(3,3);
+        mPublisherAdView = getView().findViewById(R.id.publisherAdView);
         mPublisherAdView.setAdSizes(ntvAdSize,AdSize.BANNER);
+
         // Create an ad request.
+        // The ad unit Id is set on the PublisherAdView in the fragment_dfp.xml
         final PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
-                .addCustomTargeting("ntvPlacement","1092187").build();
+                .addCustomTargeting("ntvPlacement","991150").build();
 
         mPublisherAdView.setAdListener(new AdListener() {
             @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -113,72 +109,48 @@ public class DfpFragment extends Fragment /*implements NtvSectionAdapter*/ {
     View.OnClickListener loadClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            NativoSDK.clearAds(DFP_SECTION_URL, parentView);
             loadGAMAd();
         }
     };
 
-
-
-/*
-
     @Override
-    public void needsDisplayLandingPage(String sectionUrl, Intent landingPageIntent) {
-        getContext().startActivity(landingPageIntent);
-    }
-
-    @Override
-    public void needsDisplayClickOutURL(String s, String s1) {
-        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(s1)));
-    }
-
-    public void hasbuiltView(View view, NtvInjectable ntvInjectable, NtvAdData ntvAdData) {
-
-    }
-
-    public void onReceiveAd(String s, NtvAdData ntvAdData, Integer integer) {
-        Log.d("DFP", "Ad loaded");
-//        if (ntvAdData.getAdType() == NtvAdData.AdType.NATIVE || ntvAdData.getAdType() == NtvAdData.AdType.CLICK_OUT) {
-//            nativoView.setVisibility(View.VISIBLE);
-//            NativoSDK.placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, null);
-//        } else if (ntvAdData.getAdType() == NtvAdData.AdType.IN_FEED_VIDEO || ntvAdData.getAdType() == NtvAdData.AdType.IN_FEED_AUTO_PLAY_VIDEO) {
-//            nativoVideoView.setVisibility(View.VISIBLE);
-//            NativoSDK.placeAdInView(nativoVideoView, parentView, DFP_SECTION_URL, 0, null);
-//        }
-    }
-
-    public void onFail(String s, Integer integer) {
-        Log.d("DFP", "Ad load failed");
+    public void didReceiveAd(boolean didGetFill, @NonNull String inSection) {
+        Log.d("DFP", "Ad loaded: "+didGetFill);
+        if (didGetFill) {
+            nativoView.setVisibility(View.VISIBLE);
+            NativoSDK.placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, null);
+        }
     }
 
     @Override
-    public Class<NtvInjectable> registerInjectableClassForTemplateType(NtvInjectableType templateType, String sectionUrl, Integer index) {
+    public void didAssignAdToLocation(int location, @NonNull NtvAdData adData, @NonNull String inSection, @NonNull ViewGroup container) {
+
+    }
+
+    @Override
+    public void didPlaceAdInView(@NonNull View view, @NonNull NtvAdData adData, @NonNull NtvInjectable injectable, int atLocation, @NonNull String inSection, @NonNull ViewGroup container) {
+
+    }
+
+    @Override
+    public void didFailAd(@NonNull String inSection, @Nullable Integer atLocation, @Nullable View inView, @Nullable ViewGroup container, @Nullable Throwable error) {
+        Log.e("DFP", "Ad failed", error);
+    }
+
+    @Override
+    public void needsDisplayLandingPage(@NonNull Intent landingPageIntent, @NonNull String inSection, @NonNull ViewGroup container) {
+
+    }
+
+    @Override
+    public void needsDisplayClickOutURL(@NonNull String url, @NonNull String inSection, @NonNull ViewGroup container) {
+
+    }
+
+    @Nullable
+    @Override
+    public Class<NtvInjectable> registerInjectableClassForTemplateType(@NonNull NtvInjectableType injectableType, @Nullable Integer atLocation, @Nullable String inSection) {
         return null;
     }
-
-
-    @Override
-    public void needsPlaceAdInView(@NonNull String sectionUrl, int atLocation) {
-
-    }
-
-
-    @Override
-    public void didPrefetchAd(@NonNull String sectionUrl, boolean didGetAd) {
-        Log.d("DFP", "didPrefetchAd: "+didGetAd);
-    }
-
-    @Override
-    public void didPlaceAdInView(@NonNull String sectionUrl, int atLocation, @NonNull NtvInjectable adInjectable) {
-
-    }
-
-    @Override
-    public void didFailAd(@NonNull String sectionUrl, int atLocation, @Nullable Throwable error) {
-        Log.d("DFP", "Ad load failed");
-    }
-
-    @Override
-    public void didAssignAdToLocation(@NonNull String sectionUrl, int location) {
-
-    }*/
 }
