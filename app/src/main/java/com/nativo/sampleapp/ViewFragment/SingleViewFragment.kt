@@ -34,6 +34,7 @@ class SingleViewFragment : Fragment(), NtvSectionAdapter {
         // This initializes the NativoSDK and starts prefetching ads for your section URL
         NativoSDK.initSectionWithAdapter(this, singleViewSectionUrl, this.requireContext())
 
+        // To load a new ad we simply clear ads and then make a prefetch request
         binding.loadAd.setOnClickListener {
             NativoSDK.clearAds(singleViewSectionUrl, binding.root)
             NativoSDK.prefetchAdForSection(singleViewSectionUrl)

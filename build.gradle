@@ -23,7 +23,7 @@ allprojects {
             url 'https://nativo.jfrog.io/nativo/libs-release'
         }
         maven{
-            url 'https://nativo.jfrog.io/nativo/libs-snapshot-local'
+            url 'https://nativo.jfrog.io/nativo/libs-snapshot'
         }
     }
 }

@@ -18,7 +18,6 @@ import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
-import net.nativo.sdk.NtvTestAdType
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         R.string.grid_tab,
         R.string.table_tab,
         R.string.single_view,
-        R.string.single_view_video,
         R.string.gam,
         R.string.moap
     )
@@ -75,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                 1 -> GridFragment()
                 2 -> ListViewFragment()
                 3 -> SingleViewFragment()
-                4 -> DfpFragment()
+                4 -> GamFragment()
                 5 -> MOAPFragment()
                 else -> RecyclerViewFragment()
             }

@@ -13,6 +13,7 @@ import com.nativo.sampleapp.R
 import com.nativo.sampleapp.util.AppConstants
 import com.nativo.sampleapp.util.AppConstants.NtvTAG
 import net.nativo.sdk.*
+import net.nativo.sdk.NtvAdData
 import net.nativo.sdk.injectable.NtvInjectable
 import net.nativo.sdk.injectable.NtvInjectableType
 import net.nativo.sdk.utils.NativoLayout

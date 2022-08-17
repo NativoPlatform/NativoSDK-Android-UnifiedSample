@@ -16,6 +16,7 @@ import com.nativo.sampleapp.util.AppConstants.NtvTAG
 import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.NtvAdData
 import net.nativo.sdk.NtvSectionAdapter
+import net.nativo.sdk.NtvTestAdType
 import net.nativo.sdk.injectable.NtvInjectable
 import net.nativo.sdk.injectable.NtvInjectableType
 
@@ -43,6 +44,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
         NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
         // Enable this since we have placeholders for Nativo in our data set
         NativoSDK.enablePlaceholderMode(true)
+        //NativoSDK.enableTestAdvertisements()
     }
 
     /**
