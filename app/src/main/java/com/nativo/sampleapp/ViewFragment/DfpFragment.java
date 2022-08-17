@@ -87,10 +87,11 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                Log.d("DFP","adUnit: "+mPublisherAdView.getAdUnitId()+" adSize: "+mPublisherAdView.getAdSize());
+                Log.d("DFP","loaded adUnit: "+mPublisherAdView.getAdUnitId()+" adSize: "+mPublisherAdView.getAdSize());
                 if(mPublisherAdView.getAdSize().equals(ntvAdSize) ) {
+                    nativoView.setVisibility(View.VISIBLE);
                     //call nativo.dfp.bannerexample.sdk method here pass in the mAdView to parse out the html
-                    NativoSDK.makeGAMRequestWithPublisherAdView(mPublisherAdView, parentView, DFP_SECTION_URL, 0);
+                    NativoSDK.makeGAMRequestWithPublisherAdView(mPublisherAdView, DFP_SECTION_URL);
                 }
                 else{
                     Log.d("DFP", "Did receive DFP banner ad");
@@ -99,7 +100,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
             @Override
             public void onAdFailedToLoad(int errorCode) {
                 // Code to be executed when an ad request fails.
-                Log.d("DFP", "onAdFailedToLoad: errorCode: "+errorCode);
+                Log.d("DFP", "onAdFailedToLoad. errorCode: "+errorCode);
             }
         });
 
@@ -118,19 +119,18 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
     public void didReceiveAd(boolean didGetFill, @NonNull String inSection) {
         Log.d("DFP", "Ad loaded: "+didGetFill);
         if (didGetFill) {
-            nativoView.setVisibility(View.VISIBLE);
             NativoSDK.placeAdInView(nativoView, parentView, DFP_SECTION_URL, 0, null);
         }
     }
 
     @Override
     public void didAssignAdToLocation(int location, @NonNull NtvAdData adData, @NonNull String inSection, @NonNull ViewGroup container) {
-
+        Log.d("DFP", "Ad didAssignAdToLocation: "+location);
     }
 
     @Override
     public void didPlaceAdInView(@NonNull View view, @NonNull NtvAdData adData, @NonNull NtvInjectable injectable, int atLocation, @NonNull String inSection, @NonNull ViewGroup container) {
-
+        Log.d("DFP", "didPlaceAdInView: "+adData);
     }
 
     @Override

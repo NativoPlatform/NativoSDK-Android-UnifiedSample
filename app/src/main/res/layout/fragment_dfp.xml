@@ -19,7 +19,9 @@
         <FrameLayout
             android:id="@+id/nativo_holder"
             android:layout_width="match_parent"
-            android:layout_height="248dp">
+            android:layout_height="248dp"
+            android:background="#2B8DA5"
+            android:visibility="visible">
 
         </FrameLayout>
 
