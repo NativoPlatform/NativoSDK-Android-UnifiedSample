@@ -54,17 +54,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         nativoInit()
 
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
-            setContentView(binding.root)
+        // Setup view pager and tab layout
+        setContentView(binding.root)
+        binding.pager.offscreenPageLimit = 0
+        binding.tabs.setupWithViewPager(binding.pager)
 
-            // Setup view pager and tab layout
-            binding.pager.offscreenPageLimit = 0
-            binding.tabs.setupWithViewPager(binding.pager)
-
-            // Set desired fragment for app
-            setMainFragment(NtvFragmentType.GAM_INTEGRATION)
-        }, DELAY_DURATION)
+        // Set desired fragment for app
+        setMainFragment(NtvFragmentType.RECYCLE_LIST)
     }
 
     private fun nativoInit() {

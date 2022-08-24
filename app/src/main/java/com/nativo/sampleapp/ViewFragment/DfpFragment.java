@@ -61,6 +61,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
         super.onViewCreated(view, savedInstanceState);
 
         // Nativo init
+        NativoSDK.enableTestAdvertisements();
         NativoSDK.enableGAMwithVersion("19.1.0");
         NativoSDK.initSectionWithAdapter(this, DFP_SECTION_URL, requireContext());
 
@@ -140,7 +141,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
 
     @Override
     public void needsDisplayLandingPage(@NonNull Intent landingPageIntent, @NonNull String inSection, @NonNull ViewGroup container) {
-
+        startActivity(landingPageIntent);
     }
 
     @Override
