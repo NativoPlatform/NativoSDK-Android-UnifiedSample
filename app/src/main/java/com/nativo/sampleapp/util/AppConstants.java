@@ -1,7 +1,7 @@
 package com.nativo.sampleapp.util;
 
 public class AppConstants {
-    public static final String SECTION_URL = "http://www.nativo.net/test/";
+    public static final String SECTION_URL = "http://www.publisher.com/home";
     public static final String DFP_SECTION_URL = "http://www.nativo.net/mobiledfptest";
     public static final String MOAP_SECTION_URL = "http://www.nativo.net/moap?ntv_pl=1099995";
     public static final String PUBLISHER_URL = "http://dsp.test-sites.internal.nativo.net/external/mobile_web.html";

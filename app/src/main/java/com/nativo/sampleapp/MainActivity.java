@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
+import androidx.tracing.*;
 
 import com.google.android.material.tabs.TabLayout;
 import com.nativo.sampleapp.NativeAdImpl.NativeAd;
@@ -50,6 +51,8 @@ import static com.nativo.sampleapp.util.AppConstants.SP_CONTAINER_HASH;
 import static net.nativo.sdk.ntvconstant.NtvConstants.CCPA_SHARED_PREFERENCE_STRING;
 import static net.nativo.sdk.ntvconstant.NtvConstants.GDPR_SHARED_PREFERENCE_STRING;
 
+import kotlin.jvm.functions.Function0;
+
 enum NtvFragmentType {
     RECYCLE_LIST,
     GRID,
@@ -68,26 +71,30 @@ public class MainActivity extends AppCompatActivity implements NtvSectionAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
+          Trace start
+         */
+        Log.w("SampleApp", "Trace Enabled: "+Trace.isEnabled());
+        Trace.beginAsyncSection("scrollBenchmark", 1);
         nativoInit();
-        //NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
 
-        final Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Set desired fragment for app
-                setMainFragment(NtvFragmentType.RECYCLE_LIST);
+        // Set desired fragment for app
+        setMainFragment(NtvFragmentType.RECYCLE_LIST);
 
-                setContentView(R.layout.activity_main);
-                FragmentViewAdapter fragmentViewAdapter = new FragmentViewAdapter(getSupportFragmentManager());
-                ViewPager viewPager = findViewById(R.id.pager);
-                viewPager.setAdapter(fragmentViewAdapter);
-                viewPager.setOffscreenPageLimit(0);
-                TabLayout tabLayout = findViewById(R.id.tabs);
-                tabLayout.setupWithViewPager(viewPager);
+        setContentView(R.layout.activity_main);
+        FragmentViewAdapter fragmentViewAdapter = new FragmentViewAdapter(getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.pager);
+        viewPager.setAdapter(fragmentViewAdapter);
+        viewPager.setOffscreenPageLimit(0);
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
-            }
-        }, 2000);
+//        final Handler handler = new Handler(Looper.getMainLooper());
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//            }
+//        }, 2000);
     }
 
     private void setPrivacyAndTransparencyKeys() {
@@ -105,9 +112,6 @@ public class MainActivity extends AppCompatActivity implements NtvSectionAdapter
         NativoSDK.registerFullscreenVideo(new FullScreenVideoImpl());
         NativoSDK.registerStandardDisplayAd(new StandardDisplayAd());
         NativoSDK.enableDevLogs();
-
-        // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements(NtvAdData.NtvAdType.IN_FEED_AUTO_PLAY_VIDEO);
     }
 
     private void setMainFragment(NtvFragmentType fragmentType) {

@@ -4,6 +4,7 @@
     android:id="@+id/recycler_list_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:contentDescription="@string/recycle_list_tab"
     android:scrollbars="vertical"
     tools:context=".ViewFragment.RecyclerViewFragment">
 

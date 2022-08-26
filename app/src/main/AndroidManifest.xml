@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.nativo.sampleapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,16 +17,19 @@
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true"/>
+
         <activity android:name=".MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".SponsoredContentActivity" />
         <activity android:name="net.nativo.sdk.ntvadtype.stories.NtvStoryAdActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <profileable android:shell="true" />
     </application>
 
 </manifest>

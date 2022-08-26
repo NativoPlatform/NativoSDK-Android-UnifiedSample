@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.tracing.Trace;
 
 import com.nativo.sampleapp.NativeAdImpl.NativeAdRecycler;
 import com.nativo.sampleapp.NativeAdImpl.NativeStoryAdRecycler;
@@ -32,8 +33,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
@@ -48,23 +51,50 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
     private static String TAG = RecyclerViewAdapter.class.getName();
     private Context context;
     private RecyclerView recyclerView;
+    private final int listSize = 15;
     List<Integer> integerList = new ArrayList<>();
-    Set<Integer> adsRequestIndex = new HashSet<>();
-
-
-    public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
-        this.context = context;
-        this.recyclerView = recyclerView;
-        for (int i = 0; i < 20; i++) {
-            integerList.add(i);
-        }
-        //NativoSDK.prefetchAdForSection(SECTION_URL, this, null);
-    }
+    private List<Map<String, String>> adRequestOptions = new ArrayList<>(listSize);
+    private int adRequestCount = 0;
 
     // Helper method to determine which indexes should be Nativo ads
     public boolean shouldPlaceNativoAdAtIndex(int i) {
         return i % 2 == 1;
     }
+
+    public RecyclerViewAdapter(Context context, RecyclerView recyclerView) {
+        this.context = context;
+        this.recyclerView = recyclerView;
+        for (int i = 0; i < listSize; i++) {
+            integerList.add(i);
+
+            /*
+             * Benchmark rule
+             * For each request, request a new ad type
+             */
+            if (shouldPlaceNativoAdAtIndex(i)) {
+                HashMap<String, String> options = new HashMap<>();
+                options.put("ntv_pl", "242444");
+                switch (adRequestCount) {
+                    case 0: options.put("ntv_a", "168639"); break; // Native
+                    case 1: options.put("ntv_a", "168646"); break; // Click Video
+                    case 2: options.put("ntv_a", "180314"); break; // Scroll Video
+                    case 3:                                        // No fill
+                        options.clear();
+                        options.put("ntv_tp", "1");
+                        break;
+                    case 4: options.put("ntv_a", "168641"); break; // Display
+                    case 5: options.put("ntv_a", "350180"); break; // Story
+                    case 6: options.put("ntv_a", "1092616"); break; // Std Display
+                    default: options.put("ntv_tp", "1"); break;
+                }
+                adRequestCount++;
+                adRequestOptions.add(options);
+            } else {
+                adRequestOptions.add(null);
+            }
+        }
+    }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -108,9 +138,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
         View view = listViewHolder.getContainer();
         boolean isAdContentAvailable = false;
         if (shouldPlaceNativoAdAtIndex(i)) {
-            Log.e(TAG, "binding index: "+i);
-            adsRequestIndex.add(i);
-            isAdContentAvailable = NativoSDK.placeAdInView(view, recyclerView, SECTION_URL, i, this, null);
+            Map<String, String> options = null;
+            try {
+                options = adRequestOptions.get(i);
+            } catch (Exception ignored){}
+            isAdContentAvailable = NativoSDK.placeAdInView(view, recyclerView, SECTION_URL, i, this, options);
         }
 
         if (!isAdContentAvailable) {
@@ -139,6 +171,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
                 view.findViewById(R.id.sponsored_tag).setVisibility(View.INVISIBLE);
             }
             view.setOnClickListener(onClickListener);
+        }
+
+        /*
+         * Trace complete at end of list
+         */
+        if (i == integerList.size()-1) {
+            Trace.endAsyncSection("scrollBenchmark",1);
         }
     }
 
@@ -196,7 +235,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerListViewHo
 
     public void onReceiveAd(String section, NtvAdData ntvAdData, Integer index) {
         Log.e(this.getClass().getName(), "Index: "+index+" Did receive ad: "+ ntvAdData);
-        integerList.add(index);
         notifyDataSetChanged();
     }
 
