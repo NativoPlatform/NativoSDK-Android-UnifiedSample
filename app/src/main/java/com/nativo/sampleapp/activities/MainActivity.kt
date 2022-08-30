@@ -24,12 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val tabTitles = listOf(
-        R.string.recycle_list_tab,
-        R.string.grid_tab,
-        R.string.table_tab,
-        R.string.single_view,
-        R.string.gam,
-        R.string.moap
+        R.string.recycle_list_tab
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

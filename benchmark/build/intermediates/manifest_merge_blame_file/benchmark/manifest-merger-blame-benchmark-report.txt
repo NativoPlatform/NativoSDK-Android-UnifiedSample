@@ -1,0 +1,159 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.nativo.benchmark" >
+4
+5    <uses-sdk
+5-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:6:5-8:41
+6        android:minSdkVersion="29"
+6-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:7:9-35
+7        android:targetSdkVersion="32" />
+7-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:8:9-38
+8
+9    <queries>
+9-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:10:5-12:15
+10        <package android:name="com.nativo.sampleapp" />
+10-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:11:9-56
+10-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:11:18-53
+11        <package android:name="androidx.test.orchestrator" />
+11-->[androidx.test:runner:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/4f9b8a78d1e6950f87f710efc3e46784/transformed/runner-1.4.0/AndroidManifest.xml:25:9-62
+11-->[androidx.test:runner:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/4f9b8a78d1e6950f87f710efc3e46784/transformed/runner-1.4.0/AndroidManifest.xml:25:18-59
+12        <package android:name="androidx.test.services" />
+12-->[androidx.test:runner:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/4f9b8a78d1e6950f87f710efc3e46784/transformed/runner-1.4.0/AndroidManifest.xml:26:9-58
+12-->[androidx.test:runner:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/4f9b8a78d1e6950f87f710efc3e46784/transformed/runner-1.4.0/AndroidManifest.xml:26:18-55
+13        <package android:name="com.google.android.apps.common.testing.services" />
+13-->[androidx.test:runner:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/4f9b8a78d1e6950f87f710efc3e46784/transformed/runner-1.4.0/AndroidManifest.xml:27:9-83
+13-->[androidx.test:runner:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/4f9b8a78d1e6950f87f710efc3e46784/transformed/runner-1.4.0/AndroidManifest.xml:27:18-80
+14    </queries>
+15
+16    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+16-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:14:5-16:40
+16-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:15:9-65
+17
+18    <instrumentation
+18-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:18:5-23:56
+19        android:name="androidx.test.runner.AndroidJUnitRunner"
+19-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:19:9-63
+20        android:functionalTest="false"
+20-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:20:9-39
+21        android:handleProfiling="false"
+21-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:21:9-40
+22        android:label="Tests for com.nativo.benchmark"
+22-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:22:9-55
+23        android:targetPackage="com.nativo.benchmark" />
+23-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:23:9-53
+24
+25    <!--
+26    QUERY_ALL_PACKAGES is used to enable macrobenchmarks to read package information from
+27    potential target packages, e.g. for querying debuggable, profileable, or default launch intent.
+28
+29    This could also be done by making each macrobenchmark specify a <queries/> tag, with the
+30    target package, but this removes the need for documenting that setup step, and detecting
+31    misconfiguration.
+32    -->
+33    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+33-->[androidx.benchmark:benchmark-macro:1.1.0] /Users/mmurray/.gradle/caches/transforms-3/1d52dd609a9a44f8491d1ce515032eb2/transformed/jetified-benchmark-macro-1.1.0/AndroidManifest.xml:33:5-35:53
+33-->[androidx.benchmark:benchmark-macro:1.1.0] /Users/mmurray/.gradle/caches/transforms-3/1d52dd609a9a44f8491d1ce515032eb2/transformed/jetified-benchmark-macro-1.1.0/AndroidManifest.xml:34:9-61
+34    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+35    <uses-permission android:name="android.permission.REORDER_TASKS" />
+35-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:24:5-72
+35-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:24:22-69
+36
+37    <application android:extractNativeLibs="false" >
+37-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:25:5-27:19
+38        <uses-library android:name="android.test.runner" />
+38-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:26:9-60
+38-->/Users/mmurray/Documents/Nativo/NativoSDK-Android-UnifiedSample/benchmark/build/intermediates/tmp/manifest/benchmark/tempFile2ProcessTestManifest1178538222757197313.xml:26:23-57
+39        <!-- Activity used to block background content while benchmarks are running -->
+40        <activity
+40-->[androidx.benchmark:benchmark-common:1.1.0] /Users/mmurray/.gradle/caches/transforms-3/3e631dd93e34bf7db8f6c6a2eeee25e0/transformed/jetified-benchmark-common-1.1.0/AndroidManifest.xml:34:9-38:20
+41            android:name="androidx.benchmark.IsolationActivity"
+41-->[androidx.benchmark:benchmark-common:1.1.0] /Users/mmurray/.gradle/caches/transforms-3/3e631dd93e34bf7db8f6c6a2eeee25e0/transformed/jetified-benchmark-common-1.1.0/AndroidManifest.xml:35:13-64
+42            android:exported="true"
+42-->[androidx.benchmark:benchmark-common:1.1.0] /Users/mmurray/.gradle/caches/transforms-3/3e631dd93e34bf7db8f6c6a2eeee25e0/transformed/jetified-benchmark-common-1.1.0/AndroidManifest.xml:36:13-36
+43            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
+43-->[androidx.benchmark:benchmark-common:1.1.0] /Users/mmurray/.gradle/caches/transforms-3/3e631dd93e34bf7db8f6c6a2eeee25e0/transformed/jetified-benchmark-common-1.1.0/AndroidManifest.xml:37:13-77
+44        </activity>
+45        <activity
+45-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:27:9-34:20
+46            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
+46-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:28:13-99
+47            android:exported="true"
+47-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:29:13-36
+48            android:theme="@android:style/Theme" >
+48-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:30:13-49
+49            <intent-filter>
+49-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:31:13-33:29
+50                <action android:name="android.intent.action.MAIN" />
+50-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:32:17-69
+50-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:32:25-66
+51            </intent-filter>
+52        </activity>
+53        <activity
+53-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:35:9-42:20
+54            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
+54-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:36:13-95
+55            android:exported="true"
+55-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:37:13-36
+56            android:theme="@android:style/Theme" >
+56-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:38:13-49
+57            <intent-filter>
+57-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:31:13-33:29
+58                <action android:name="android.intent.action.MAIN" />
+58-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:32:17-69
+58-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:32:25-66
+59            </intent-filter>
+60        </activity>
+61        <activity
+61-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:43:9-50:20
+62            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
+62-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:44:13-103
+63            android:exported="true"
+63-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:45:13-36
+64            android:theme="@android:style/Theme.Dialog" >
+64-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:46:13-56
+65            <intent-filter>
+65-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:31:13-33:29
+66                <action android:name="android.intent.action.MAIN" />
+66-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:32:17-69
+66-->[androidx.test:core:1.4.0] /Users/mmurray/.gradle/caches/transforms-3/3c3328d54d6217ba910600897331768a/transformed/jetified-core-1.4.0/AndroidManifest.xml:32:25-66
+67            </intent-filter>
+68        </activity>
+69
+70        <provider
+70-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:26:9-34:20
+71            android:name="androidx.startup.InitializationProvider"
+71-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:27:13-67
+72            android:authorities="com.nativo.benchmark.androidx-startup"
+72-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:28:13-68
+73            android:exported="false" >
+73-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:29:13-37
+74            <meta-data
+74-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:31:13-33:52
+75                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+75-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:32:17-85
+76                android:value="androidx.startup" />
+76-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:33:17-49
+77        </provider>
+78
+79        <receiver
+79-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:36:9-45:20
+80            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+80-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:37:13-76
+81            android:directBootAware="false"
+81-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:38:13-44
+82            android:enabled="true"
+82-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:39:13-35
+83            android:exported="true"
+83-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:40:13-36
+84            android:permission="android.permission.DUMP" >
+84-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:41:13-57
+85            <intent-filter>
+85-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:42:13-44:29
+86                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+86-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:43:17-91
+86-->[androidx.profileinstaller:profileinstaller:1.0.3] /Users/mmurray/.gradle/caches/transforms-3/c890827626e83505525f138ab6206c75/transformed/jetified-profileinstaller-1.0.3/AndroidManifest.xml:43:25-88
+87            </intent-filter>
+88        </receiver>
+89    </application>
+90
+91</manifest>

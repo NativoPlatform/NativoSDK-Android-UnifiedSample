@@ -22,31 +22,29 @@ import net.nativo.sdk.injectable.NtvInjectableType
 
 const val ITEM_TYPE_ARTICLE = 0
 const val ITEM_TYPE_NATIVO = 1
-const val ITEM_COUNT = 40
+const val ITEM_COUNT = 22
 
 class RecyclerViewAdapter(private val context: Context, private val recyclerView: RecyclerView) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), NtvSectionAdapter {
 
     private val articleList: ArrayList<String> = ArrayList()
-    private var nativoNeedsReload = false
-
-    private var onClickListener = View.OnClickListener {
-        it.context.startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(AppConstants.CLICK_OUT_URL)
-            )
-        )
-    }
+    private val adRequestOptions: MutableMap<Int, Map<String,String>> = mutableMapOf()
+    private var adRequestCount = 0
 
     init {
+        NativoSDK.enableTestAdvertisements(NtvTestAdType.DISPLAY)
         // This initializes the NativoSDK and starts prefetching ads for your section URL
         NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
         // Enable this since we have placeholders for Nativo in our data set
         NativoSDK.enablePlaceholderMode(true)
-        //NativoSDK.enableTestAdvertisements()
+
+        createArticlesDataSet()
     }
 
+    // Helper method to determine which indexes should be Nativo ads
+    private fun shouldPlaceNativoAdAtIndex(i: Int): Boolean {
+        return i % 2 == 1
+    }
     /**
      * Create article list as our data set
      * Wait until we have response from Nativo before creating
@@ -67,11 +65,6 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
             articleList.add(title)
         }
         notifyDataSetChanged()
-    }
-
-    // Helper method to determine which indexes should be Nativo ads
-    private fun shouldPlaceNativoAdAtIndex(i: Int): Boolean {
-        return i % 3 == 1
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -103,7 +96,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
                                                   recyclerView,
                                                   AppConstants.SECTION_URL,
                                                   position,
-                                           null)
+                                                  null)
             Log.d(NtvTAG, "placing ad at position $position, available: $success")
         } else if (holder is ArticleViewHolder) {
             val articleTitle = articleList[position]
@@ -126,29 +119,41 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
      */
 
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {
-        Log.d(NtvTAG, "Did receive ad: $didGetFill")
-
-        // Wait until we have response from Nativo to create articleList
-        if (articleList.size == 0) {
-            createArticlesDataSet()
+        /*
+        * Benchmark logic
+        * Both v6 and v7 should return same number of ads,
+        * Two of each type in order to measure performance of how cells can be reused
+         */
+        adRequestCount++
+        when (adRequestCount) {
+            1 -> NativoSDK.enableTestAdvertisements(NtvTestAdType.NATIVE)
+            2 -> NativoSDK.enableTestAdvertisements(NtvTestAdType.VIDEO_CLICK_TO_PLAY)
+//            3 -> NativoSDK.enableTestAdvertisements(NtvTestAdType.DISPLAY)
+            3 -> NativoSDK.enableTestAdvertisements(NtvTestAdType.STORY)
+            4 -> NativoSDK.enableTestAdvertisements(NtvTestAdType.VIDEO_SCROLL_TO_PLAY)
+            5 -> NativoSDK.enableTestAdvertisements(NtvTestAdType.NATIVE)
+            6 -> NativoSDK.enableTestAdvertisements(NtvTestAdType.VIDEO_CLICK_TO_PLAY)
+            7 -> NativoSDK.enableTestAdvertisements(NtvTestAdType.STORY)
+            8 -> NativoSDK.enableTestAdvertisements(NtvTestAdType.VIDEO_SCROLL_TO_PLAY)
+            9 -> NativoSDK.enableTestAdvertisements(NtvTestAdType.DISPLAY)
+            else -> NativoSDK.enableTestAdvertisements(NtvTestAdType.NO_FILL)
         }
+        Log.d(NtvTAG, "Did receive ad: $didGetFill")
     }
 
     override fun didAssignAdToLocation(location: Int, adData: NtvAdData, inSection: String, container: ViewGroup) {
         Log.d(NtvTAG, "didAssignAdToLocation: $location")
+        if (location < 4) {
+            notifyItemChanged(location)
+        }
     }
 
     override fun didFailAd(inSection: String, atLocation: Int?, inView: View?, container: ViewGroup?, error: Throwable?) {
         Log.d(NtvTAG, "onFail at location: $atLocation Error: $error")
         if (atLocation != null) {
-            Log.w(NtvTAG,"Removing Nativo Ad!")
+            Log.w(NtvTAG,"Removing Nativo Ad! $articleList")
             articleList.removeAt(atLocation)
             notifyItemRemoved(atLocation)
-        }
-
-        // Add this here in case Nativo fails, we still create our article list
-        if (articleList.size == 0) {
-            createArticlesDataSet()
         }
     }
 
