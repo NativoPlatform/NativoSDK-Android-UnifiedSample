@@ -8,14 +8,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import com.nativo.sampleapp.R
 import com.nativo.sampleapp.util.AppConstants
 import com.nativo.sampleapp.util.AppConstants.NtvTAG
-import net.nativo.sdk.utils.NativoLayout
 import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.NtvAdData
 import net.nativo.sdk.NtvSectionAdapter
@@ -32,11 +28,14 @@ class ListViewAdapter(
 ) : BaseAdapter(), NtvSectionAdapter {
 
     companion object {
-        const val ITEM_COUNT = 40
+        const val ITEM_COUNT = 20
     }
 
-    private var integerList: MutableList<Int> = ArrayList()
+    private var sudoArticleList = mutableListOf<String>()
     private var initialNativoRequest = true
+
+    // Create unique layout class for Nativo ads
+    private class NativoLayout(context: Context) : FrameLayout(context)
 
     /**
      * Show [AppConstants.CLICK_OUT_URL]
@@ -55,12 +54,12 @@ class ListViewAdapter(
         NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
 
         for (i in 0..ITEM_COUNT) {
-            integerList.add(i)
+            sudoArticleList.add("Article $i")
         }
     }
 
     override fun getCount(): Int {
-        return integerList.size
+        return sudoArticleList.size
     }
 
     override fun getItem(p0: Int): Any? {
@@ -71,63 +70,50 @@ class ListViewAdapter(
         return 0
     }
 
-    override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
-        val item = integerList[i]
-        val convertView: View
-        if (view != null) {
-            if (shouldShowPlaceAd(item)) {
-                convertView = if (view !is NativoLayout) {
-                    NativoLayout(context)
-                } else {
-                    view
-                }
+    override fun getView(index: Int, view: View?, viewGroup: ViewGroup): View {
+        var itemView : View
 
-                NativoSDK.placeAdInView(convertView, listView, AppConstants.SECTION_URL, i, null)
-                return convertView
-            } else {
-                // Publisher article view
-                convertView = if (view is NativoLayout) {
-                    LayoutInflater.from(context)
-                        .inflate(R.layout.publisher_article, viewGroup, false)
-                } else {
-                    view
-                }
-                bindView(convertView, integerList[i])
-            }
-        } else {
-            if (shouldShowPlaceAd(item)) {
-                convertView = NativoLayout(context)
-                NativoSDK.placeAdInView(convertView, listView, AppConstants.SECTION_URL, i, null)
-            } else {
-                // Publisher article view
-                convertView = LayoutInflater.from(context)
-                    .inflate(R.layout.publisher_article, viewGroup, false)
-                bindView(convertView, integerList[i])
+        // Create Nativo ad
+        if (isNativoRow(index)) { // Check if index should be a Nativo ad slot
+            itemView = if (view !is NativoLayout) NativoLayout(context) else view
+            val nativoSuccess = NativoSDK.placeAdInView(itemView, listView, AppConstants.SECTION_URL, index, null)
+
+            // In this example we need to check if Nativo was successful before returning the view.
+            // Otherwise we may end up with a blank ad unit if an ad fails.
+            if (nativoSuccess) {
+                return itemView
             }
         }
 
-        return convertView
+        // Create Article
+        if (view == null || view is NativoLayout) {
+            // Create new publisher article view
+            itemView = LayoutInflater.from(context).inflate(R.layout.publisher_article, viewGroup, false)
+            bindView(itemView, sudoArticleList[index])
+        } else {
+            itemView = view
+            bindView(itemView, sudoArticleList[index])
+        }
+        return itemView
+    }
+
+    private fun isNativoRow(item: Int): Boolean {
+        return item % 3 == 1
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindView(view: View, item: Int) {
+    private fun bindView(view: View, item: String) {
         val articleImage: ImageView? = view.findViewById(R.id.article_image)
         val articleTitle: TextView? = view.findViewById(R.id.article_title)
         val articleAuthor: TextView? = view.findViewById(R.id.article_description)
-        //val articleSponsor: ImageView? = view.findViewById(R.id.sponsored_ad_indicator)
 
         articleImage?.setImageResource(R.drawable.newsimage)
-        //articleSponsor?.visibility = View.INVISIBLE
         articleAuthor?.setText(R.string.sample_author)
-        articleTitle?.text = context.getString(R.string.sample_title) + " :" + item
+        articleTitle?.text = item
 
         view.setOnClickListener {
             itemClickListener.run()
         }
-    }
-
-    private fun shouldShowPlaceAd(item: Int): Boolean {
-        return item % 3 == 1
     }
 
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {
@@ -148,6 +134,7 @@ class ListViewAdapter(
         container: ViewGroup
     ) {
         Log.d(NtvTAG, "didAssignAdToLocation: $location")
+        sudoArticleList.add(location, "Nativo $location")
         notifyDataSetChanged()
     }
 
@@ -169,10 +156,9 @@ class ListViewAdapter(
         container: ViewGroup?,
         error: Throwable?
     ) {
-        Log.d(NtvTAG, "onFail at location: $atLocation Error: $error")
-        if (atLocation != null && inView != null) {
+        if (atLocation != null) {
             Log.w(NtvTAG, "Removing Nativo Ad!")
-            integerList.removeAt(atLocation.toInt())
+            sudoArticleList.removeAt(atLocation)
             notifyDataSetChanged()
         }
     }
