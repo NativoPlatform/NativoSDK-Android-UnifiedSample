@@ -54,13 +54,6 @@ class MainActivity : AppCompatActivity() {
         }.attach()
     }
 
-    private fun setPrivacyAndTransparencyKeys() {
-        val editor = editor
-        editor.putString(AppConstants.GDPR_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_GDPR_CONSENT)
-        editor.putString(AppConstants.CCPA_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_CCPA_VALID_CONSENT)
-        editor.apply()
-    }
-
     private inner class FragmentViewAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
 
         override fun getItemCount(): Int {
@@ -105,18 +98,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val editor: SharedPreferences.Editor
+        get() {
+            val preferenceManager = PreferenceManager.getDefaultSharedPreferences(this)
+            return preferenceManager.edit()
+        }
+
+    private fun setPrivacyAndTransparencyKeys() {
+        val editor = editor
+        editor.putString(AppConstants.GDPR_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_GDPR_CONSENT)
+        editor.putString(AppConstants.CCPA_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_CCPA_VALID_CONSENT)
+        editor.apply()
+    }
+
     private fun invalidPrivacyAndTransparencyKeys() {
         val editor = editor
         editor.putString(AppConstants.GDPR_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_GDPR_INVALID_CONSENT)
         editor.putString(AppConstants.CCPA_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_CCPA_INVALID_CONSENT)
         editor.apply()
     }
-
-    private val editor: SharedPreferences.Editor
-        get() {
-            val preferenceManager = PreferenceManager.getDefaultSharedPreferences(this)
-            return preferenceManager.edit()
-        }
 
     private fun removePrivacyAndTransparencyKeys() {
         val editor = editor
