@@ -9,9 +9,10 @@ buildscript {
 }
 
 plugins {
-//    id 'com.android.library' version '7.1.0' apply false
     id 'org.jetbrains.dokka' version '1.6.21'
     id 'com.jfrog.artifactory' version '4.26.3'
+    id 'com.android.test' version '7.1.3' apply false
+    id 'org.jetbrains.kotlin.android' version '1.6.21' apply false
     // Currently this creates an issues with the Exoplayer submodules in Jenkins build step
     //id 'org.sonarqube' version "3.3"
 }

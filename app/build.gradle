@@ -8,7 +8,7 @@ android {
     compileSdkVersion 31
     defaultConfig {
         applicationId "com.nativo.sampleapp"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -16,10 +16,14 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
+        }
+        benchmark {
+            signingConfig signingConfigs.debug
+            debuggable false
         }
     }
     lintOptions {
@@ -75,6 +79,10 @@ dependencies {
     implementation "co.touchlab:stately-concurrency:$statelyVersion"
     implementation "co.touchlab:stately-isolate:$statelyVersion"
     implementation "co.touchlab:stately-iso-collections:$statelyVersion"
+    // Getting advertiser id
+//    implementation("androidx.ads:ads-identifier:1.0.0-alpha04")
+//    implementation("com.google.guava:guava:31.0.1-android")
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:$coroutinesVersion")
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'

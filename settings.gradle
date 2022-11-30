@@ -26,3 +26,4 @@ project(':NtvCore').projectDir = new File(nativoSdkDir, '/NativoSDK-Core/NtvCore
 // Import internal Exoplayer
 gradle.ext.exoplayerModulePrefix = 'ntvexoplayer-'
 apply from: new File(nativoSdkDir, '/ExoPlayer/core_settings.gradle')
+include ':Benchmark'

@@ -172,15 +172,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      * NativoSDK Section Adapter
      */
 
-    Boolean initialNativoRequest = true;
     @Override
     public void didReceiveAd(boolean didGetAdFill, @NotNull String inSectionUrl) {
         Log.d(NtvTAG, "Did receive ad: "+ didGetAdFill);
-        if (didGetAdFill && initialNativoRequest) {
-            Log.w(NtvTAG, "Needs Reload Everything");
-            notifyDataSetChanged();
-        }
-        initialNativoRequest = false;
     }
 
     @Override
@@ -188,6 +182,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Log.d(NtvTAG, "didAssignAdToLocation: "+location);
         //articleList.add(location, "Nativo placeholder "+location);
         //notifyItemInserted(location);
+
+        // Reload initial views to inject ad. Subsequent views will already have ad prefetched.
+        if (location < 5) {
+            Log.w(NtvTAG, "Needs Reload");
+            notifyItemChanged(location);
+        }
     }
 
     @Override

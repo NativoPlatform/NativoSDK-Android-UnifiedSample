@@ -15,7 +15,7 @@ object AppConstants {
 
     const val CCPA_SHARED_PREFERENCE_STRING = "IABUSPrivacy_String"
     const val GDPR_SHARED_PREFERENCE_STRING = "IABTCF_TCString"
-    const val SAMPLE_GDPR_CONSENT = "BOqm1JLOqm1JLAPABBAAABAAAAAsuABgACBZYA"
+    const val SAMPLE_GDPR_CONSENT = "BOXjEnFOXjEnFAKALBENB5-AAAAid7_______9______9uz_Gv_v_f__33e8__9v_l_7_-___u_-33d4-_1vf99yfm1-7ftr3tp_87ues2_Xur_959__3z3_EA"
 
     // Changed last few chars of valid string
     const val SAMPLE_GDPR_INVALID_CONSENT = "BOqm1JLOqm1JLAPABBAAABAAAAAsuABgA"
@@ -23,5 +23,5 @@ object AppConstants {
     const val SAMPLE_CCPA_INVALID_CONSENT = "1YYY"
 
     // Nativo STK Tag
-    const val NtvTAG = "NativoSDK"
+    const val NtvTAG = "NtvApp"
 }

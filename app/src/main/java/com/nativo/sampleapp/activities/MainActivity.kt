@@ -136,8 +136,8 @@ class MainActivity : AppCompatActivity() {
     private fun setPrivacyAndTransparencyKeys() {
         getEditor().apply {
             putString(
-                "IABTCF_TCString",
-                "BOqm1JLOqm1JLAPABBAAABAAAAAsuABgACBZYA"
+                AppConstants.GDPR_SHARED_PREFERENCE_STRING,
+                AppConstants.SAMPLE_GDPR_CONSENT
             )
             putString(
                 AppConstants.CCPA_SHARED_PREFERENCE_STRING,
