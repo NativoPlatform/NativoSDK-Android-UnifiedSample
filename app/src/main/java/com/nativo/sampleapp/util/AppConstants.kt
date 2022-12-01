@@ -9,9 +9,6 @@ object AppConstants {
     const val MOAP_SECTION_URL = "http://www.nativo.net/moap?ntv_pl=1099995"
     const val PUBLISHER_URL = "http://dsp.test-sites.internal.nativo.net/external/mobile_web.html"
     const val CLICK_OUT_URL = "https://www.nativo.com/"
-    const val SP_CAMPAIGN_ID = "CAMPAIGN_ID"
-    const val SP_SECTION_URL = "SECTION_URL"
-    const val SP_CONTAINER_HASH = "CONTAINER_HASH"
 
     const val CCPA_SHARED_PREFERENCE_STRING = "IABUSPrivacy_String"
     const val GDPR_SHARED_PREFERENCE_STRING = "IABTCF_TCString"

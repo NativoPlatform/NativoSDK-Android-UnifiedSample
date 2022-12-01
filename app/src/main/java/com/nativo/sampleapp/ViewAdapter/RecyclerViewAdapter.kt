@@ -128,7 +128,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {
         Log.d(NtvTAG, "Did receive ad: $didGetFill")
 
-        // Wait until we have response from Nativo to create articleList
+        // Wait until we have the first response from Nativo to create articleList
         if (articleList.size == 0) {
             createArticlesDataSet()
         }
