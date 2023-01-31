@@ -3,6 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
+    signingConfigs {
+        ntv_release {
+            storeFile file('/Users/mmurray/Documents/keystore/android-keystore.jks')
+            storePassword 'ntv$2020'
+            keyPassword 'ntv$2020'
+            keyAlias 'ntv_android'
+        }
+    }
     compileSdkVersion 32
     defaultConfig {
         applicationId "com.nativo.sampleapp"
@@ -14,8 +22,10 @@ android {
     }
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.ntv_release
         }
     }
     lintOptions {
@@ -37,7 +47,7 @@ configurations.all {
 dependencies {
     implementation 'net.nativo.sdk:nativo-sdk:7.0.0-SNAPSHOT'
     implementation 'com.google.android.gms:play-services-ads:19.1.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'com.google.android.material:material:1.2.1'

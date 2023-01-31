@@ -23,15 +23,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val tabTitles = listOf(
-        R.string.recycle_list_tab,
-        R.string.grid_tab,
-        R.string.table_tab,
-        R.string.single_view,
-        R.string.gam,
-        R.string.moap
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,35 +35,10 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.pager.apply {
-            adapter = FragmentViewAdapter(this@MainActivity)
-            isUserInputEnabled = false
-        }
 
-        TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
-            tab.setText(tabTitles[position])
-        }.attach()
+        // RecyclerViewFragment()
     }
 
-    private inner class FragmentViewAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
-
-        override fun getItemCount(): Int {
-            return tabTitles.count()
-        }
-
-        override fun createFragment(position: Int): Fragment {
-            return when (position) {
-                0 -> RecyclerViewFragment()
-                1 -> GridFragment()
-                2 -> ListViewFragment()
-                3 -> SingleViewFragment()
-                4 -> GamFragment()
-                5 -> MOAPFragment()
-                else -> RecyclerViewFragment()
-            }
-        }
-
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
