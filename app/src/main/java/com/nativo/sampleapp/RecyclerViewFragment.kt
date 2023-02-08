@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewFragment
+package com.nativo.sampleapp
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.nativo.sampleapp.ViewAdapter.RecyclerViewAdapter
 import com.nativo.sampleapp.databinding.FragmentRecyclerListViewBinding
 
 class RecyclerViewFragment : Fragment() {
@@ -14,7 +13,8 @@ class RecyclerViewFragment : Fragment() {
     private lateinit var binding: FragmentRecyclerListViewBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRecyclerListViewBinding.inflate(inflater, container, false)

@@ -22,7 +22,7 @@ class NativeVideoAd : NtvVideoAdInjectable {
     override lateinit var authorLabel: TextView
     override lateinit var adChoicesImageView: ImageView
     override lateinit var authorImageView: ImageView
-    override lateinit var dateLabel: TextView
+    override var dateLabel: TextView? = null
     override lateinit var previewTextLabel: TextView
     override lateinit var previewImage: ImageView
     override val shouldPrependAuthorByline: Boolean = true

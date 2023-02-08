@@ -5,7 +5,6 @@
     android:id="@+id/article_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?android:selectableItemBackground"
     android:orientation="vertical"
     android:padding="16dp"
     tools:background="@drawable/sponsored_border">
@@ -14,9 +13,9 @@
         android:id="@+id/article_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        card_view:cardElevation="5dp"
+        android:layout_gravity="center"
         card_view:cardCornerRadius="5dp"
-        android:layout_gravity="center">
+        card_view:cardElevation="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,71 +26,73 @@
                 android:id="@+id/article_image"
                 android:layout_width="107dp"
                 android:layout_height="129dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="article image"
                 android:scaleType="fitXY"
                 tools:src="@android:drawable/sym_def_app_icon" />
 
             <TextView
                 android:id="@+id/sponsored_tag"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="8dp"
-                android:layout_toEndOf="@id/article_image"
-                android:textStyle="italic|bold"
-                android:fontFamily="sans-serif"
-                android:text="@string/sponsored_content" />
-
-            <TextView
-                android:id="@+id/article_date"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/sponsored_tag"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="2dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="2dp"
                 android:layout_toEndOf="@id/article_image"
                 android:fontFamily="sans-serif"
-                tools:text="Article Date" />
+                android:text="@string/sponsored_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                android:textStyle="italic|bold" />
 
             <TextView
                 android:id="@+id/article_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/article_date"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="2dp"
-                android:layout_toEndOf="@id/article_image"
+                android:layout_below="@+id/sponsored_tag"
+                android:layout_alignStart="@+id/sponsored_tag"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
+                android:contentDescription="Title"
                 android:ellipsize="end"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textStyle="bold"
-                android:textSize="15sp"
                 android:fontFamily="sans-serif"
-                tools:text="Article Title" />
+                android:maxLines="3"
+                android:singleLine="false"
+                android:textColor="#232323"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="Title" />
 
             <TextView
                 android:id="@+id/article_description"
-                android:layout_width="195dp"
-                android:layout_height="69dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/article_title"
-                android:layout_margin="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_toEndOf="@id/article_image"
+                android:contentDescription="Article description"
                 android:ellipsize="end"
-                android:maxLines="3"
                 android:fontFamily="sans-serif"
-                tools:text="Article Description" />
+                android:maxLines="2"
+                tools:text="Description" />
 
             <TextView
                 android:id="@+id/article_author_by"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/article_description"
-                android:layout_margin="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
                 android:layout_toEndOf="@id/article_image"
-                android:textStyle="italic"
                 android:fontFamily="sans-serif"
+                android:textStyle="italic"
                 tools:text="By" />
 
             <TextView
@@ -99,7 +100,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/article_description"
-                android:layout_margin="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
                 android:layout_toEndOf="@id/article_author_by"
                 android:textStyle="italic"
                 tools:text="Article Author" />
@@ -109,19 +113,24 @@
                 android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_below="@id/article_description"
-                android:layout_margin="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
                 android:layout_toEndOf="@id/article_author"
+                android:contentDescription="author logo"
                 tools:src="@drawable/nativo_icon" />
 
             <ImageView
                 android:id="@+id/adchoices_indicator"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:layout_alignTop="@+id/article_image"
                 android:layout_alignEnd="@id/article_image"
                 android:layout_alignParentEnd="true"
-                android:layout_alignTop="@+id/article_image"
-                tools:visibility="visible"
-                tools:src="@drawable/ad_choices"/>
+                android:contentDescription="ad choices"
+                tools:src="@drawable/ad_choices"
+                tools:visibility="visible" />
 
         </RelativeLayout>
 

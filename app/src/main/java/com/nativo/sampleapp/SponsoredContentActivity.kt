@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.activities
+package com.nativo.sampleapp
 
 import android.content.Context
 import android.content.Intent
@@ -8,7 +8,6 @@ import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.nativo.sampleapp.R
 import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.injectable.NtvLandingPageInjectable
 import java.util.*

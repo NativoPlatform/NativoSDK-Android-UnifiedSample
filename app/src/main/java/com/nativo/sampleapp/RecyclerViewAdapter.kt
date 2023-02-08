@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewAdapter
+package com.nativo.sampleapp
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,14 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewHolders.ArticleViewHolder
 import com.nativo.sampleapp.util.AppConstants
 import com.nativo.sampleapp.util.AppConstants.NtvTAG
 import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.NtvAdData
 import net.nativo.sdk.NtvSectionAdapter
-import net.nativo.sdk.NtvTestAdType
 import net.nativo.sdk.injectable.NtvInjectable
 import net.nativo.sdk.injectable.NtvInjectableType
 
@@ -44,7 +42,6 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
         NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
         // Enable this since we have placeholders for Nativo in our data set
         NativoSDK.enablePlaceholderMode(true)
-        //NativoSDK.enableTestAdvertisements()
     }
 
     /**
@@ -99,11 +96,13 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is net.nativo.sdk.utils.NativoViewHolder) {
             // Call Nativo placeAdInView using NativoViewHolder.itemView
+            holder.itemView.visibility = View.GONE
             val success = NativoSDK.placeAdInView(holder.itemView,
                                                   recyclerView,
                                                   AppConstants.SECTION_URL,
                                                   position,
                                            null)
+            if (success) holder.itemView.visibility = View.VISIBLE
             Log.d(NtvTAG, "placing ad at position $position, available: $success")
         } else if (holder is ArticleViewHolder) {
             val articleTitle = articleList[position]

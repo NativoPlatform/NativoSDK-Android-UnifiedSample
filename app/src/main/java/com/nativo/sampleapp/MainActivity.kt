@@ -1,20 +1,16 @@
-package com.nativo.sampleapp.activities
+package com.nativo.sampleapp
 
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBar.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
 import com.nativo.sampleapp.NativoAds.NativeAd
 import com.nativo.sampleapp.NativoAds.NativeVideoAd
 import com.nativo.sampleapp.NativoAds.StandardDisplayAd
-import com.nativo.sampleapp.R
-import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
@@ -28,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         // Nativo Setup
         NativoSDK.enableDevLogs()
+        NativoSDK.enableTestAdvertisements()
         NativoSDK.registerClassForLandingPage(SponsoredContentActivity::class.java)
         NativoSDK.registerClassForNativeAd(NativeAd::class.java)
         NativoSDK.registerClassForVideoAd(NativeVideoAd::class.java)
@@ -36,13 +33,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // RecyclerViewFragment()
+        supportActionBar?.let {
+            it.setLogo(R.drawable.favicon)
+            it.setDisplayUseLogoEnabled(true)
+            it.setDisplayShowHomeEnabled(true)
+        }
     }
 
 
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.app_menu, menu)
+        menuInflater.inflate(R.menu.app_menu, menu)
         return true
     }
 

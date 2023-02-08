@@ -19,7 +19,7 @@ class NativeAd : NtvNativeAdInjectable {
     override lateinit var authorLabel: TextView
     override lateinit var adChoicesImageView: ImageView
     override lateinit var authorImageView: ImageView
-    override lateinit var dateLabel: TextView
+    override var dateLabel: TextView? = null
     override lateinit var previewImageView: ImageView
     override lateinit var previewTextLabel: TextView
     override val shouldPrependAuthorByline: Boolean = true
@@ -38,7 +38,7 @@ class NativeAd : NtvNativeAdInjectable {
         titleLabel = v.findViewById(R.id.article_title)
         authorLabel = v.findViewById(R.id.article_author)
         previewImageView = v.findViewById(R.id.article_image)
-        dateLabel = v.findViewById(R.id.article_date)
+        //dateLabel = v.findViewById(R.id.article_date)
         previewTextLabel = v.findViewById(R.id.article_description)
         authorImageView = v.findViewById(R.id.article_author_image)
         sponsoredTag = v.findViewById(R.id.sponsored_tag)

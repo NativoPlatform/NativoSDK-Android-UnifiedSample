@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nativo.sampleapp">
 
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
@@ -16,7 +17,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true"/>
-        <activity android:name=".activities.MainActivity"
+        <activity android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true">
             <intent-filter>
@@ -25,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SponsoredContentActivity" />
+        <activity android:name=".SponsoredContentActivity" />
         <activity android:name="net.nativo.sdk.stories.NtvStoryAdActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
     </application>
 

@@ -5,22 +5,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".activities.MainActivity">
+    tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-            tools:ignore="SpeakableTextPresentCheck" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/fragment_recycler_list_view" />
+        android:layout_height="match_parent"
+        android:name="com.nativo.sampleapp.RecyclerViewFragment" />
 
 </LinearLayout>
