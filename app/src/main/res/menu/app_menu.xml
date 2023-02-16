@@ -4,6 +4,4 @@
         android:title="@string/give_consent"/>
     <item android:id="@+id/no"
         android:title="@string/remove_consent" />
-    <item android:id="@+id/invalid"
-        android:title="@string/invalid_consent" />
 </menu>

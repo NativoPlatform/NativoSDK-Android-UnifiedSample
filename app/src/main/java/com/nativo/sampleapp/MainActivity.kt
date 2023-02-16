@@ -14,6 +14,7 @@ import com.nativo.sampleapp.NativoAds.StandardDisplayAd
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
+import net.nativo.sdk.NtvTestAdType
 
 class MainActivity : AppCompatActivity() {
 
@@ -55,10 +56,6 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.no -> {
                 removePrivacyAndTransparencyKeys()
-                true
-            }
-            R.id.invalid -> {
-                invalidPrivacyAndTransparencyKeys()
                 true
             }
             else -> super.onOptionsItemSelected(item)

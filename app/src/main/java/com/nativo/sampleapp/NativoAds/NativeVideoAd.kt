@@ -23,7 +23,7 @@ class NativeVideoAd : NtvVideoAdInjectable {
     override lateinit var adChoicesImageView: ImageView
     override lateinit var authorImageView: ImageView
     override var dateLabel: TextView? = null
-    override lateinit var previewTextLabel: TextView
+    override var previewTextLabel: TextView? = null
     override lateinit var previewImage: ImageView
     override val shouldPrependAuthorByline: Boolean = true
 
@@ -34,11 +34,8 @@ class NativeVideoAd : NtvVideoAdInjectable {
     override lateinit var muteIndicator: ImageView
     override lateinit var progressBar: ProgressBar
 
-    // Misc
-    private var cardView: CardView? = null
-
     override fun getLayout(context: Context): Int {
-        return R.layout.video_layout
+        return R.layout.video_layout_2
     }
 
     override fun bindViews(v: View) {
@@ -46,18 +43,15 @@ class NativeVideoAd : NtvVideoAdInjectable {
         titleLabel = v.findViewById(R.id.article_title)
         authorLabel = v.findViewById(R.id.article_author)
         authorImageView = v.findViewById(R.id.article_author_image)
-        previewTextLabel = v.findViewById(R.id.article_description)
+        //previewTextLabel = v.findViewById(R.id.article_description)
         previewImage = v.findViewById(R.id.preview_image)
         adChoicesImageView = v.findViewById(R.id.adchoices_indicator)
-        dateLabel = v.findViewById(R.id.article_date)
+        //dateLabel = v.findViewById(R.id.article_date)
         textureView = v.findViewById(R.id.video)
         playButton = v.findViewById(R.id.play)
         restartButton = v.findViewById(R.id.restart)
         muteIndicator = v.findViewById(R.id.mute_indicator)
         progressBar = v.findViewById(R.id.video_progress_bar)
-
-        cardView = v.findViewById(R.id.video_constraint_layout)
-        cardView?.setBackgroundColor(Color.LTGRAY)
     }
 
     // Only use this if you need to switch between regular article and sponsored nativo ads

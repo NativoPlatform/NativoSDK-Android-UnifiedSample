@@ -50,7 +50,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
      */
     @SuppressLint("NotifyDataSetChanged")
     private fun createArticlesDataSet() {
-        // Create artificial datasource with both article and Nativo ad items
+        // Create artificial datasource with both article and Nativo ad placeholders
         var articleNum = 0
         var adNum = 0
         for ( i in 0 until ITEM_COUNT) {
@@ -59,10 +59,11 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
                 "Nativo Placeholder $adNum"
             } else {
                 articleNum++
-                "Publisher Article $articleNum"
+                "Article"
             }
             articleList.add(title)
         }
+        Log.i("Ntv", "Created new Dataset: $articleList")
         notifyDataSetChanged()
     }
 
@@ -96,19 +97,15 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is net.nativo.sdk.utils.NativoViewHolder) {
             // Call Nativo placeAdInView using NativoViewHolder.itemView
-            holder.itemView.visibility = View.GONE
             val success = NativoSDK.placeAdInView(holder.itemView,
                                                   recyclerView,
                                                   AppConstants.SECTION_URL,
                                                   position,
                                            null)
-            if (success) holder.itemView.visibility = View.VISIBLE
-            Log.d(NtvTAG, "placing ad at position $position, available: $success")
         } else if (holder is ArticleViewHolder) {
             val articleTitle = articleList[position]
             holder.bindData(position, articleTitle)
         }
-        Log.d("onBindViewHolder", "At pos: $position")
     }
 
     override fun getItemCount(): Int {
@@ -138,12 +135,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     }
 
     override fun didFailAd(inSection: String, atLocation: Int?, inView: View?, container: ViewGroup?, error: Throwable?) {
-        Log.d(NtvTAG, "onFail at location: $atLocation Error: $error")
-        if (atLocation != null) {
-            Log.w(NtvTAG,"Removing Nativo Ad!")
-            articleList.removeAt(atLocation)
-            notifyItemRemoved(atLocation)
-        }
+        Log.d(NtvTAG, "onFail at location: $atLocation Error: ${error?.message}")
 
         // Add this here in case Nativo fails, we still create our article list
         if (articleList.size == 0) {

@@ -19,9 +19,9 @@
     <string name="hide_ad">Hide Ad</string>
     <string name="show_ad">Show Ad</string>
     <string name="sample_title">Publisher Article Title</string>
-    <string name="sample_description">Article Description</string>
+    <string name="sample_description">Description</string>
     <string name="sample_viewable_impression">Sample Viewable Impression</string>
-    <string name="sample_author">Article Author</string>
+    <string name="sample_author">Author</string>
 
     <!--DFP ad unit id-->
     <string name="ad_unit_id">/416881364/AdUnitSDK</string>

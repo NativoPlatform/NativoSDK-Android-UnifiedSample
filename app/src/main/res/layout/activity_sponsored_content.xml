@@ -14,26 +14,32 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
             android:gravity="center_horizontal"
-            android:layout_margin="8dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/sponsored_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
-                android:textStyle="italic|bold"
+                android:layout_marginBottom="2dp"
                 android:fontFamily="sans-serif"
-                android:text="@string/sponsored_content" />
+                android:text="@string/sponsored_content"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="italic|bold" />
 
             <TextView
                 android:id="@+id/title_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/sponsored_tag"
-                android:gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="start"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 tools:text="Title" />
 
@@ -42,9 +48,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title_label"
-                android:layout_margin="1dp"
-                android:textStyle="italic"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
                 android:text="@string/by"
+                android:textStyle="italic"
                 tools:text="By" />
 
             <TextView
@@ -52,8 +61,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title_label"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
                 android:layout_toEndOf="@id/article_by"
-                android:layout_margin="2dp"
                 android:textStyle="italic"
                 tools:text="Article Author" />
 
