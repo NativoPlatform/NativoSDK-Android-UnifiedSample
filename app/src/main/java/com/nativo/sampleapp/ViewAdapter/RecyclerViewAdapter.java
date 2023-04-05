@@ -45,21 +45,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         // Create sudo articles datasource
         for (int i = 0; i < 30; i++) {
-            String title = "Publisher Article " + i;
-            articleList.add(title);
-        }
-        // Add Nativo placeholders
-        for (int i = 0; i < 40; i++) {
             if (shouldPlaceNativoAdAtIndex(i)) {
                 String title = "Nativo Placeholder";
-                articleList.add(i, title);
+                articleList.add(title);
+            } else {
+                String title = "Publisher Article " + i;
+                articleList.add(title);
             }
         }
     }
 
     // Helper method to determine which indexes should be Nativo ads
     public boolean shouldPlaceNativoAdAtIndex(int i) {
-        return i % 3 == 1;
+        return i % 6 == 1;
     }
 
     /**
@@ -200,8 +198,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Log.d(NtvTAG, "onFail at location: "+atLocation+" Error: "+ error);
         if (atLocation != null) {
             Log.w(NtvTAG,"Removing Nativo Ad!");
-            articleList.remove(atLocation.intValue());
-            notifyItemRemoved(atLocation);
+            if (inView != null) {
+                inView.setVisibility(View.GONE);
+                //((ViewGroup)inView).getChildAt(0).setVisibility(View.GONE);
+            }
+//            articleList.remove(atLocation.intValue());
+//            notifyItemRemoved(atLocation);
         }
     }
 

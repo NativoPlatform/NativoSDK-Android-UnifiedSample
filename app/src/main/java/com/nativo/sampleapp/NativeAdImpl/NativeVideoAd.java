@@ -3,12 +3,16 @@ package com.nativo.sampleapp.NativeAdImpl;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import com.nativo.sampleapp.R;
 
@@ -20,15 +24,11 @@ import java.util.Date;
 public class NativeVideoAd implements NtvVideoAdInjectable {
 
     private static String TAG = NativeVideoAd.class.getName();
-    private RelativeLayout layout;
-    private TextureView textureView;
-    private ImageView previewImage;
+    private FrameLayout videoContainer;
     private ImageView playButton;
     private ImageView restartButton;
-    private ImageView muteIndicator;
     private TextView titleLabel;
     private TextView authorLabel;
-    private ImageView sponsoredIndicator;
     private ImageView adChoicesIndicator;
     private ProgressBar progressBar;
     private View view;
@@ -51,14 +51,12 @@ public class NativeVideoAd implements NtvVideoAdInjectable {
     @Override
     public void bindViews(View v) {
         view = v;
-        textureView = (TextureView) v.findViewById(R.id.video);
-        previewImage = (ImageView) v.findViewById(R.id.preview_image);
-        playButton = (ImageView) v.findViewById(R.id.play);
-        restartButton = (ImageView) v.findViewById(R.id.restart);
-        titleLabel = (TextView) v.findViewById(R.id.article_title);
-        authorLabel = (TextView) v.findViewById(R.id.article_author);
+        videoContainer = v.findViewById(R.id.video_container);
+        playButton = v.findViewById(R.id.play);
+        restartButton = v.findViewById(R.id.restart);
+        titleLabel = v.findViewById(R.id.article_title);
+        authorLabel = v.findViewById(R.id.article_author);
         progressBar = v.findViewById(R.id.video_progress_bar);
-        muteIndicator = v.findViewById(R.id.mute_indicator);
         adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
         articlePreviewLabel = v.findViewById(R.id.article_description);
         articleAuthorImage = v.findViewById(R.id.article_author_image);
@@ -66,14 +64,10 @@ public class NativeVideoAd implements NtvVideoAdInjectable {
         cardView = v.findViewById(R.id.video_constraint_layout);
     }
 
+    @NonNull
     @Override
-    public TextureView getTextureView() {
-        return textureView;
-    }
-
-    @Override
-    public ImageView getPreviewImage() {
-        return previewImage;
+    public FrameLayout getVideoContainer() {
+        return videoContainer;
     }
 
     @Override
@@ -116,11 +110,6 @@ public class NativeVideoAd implements NtvVideoAdInjectable {
         if (cardView != null) {
             cardView.setBackgroundColor(Color.LTGRAY);
         }
-    }
-
-    @Override
-    public ImageView getMuteIndicator() {
-        return muteIndicator;
     }
 
     @Override
@@ -172,4 +161,5 @@ public class NativeVideoAd implements NtvVideoAdInjectable {
     public boolean getShouldPrependAuthorByline() {
         return true;
     }
+
 }

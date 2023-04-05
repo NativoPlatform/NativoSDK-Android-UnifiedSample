@@ -1,11 +1,10 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android-extensions'
     id 'kotlin-android'
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.nativo.sampleapp"
         minSdkVersion 23
@@ -64,7 +63,7 @@ dependencies {
     implementation(group: 'com.iab.omid', name: 'omsdk-android', version: '1.3.13')
 
     // need for exoplayer
-    implementation(group: 'com.google.guava', name: 'guava', version: '27.1-android')
+    implementation(group: 'com.google.guava', name: 'guava', version: '31.0.1-android')
 
 
     // Kotlin Core

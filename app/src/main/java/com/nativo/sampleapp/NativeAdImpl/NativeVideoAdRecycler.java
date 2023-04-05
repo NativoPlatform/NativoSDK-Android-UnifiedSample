@@ -3,13 +3,16 @@ package com.nativo.sampleapp.NativeAdImpl;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.ViewHolders.ArticleViewHolder;
@@ -22,15 +25,10 @@ import java.util.Date;
 public class NativeVideoAdRecycler extends ArticleViewHolder implements NtvVideoAdInjectable {
 
     private static String TAG = NativeVideoAdRecycler.class.getName();
-    private RelativeLayout layout;
-    private TextureView textureView;
-    private ImageView previewImage;
     private ImageView playButton;
     private ImageView restartButton;
-    private ImageView muteIndicator;
     private TextView titleLabel;
     private TextView authorLabel;
-    private ImageView sponsoredIndicator;
     private ImageView adChoicesIndicator;
     private TextView articlePreviewLabel;
     private ImageView articleAuthorImage;
@@ -39,14 +37,13 @@ public class NativeVideoAdRecycler extends ArticleViewHolder implements NtvVideo
     private View view;
     private CardView cardView;
 
+    public NativeVideoAdRecycler(@NonNull View container, ViewGroup viewGroup) {
+        super(container, viewGroup);
+    }
+
     @Override
     public int getLayout(Context context) {
         return 0;
-    }
-
-    public NativeVideoAdRecycler(View itemView, ViewGroup viewGroup) {
-        super(itemView, viewGroup);
-        view = itemView;
     }
 
     @Override
@@ -61,14 +58,12 @@ public class NativeVideoAdRecycler extends ArticleViewHolder implements NtvVideo
 
     @Override
     public void bindViews(View v) {
-        textureView = (TextureView) v.findViewById(R.id.video);
-        previewImage = (ImageView) v.findViewById(R.id.preview_image);
+        view = v;
         playButton = (ImageView) v.findViewById(R.id.play);
         restartButton = (ImageView) v.findViewById(R.id.restart);
         titleLabel = (TextView) v.findViewById(R.id.article_title);
         authorLabel = (TextView) v.findViewById(R.id.article_author);
         progressBar = v.findViewById(R.id.video_progress_bar);
-        muteIndicator = v.findViewById(R.id.mute_indicator);
         adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
         articlePreviewLabel = v.findViewById(R.id.article_description);
         articleAuthorImage = v.findViewById(R.id.article_author_image);
@@ -76,14 +71,10 @@ public class NativeVideoAdRecycler extends ArticleViewHolder implements NtvVideo
         cardView = v.findViewById(R.id.video_constraint_layout);
     }
 
+    @NonNull
     @Override
-    public TextureView getTextureView() {
-        return textureView;
-    }
-
-    @Override
-    public ImageView getPreviewImage() {
-        return previewImage;
+    public FrameLayout getVideoContainer() {
+        return null;
     }
 
     @Override
@@ -126,11 +117,6 @@ public class NativeVideoAdRecycler extends ArticleViewHolder implements NtvVideo
         if (cardView != null) {
             cardView.setBackgroundColor(Color.LTGRAY);
         }
-    }
-
-    @Override
-    public ImageView getMuteIndicator() {
-        return muteIndicator;
     }
 
     @Override
@@ -182,4 +168,5 @@ public class NativeVideoAdRecycler extends ArticleViewHolder implements NtvVideo
     public boolean getShouldPrependAuthorByline() {
         return false;
     }
+
 }

@@ -2,13 +2,11 @@ package com.nativo.sampleapp.ViewFragment;
 
 
 import static com.nativo.sampleapp.util.AppConstants.CLICK_OUT_URL;
-import static com.nativo.sampleapp.util.AppConstants.SECTION_URL;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +41,7 @@ public class SingleViewVideoFragment extends Fragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        convertView = view.findViewById(R.id.video_container);
+        convertView = view.findViewById(R.id.layout);
 
         bindView(view, 0);
         view.findViewById(R.id.load_ad).setOnClickListener(loadAd);
