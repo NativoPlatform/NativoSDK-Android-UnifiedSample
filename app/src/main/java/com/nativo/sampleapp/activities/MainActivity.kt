@@ -13,7 +13,6 @@ import androidx.preference.PreferenceManager
 import com.nativo.sampleapp.NativeAdImpl.NativeAd
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAd
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAd
-import com.nativo.sampleapp.NativeAdVideo.FullScreenVideoImpl
 import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
@@ -69,10 +68,9 @@ class MainActivity : AppCompatActivity() {
         NativoSDK.registerClassForNativeAd(NativeAd::class.java)
         NativoSDK.registerClassForVideoAd(NativeVideoAd::class.java)
         NativoSDK.registerClassForStandardDisplayAd(StandardDisplayAd::class.java)
-        NativoSDK.registerFullscreenVideo(FullScreenVideoImpl())
 
         // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements()
+        NativoSDK.enableTestAdvertisements(NtvTestAdType.VIDEO_SCROLL_TO_PLAY)
         NativoSDK.enableDevLogs()
     }
 

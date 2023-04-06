@@ -84,22 +84,22 @@ public class NativeAd implements NtvNativeAdInjectable {
 
     @Override
     public int getLayout(Context context) {
-        return R.layout.native_article;
+        return R.layout.native_article_2;
     }
 
     @Override
     public void bindViews(View v) {
         view = v;
-        layout = v.findViewById(R.id.article_layout);
-        cardView = v.findViewById(R.id.article_constraint_layout);
         titleLabel = v.findViewById(R.id.article_title);
         authorLabel = v.findViewById(R.id.article_author);
         image = v.findViewById(R.id.article_image);
-        articleDateLabel = v.findViewById(R.id.article_date);
-        articlePreviewLabel = v.findViewById(R.id.article_description);
         articleAuthorImage = v.findViewById(R.id.article_author_image);
-        sponsoredTag = v.findViewById(R.id.sponsored_tag);
-        adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
+
+//        layout = v.findViewById(R.id.article_layout);
+//        adChoicesIndicator = v.findViewById(R.id.adchoices_indicator);
+//        sponsoredTag = v.findViewById(R.id.sponsored_tag);
+//        articleDateLabel = v.findViewById(R.id.article_date);
+//        articlePreviewLabel = v.findViewById(R.id.article_description);
     }
 
     @Override
