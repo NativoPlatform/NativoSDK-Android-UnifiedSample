@@ -18,6 +18,7 @@ import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
+import net.nativo.sdk.NtvTestAdType
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         // Nativo Setup
         NativoSDK.enableDevLogs()
+        NativoSDK.enableTestAdvertisements(NtvTestAdType.VIDEO_SCROLL_TO_PLAY)
         NativoSDK.registerClassForLandingPage(SponsoredContentActivity::class.java)
         NativoSDK.registerClassForNativeAd(NativeAd::class.java)
         NativoSDK.registerClassForVideoAd(NativeVideoAd::class.java)

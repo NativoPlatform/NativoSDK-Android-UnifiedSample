@@ -3,38 +3,30 @@ package com.nativo.sampleapp.NativoAds
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
-import android.view.TextureView
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.nativo.sampleapp.R
 import net.nativo.sdk.injectable.NtvVideoAdInjectable
-import net.nativo.sdk.video.VideoPlaybackError
+import net.nativo.sdk.video.*
 import java.util.*
 
 class NativeVideoAd : NtvVideoAdInjectable {
-
-    // Nativo Injectable properties
-    override lateinit var view: View
+    override lateinit var videoContainer: FrameLayout
+    override lateinit var playButton: ImageView
+    override lateinit var restartButton: ImageView
     override lateinit var titleLabel: TextView
     override lateinit var authorLabel: TextView
     override lateinit var adChoicesImageView: ImageView
+    override lateinit var progressBar: ProgressBar
+    override lateinit var view: View
+    override lateinit var previewTextLabel: TextView
     override lateinit var authorImageView: ImageView
     override lateinit var dateLabel: TextView
-    override lateinit var previewTextLabel: TextView
-    override lateinit var previewImage: ImageView
-    override val shouldPrependAuthorByline: Boolean = true
 
-    // Nativo Video Injectable properties
-    override lateinit var textureView: TextureView
-    override lateinit var playButton: ImageView
-    override lateinit var restartButton: ImageView
-    override lateinit var muteIndicator: ImageView
-    override lateinit var progressBar: ProgressBar
-
-    // Misc
     private var cardView: CardView? = null
 
     override fun getLayout(context: Context): Int {
@@ -43,54 +35,62 @@ class NativeVideoAd : NtvVideoAdInjectable {
 
     override fun bindViews(v: View) {
         view = v
-        titleLabel = v.findViewById(R.id.article_title)
-        authorLabel = v.findViewById(R.id.article_author)
-        authorImageView = v.findViewById(R.id.article_author_image)
-        previewTextLabel = v.findViewById(R.id.article_description)
-        previewImage = v.findViewById(R.id.preview_image)
-        adChoicesImageView = v.findViewById(R.id.adchoices_indicator)
-        dateLabel = v.findViewById(R.id.article_date)
-        textureView = v.findViewById(R.id.video)
+        videoContainer = v.findViewById(R.id.video_container)
         playButton = v.findViewById(R.id.play)
         restartButton = v.findViewById(R.id.restart)
-        muteIndicator = v.findViewById(R.id.mute_indicator)
+        titleLabel = v.findViewById(R.id.article_title)
+        authorLabel = v.findViewById(R.id.article_author)
         progressBar = v.findViewById(R.id.video_progress_bar)
-
+        adChoicesImageView = v.findViewById(R.id.adchoices_indicator)
+        previewTextLabel = v.findViewById(R.id.article_description)
+        authorImageView = v.findViewById(R.id.article_author_image)
+        dateLabel = v.findViewById(R.id.article_date)
         cardView = v.findViewById(R.id.video_constraint_layout)
-        cardView?.setBackgroundColor(Color.LTGRAY)
     }
 
-    // Only use this if you need to switch between regular article and sponsored nativo ads
     override fun displaySponsoredIndicators(isSponsored: Boolean) {
+        if (cardView != null) {
+            cardView!!.setBackgroundColor(Color.LTGRAY)
+        }
     }
 
     override fun formatDate(date: Date?): String? {
         return null
     }
 
-    private val tag = "NativeVideoAd"
-    override fun onVideoEnteredFullscreen() {
-        Log.d(tag, "onVideoEnteredFullscreen: ")
-    }
+    override val shouldPrependAuthorByline: Boolean
+        get() = true
 
-    override fun onVideoExitedFullscreen() {
-        Log.d(tag, "onVideoExitedFullscreen: ")
-    }
+    //Log.d(TAG, "onVideoProgress: " + progress);
+    override val videoEventListener: VideoEventListener = object : VideoEventListener {
+            override fun onVideoStateChange(state: VideoState, player: VideoPlayer) {
+                if (state === VideoState.Init) {
+                    player.setResizeMode(VideoResizeMode.Fit)
+                }
+            }
 
-    override fun onVideoPlay() {
-        Log.d(tag, "onVideoPlay: ")
-    }
+            override fun onVideoProgress(progress: Long, player: VideoPlayer) {
+                //Log.d(TAG, "onVideoProgress: " + progress);
+            }
 
-    override fun onVideoPause() {
-        Log.d(tag, "onVideoPause: ")
-    }
+            override fun onVideoError(error: VideoPlaybackError, player: VideoPlayer) {
+                Log.d(TAG, "onVideoError: $error")
+            }
 
-    override fun onVideoPlaybackCompleted() {
-        Log.d(tag, "onVideoPlaybackCompleted: ")
-    }
+            override fun onVideoFullscreen(player: VideoPlayer) {
+                Log.d(TAG, "onVideoFullscreen: ")
+            }
 
-    override fun onVideoPlaybackError(error: VideoPlaybackError?) {
-        Log.e(tag, "onVideoPlaybackError: $error")
-    }
+            override fun onVideoExitFullscreen(player: VideoPlayer) {
+                Log.d(TAG, "onVideoExitFullscreen: ")
+            }
 
+            override fun onVideoLearnMore(player: VideoPlayer) {
+                Log.d(TAG, "onVideoLearnMore: ")
+            }
+        }
+
+    companion object {
+        private val TAG = NativeVideoAd::class.java.name
+    }
 }
