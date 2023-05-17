@@ -11,8 +11,8 @@
         android:id="@+id/adchoices_indicator"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:layout_alignTop="@id/video_frame"
-        android:layout_alignEnd="@id/video_frame"
+        android:layout_alignTop="@id/video_container"
+        android:layout_alignEnd="@id/video_container"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sponsoredContent" />
 
     <FrameLayout
-        android:id="@+id/video_frame"
+        android:id="@+id/video_container"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginTop="8dp"
@@ -72,17 +72,6 @@
         app:layout_constraintStart_toStartOf="@+id/article_author_image"
         app:layout_constraintTop_toBottomOf="@+id/article_author_image"
         app:layout_constraintVertical_bias="1.0">
-
-        <TextureView
-            android:id="@+id/video"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <ImageView
-            android:id="@+id/preview_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/play"
@@ -104,14 +93,6 @@
             android:scaleY="1.5"
             android:src="@drawable/restart"
             android:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/mute_indicator"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp" />
 
         <ProgressBar
             android:id="@+id/video_progress_bar"

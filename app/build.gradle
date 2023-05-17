@@ -11,11 +11,11 @@ android {
             keyAlias 'ntv_android'
         }
     }
-    compileSdkVersion 32
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.nativo.sampleapp"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 4
         versionName "1.0"
         multiDexEnabled true
@@ -28,9 +28,6 @@ android {
             signingConfig signingConfigs.ntv_release
         }
     }
-    lintOptions {
-        abortOnError false
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -38,6 +35,10 @@ android {
     buildFeatures {
         viewBinding true
     }
+    lint {
+        abortOnError false
+    }
+    namespace 'com.nativo.sampleapp'
 }
 
 configurations.all {
@@ -45,13 +46,10 @@ configurations.all {
 }
 
 dependencies {
-    implementation 'net.nativo.sdk:nativo-sdk:7.0.3-SNAPSHOT'
-    implementation 'com.google.android.gms:play-services-ads:19.1.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'net.nativo.sdk:nativo-sdk:7.1.0-SNAPSHOT'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }
