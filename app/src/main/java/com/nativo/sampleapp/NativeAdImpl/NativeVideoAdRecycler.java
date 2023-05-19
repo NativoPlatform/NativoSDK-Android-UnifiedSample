@@ -13,12 +13,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import com.nativo.sampleapp.R;
 import com.nativo.sampleapp.ViewHolders.ArticleViewHolder;
 
 import net.nativo.sdk.injectable.NtvVideoAdInjectable;
+import net.nativo.sdk.video.VideoEventListener;
 import net.nativo.sdk.video.VideoPlaybackError;
+import net.nativo.sdk.video.VideoPlayer;
+import net.nativo.sdk.video.VideoState;
 
 import java.util.Date;
 
@@ -135,38 +139,13 @@ public class NativeVideoAdRecycler extends ArticleViewHolder implements NtvVideo
     }
 
     @Override
-    public void onVideoEnteredFullscreen() {
-        Log.d(TAG, "onVideoEnteredFullscreen: ");
-    }
-
-    @Override
-    public void onVideoExitedFullscreen() {
-        Log.d(TAG, "onVideoExitedFullscreen: ");
-    }
-
-    @Override
-    public void onVideoPlay() {
-        Log.d(TAG, "onVideoPlay: ");
-    }
-
-    @Override
-    public void onVideoPause() {
-        Log.d(TAG, "onVideoPause: ");
-    }
-
-    @Override
-    public void onVideoPlaybackCompleted() {
-        Log.d(TAG, "onVideoPlaybackCompleted: ");
-    }
-
-    @Override
-    public void onVideoPlaybackError(VideoPlaybackError videoPlaybackError) {
-        Log.d(TAG, "onVideoPlaybackError: ");
-    }
-
-    @Override
     public boolean getShouldPrependAuthorByline() {
         return false;
     }
 
+    @Nullable
+    @Override
+    public VideoEventListener getVideoEventListener() {
+        return null;
+    }
 }

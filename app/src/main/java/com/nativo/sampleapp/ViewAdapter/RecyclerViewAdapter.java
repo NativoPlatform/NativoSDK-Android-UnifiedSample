@@ -57,7 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     // Helper method to determine which indexes should be Nativo ads
     public boolean shouldPlaceNativoAdAtIndex(int i) {
-        return i % 6 == 1;
+        return i % 3 == 1;
     }
 
     /**
@@ -136,8 +136,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 Log.d(NtvTAG, "Couldn't place ad! at "+position);
             }
         }
-
-
 
         // LEGACY
         /*boolean isAdContentAvailable = false;
@@ -222,6 +220,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public Class<NtvInjectable> registerInjectableClassForTemplateType(@NonNull NtvInjectableType injectableType, @Nullable Integer atLocation, @Nullable String inSection) {
         return null;
     }
-
 
 }
