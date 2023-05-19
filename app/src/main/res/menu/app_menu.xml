@@ -6,4 +6,6 @@
         android:title="@string/remove_consent" />
     <item android:id="@+id/invalid"
         android:title="@string/invalid_consent" />
+    <item android:id="@+id/reload"
+        android:title="Reload" />
 </menu>

@@ -17,6 +17,7 @@ import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
+import com.nativo.sampleapp.util.Reloadable
 import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.NtvTestAdType
 
@@ -58,12 +59,14 @@ class MainActivity : AppCompatActivity() {
 
     private inner class FragmentViewAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
 
+        var currentItem : Fragment? = null
+
         override fun getItemCount(): Int {
             return tabTitles.count()
         }
 
         override fun createFragment(position: Int): Fragment {
-            return when (position) {
+            currentItem = when (position) {
                 0 -> RecyclerViewFragment()
                 1 -> GridFragment()
                 2 -> ListViewFragment()
@@ -72,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                 5 -> MOAPFragment()
                 else -> RecyclerViewFragment()
             }
+            return currentItem!!
         }
 
     }
@@ -96,7 +100,19 @@ class MainActivity : AppCompatActivity() {
                 invalidPrivacyAndTransparencyKeys()
                 true
             }
+            R.id.reload -> {
+                reloadAds()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun reloadAds() {
+        val adapter = binding.pager.adapter as FragmentViewAdapter
+        val fragment = adapter.currentItem
+        if (fragment is Reloadable) {
+            fragment.reload()
         }
     }
 
