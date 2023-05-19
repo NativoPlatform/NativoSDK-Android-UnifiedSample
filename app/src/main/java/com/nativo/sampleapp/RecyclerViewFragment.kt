@@ -11,6 +11,7 @@ import com.nativo.sampleapp.databinding.FragmentRecyclerListViewBinding
 class RecyclerViewFragment : Fragment() {
 
     private lateinit var binding: FragmentRecyclerListViewBinding
+    lateinit var adapter: RecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +29,7 @@ class RecyclerViewFragment : Fragment() {
             adapter = RecyclerViewAdapter(context, this)
             layoutManager = LinearLayoutManager(context)
         }
+        this.adapter = binding.recyclerListView.adapter as RecyclerViewAdapter
     }
 
     // calling clear ads in section when your app transitions to new activity or fragment

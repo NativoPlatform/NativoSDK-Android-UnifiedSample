@@ -36,6 +36,7 @@ class SponsoredContentActivity : AppCompatActivity(), NtvLandingPageInjectable {
     override fun bindViews(v: View) {
         view = v
         contentWebView = v.findViewById(R.id.web_view)
+        contentWebView.settings.javaScriptEnabled = true
         titleLabel = v.findViewById(R.id.title_label)
         authorNameLabel = v.findViewById(R.id.article_author)
         authorImageView = v.findViewById(R.id.article_author_image)

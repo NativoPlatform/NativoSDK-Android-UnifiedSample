@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.nativo.sampleapp.ArticleActivity
 import com.nativo.sampleapp.R
 import com.nativo.sampleapp.util.AppConstants
 import java.text.DateFormat
@@ -24,7 +25,8 @@ open class ArticleViewHolder(container: View, var parent: ViewGroup) :
     //private var articleSponsor: ImageView?
 
     private var onClickListener = View.OnClickListener {
-        it.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.CLICK_OUT_URL)))
+        val intent = Intent(this.parent.context, ArticleActivity::class.java)
+        it.context.startActivity(intent)
     }
 
     init {

@@ -10,6 +10,7 @@
     <string name="single_view_video">Single Video</string>
     <string name="gam">GAM Integration</string>
     <string name="moap">MOAP</string>
+    <string name="reload">Reload</string>
 
     <string name="hello_blank_fragment">Hello blank fragment one</string>
     <string name="hello_blank_fragment_two">Hello blank fragment two</string>
@@ -30,4 +31,13 @@
     <string name="invalid_consent">Invalid Consent</string>
     <string name="new_activity">New Activity</string>
     <string name="sampleDate">2023-01-027</string>
+    <string name="title_activity_article">ArticleActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

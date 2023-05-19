@@ -5,28 +5,31 @@
     android:id="@+id/article_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?android:selectableItemBackground"
+    android:background="#F3F3F3"
     android:orientation="vertical"
-    android:padding="16dp"
-    tools:background="@drawable/sponsored_border">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="8dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/article_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        card_view:cardCornerRadius="5dp"
-        card_view:cardElevation="5dp">
+        card_view:cardBackgroundColor="#FFFFFF">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:paddingStart="8dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="16dp">
 
             <ImageView
                 android:id="@+id/article_image"
                 android:layout_width="107dp"
-                android:layout_height="129dp"
+                android:layout_height="107dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -64,15 +67,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/article_date"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
-                android:layout_toEndOf="@id/article_image"
+                android:layout_toEndOf="@+id/article_image"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif"
                 android:maxLines="3"
-                tools:text="Article Description" />
+                tools:text="Lorem ipsum" />
 
             <TextView
                 android:id="@+id/article_author"

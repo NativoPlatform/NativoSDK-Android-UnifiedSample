@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentContainerView
 import androidx.preference.PreferenceManager
 import com.nativo.sampleapp.NativoAds.NativeAd
 import com.nativo.sampleapp.NativoAds.NativeVideoAd
@@ -49,42 +50,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.yes -> {
-                setPrivacyAndTransparencyKeys()
-                true
-            }
-            R.id.no -> {
-                removePrivacyAndTransparencyKeys()
+            R.id.reload -> {
+                reloadAds()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private val editor: SharedPreferences.Editor
-        get() {
-            val preferenceManager = PreferenceManager.getDefaultSharedPreferences(this)
-            return preferenceManager.edit()
-        }
-
-    private fun setPrivacyAndTransparencyKeys() {
-        val editor = editor
-        editor.putString(AppConstants.GDPR_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_GDPR_CONSENT)
-        editor.putString(AppConstants.CCPA_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_CCPA_VALID_CONSENT)
-        editor.apply()
-    }
-
-    private fun invalidPrivacyAndTransparencyKeys() {
-        val editor = editor
-        editor.putString(AppConstants.GDPR_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_GDPR_INVALID_CONSENT)
-        editor.putString(AppConstants.CCPA_SHARED_PREFERENCE_STRING, AppConstants.SAMPLE_CCPA_INVALID_CONSENT)
-        editor.apply()
-    }
-
-    private fun removePrivacyAndTransparencyKeys() {
-        val editor = editor
-        editor.remove(AppConstants.GDPR_SHARED_PREFERENCE_STRING)
-        editor.remove(AppConstants.CCPA_SHARED_PREFERENCE_STRING)
-        editor.apply()
+    private fun reloadAds() {
+        NativoSDK.clearAds(AppConstants.SECTION_URL)
+        val fragment = binding.fragmentContainerView.getFragment<RecyclerViewFragment>()
+        fragment.adapter.reloadDataSet()
     }
 }

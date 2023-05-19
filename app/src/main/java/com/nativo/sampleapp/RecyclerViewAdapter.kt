@@ -28,20 +28,16 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     private val articleList: ArrayList<String> = ArrayList()
     private var nativoNeedsReload = false
 
-    private var onClickListener = View.OnClickListener {
-        it.context.startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(AppConstants.CLICK_OUT_URL)
-            )
-        )
-    }
-
     init {
         // This initializes the NativoSDK and starts prefetching ads for your section URL
         NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
         // Enable this since we have placeholders for Nativo in our data set
         NativoSDK.enablePlaceholderMode(true)
+    }
+
+    fun reloadDataSet() {
+        NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
+        NativoSDK.prefetchAdForSection(AppConstants.SECTION_URL)
     }
 
     /**
@@ -51,6 +47,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     @SuppressLint("NotifyDataSetChanged")
     private fun createArticlesDataSet() {
         // Create artificial datasource with both article and Nativo ad placeholders
+        articleList.clear()
         var articleNum = 0
         var adNum = 0
         for ( i in 0 until ITEM_COUNT) {
