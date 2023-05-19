@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".ViewFragment.DfpFragment">
+        tools:context=".ViewFragment.GAMFragment">
 
         <Space
             android:layout_width="match_parent"
@@ -41,14 +41,14 @@
             android:layout_width="match_parent"
             android:layout_height="57dp" />
 
-        <com.google.android.gms.ads.doubleclick.PublisherAdView
+        <com.google.android.gms.ads.admanager.AdManagerAdView
             android:id="@+id/publisherAdView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="visible"
             ads:adSize="BANNER"
-            ads:adUnitId="@string/ad_unit_id"></com.google.android.gms.ads.doubleclick.PublisherAdView>
+            ads:adUnitId="@string/ad_unit_id"></com.google.android.gms.ads.admanager.AdManagerAdView>
 
 
     </LinearLayout>

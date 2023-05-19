@@ -3,10 +3,7 @@ package com.nativo.sampleapp.ViewFragment;
 
 import static com.nativo.sampleapp.util.AppConstants.DFP_SECTION_URL;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +15,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
-import com.google.android.gms.ads.doubleclick.PublisherAdView;
+
+import com.google.android.gms.ads.admanager.AdManagerAdRequest;
+import com.google.android.gms.ads.admanager.AdManagerAdView;
 import com.nativo.sampleapp.R;
-import com.nativo.sampleapp.util.AppConstants;
 
 import net.nativo.sdk.NativoSDK;
 import net.nativo.sdk.NtvAdData;
@@ -38,13 +34,13 @@ import net.nativo.sdk.injectable.NtvInjectableType;
 * LineItem -> "Mobile Test Line Item"
 * Creative -> "Nativo Tag Creative"
 * Campaign ID "c" -> 114921*/
-public class DfpFragment extends Fragment implements NtvSectionAdapter {
+public class GAMFragment extends Fragment implements NtvSectionAdapter {
 
-    PublisherAdView mPublisherAdView;
+    AdManagerAdView mPublisherAdView;
     View nativoView;
     ViewGroup parentView;
 
-    public DfpFragment() {
+    public GAMFragment() {
         // Required empty public constructor
     }
 
@@ -62,7 +58,7 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
 
         // Nativo init
         NativoSDK.enableTestAdvertisements();
-        NativoSDK.enableGAMwithVersion("19.1.0");
+        NativoSDK.enableGAMwithVersion("21.3.0");
         NativoSDK.initSectionWithAdapter(this, DFP_SECTION_URL, requireContext());
 
         parentView = (ViewGroup) view;
@@ -80,11 +76,10 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
 
         // Create an ad request.
         // The ad unit Id is set on the PublisherAdView in the fragment_dfp.xml
-        final PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
+        final AdManagerAdRequest adRequest = new AdManagerAdRequest.Builder()
                 .addCustomTargeting("ntvPlacement","991150").build();
 
         mPublisherAdView.setAdListener(new AdListener() {
-            @TargetApi(Build.VERSION_CODES.KITKAT)
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
@@ -97,11 +92,6 @@ public class DfpFragment extends Fragment implements NtvSectionAdapter {
                 else{
                     Log.d("DFP", "Did receive DFP banner ad");
                 }
-            }
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-                Log.d("DFP", "onAdFailedToLoad. errorCode: "+errorCode);
             }
         });
 

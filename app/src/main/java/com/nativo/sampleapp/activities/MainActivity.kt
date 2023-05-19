@@ -1,8 +1,6 @@
 package com.nativo.sampleapp.activities
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -14,11 +12,11 @@ import com.nativo.sampleapp.NativeAdImpl.NativeAd
 import com.nativo.sampleapp.NativeAdImpl.NativeVideoAd
 import com.nativo.sampleapp.NativeAdImpl.StandardDisplayAd
 import com.nativo.sampleapp.R
+import com.nativo.sampleapp.util.Reloadable
 import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
-import net.nativo.sdk.NtvTestAdType
 
 /**
  * Various of Fragment Types
@@ -70,23 +68,26 @@ class MainActivity : AppCompatActivity() {
         NativoSDK.registerClassForStandardDisplayAd(StandardDisplayAd::class.java)
 
         // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements(NtvTestAdType.VIDEO_SCROLL_TO_PLAY)
+        //NativoSDK.enableTestAdvertisements()
         NativoSDK.enableDevLogs()
     }
 
     private inner class FragmentViewAdapter(fm: FragmentManager) :
         FragmentPagerAdapter(fm) {
+
+        lateinit var currentItem : Fragment
         override fun getItem(i: Int): Fragment {
-            return when (mainFragmentType) {
+            currentItem = when (mainFragmentType) {
                 NtvFragmentType.RECYCLE_LIST -> RecyclerViewFragment()
                 NtvFragmentType.GRID -> GridFragment()
                 NtvFragmentType.TABLE -> ListViewFragment()
                 NtvFragmentType.SINGLEVIEW -> SingleViewFragment()
                 NtvFragmentType.SINGLEVIEW_VIDEO -> SingleViewVideoFragment()
-                NtvFragmentType.GAM_INTEGRATION -> DfpFragment()
+                NtvFragmentType.GAM_INTEGRATION -> GAMFragment()
                 NtvFragmentType.MIDDLE_OF_ARTICLE -> MOAPFragment()
                 else -> MOAPFragment()
             }
+            return currentItem
         }
 
         override fun getCount(): Int {
@@ -114,6 +115,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
         return when (item.itemId) {
             R.id.yes -> {
                 setPrivacyAndTransparencyKeys()
@@ -127,7 +129,19 @@ class MainActivity : AppCompatActivity() {
                 invalidPrivacyAndTransparencyKeys()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            R.id.reload -> {
+                reloadAds()
+                true
+            }
+            else -> false
+        }
+    }
+
+    private fun reloadAds() {
+        val adapter = binding.pager.adapter as FragmentViewAdapter
+        val fragment = adapter.currentItem
+        if (fragment is Reloadable) {
+            fragment.reload()
         }
     }
 
