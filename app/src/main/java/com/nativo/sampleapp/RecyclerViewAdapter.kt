@@ -20,13 +20,13 @@ import net.nativo.sdk.injectable.NtvInjectableType
 
 const val ITEM_TYPE_ARTICLE = 0
 const val ITEM_TYPE_NATIVO = 1
-const val ITEM_COUNT = 40
+const val ITEM_COUNT = 18
 
 class RecyclerViewAdapter(private val context: Context, private val recyclerView: RecyclerView) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), NtvSectionAdapter {
 
     private val articleList: ArrayList<String> = ArrayList()
-    private var nativoNeedsReload = false
+    private var needsReload = true
 
     init {
         // This initializes the NativoSDK and starts prefetching ads for your section URL
@@ -35,9 +35,12 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
         NativoSDK.enablePlaceholderMode(true)
     }
 
+
     fun reloadDataSet() {
+        Log.d("NativoApp", "Reloading dataset")
         NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
         NativoSDK.prefetchAdForSection(AppConstants.SECTION_URL)
+        needsReload = true
     }
 
     /**
@@ -46,8 +49,9 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
      */
     @SuppressLint("NotifyDataSetChanged")
     private fun createArticlesDataSet() {
-        // Create artificial datasource with both article and Nativo ad placeholders
+        needsReload = false
         articleList.clear()
+        // Create artificial datasource with both article and Nativo ad placeholders
         var articleNum = 0
         var adNum = 0
         for ( i in 0 until ITEM_COUNT) {
@@ -122,7 +126,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
         Log.d(NtvTAG, "Did receive ad: $didGetFill")
 
         // Wait until we have the first response from Nativo to create articleList
-        if (articleList.size == 0) {
+        if (needsReload) {
             createArticlesDataSet()
         }
     }
