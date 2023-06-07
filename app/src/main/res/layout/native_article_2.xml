@@ -5,7 +5,7 @@
     android:id="@+id/article_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#F2F2F2">
+    android:background="#F9F9F9">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,6 +13,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="#E3EDF8"
+        android:elevation="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

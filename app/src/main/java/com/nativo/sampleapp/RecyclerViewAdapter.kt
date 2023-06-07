@@ -104,8 +104,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
                                                   position,
                                            null)
         } else if (holder is ArticleViewHolder) {
-            val articleTitle = articleList[position]
-            holder.bindData(position, articleTitle)
+
         }
     }
 

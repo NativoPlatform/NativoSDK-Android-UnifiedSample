@@ -23,12 +23,12 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:gravity="start"
+            android:text="Lorem Ipsum"
             android:textColor="@color/black"
             android:textSize="24sp"
-            android:text="Article Title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Article Title" />
+            tools:text="Lorem Ipsum" />
 
         <TextView
             android:id="@+id/article_by"
@@ -66,7 +66,7 @@
             app:layout_constraintEnd_toStartOf="@+id/share_icon"
             app:layout_constraintStart_toEndOf="@id/article_author"
             app:layout_constraintTop_toBottomOf="@id/title_label"
-            tools:src="@drawable/nativo_icon" />
+            android:src="@drawable/sample_author_image" />
 
         <ImageView
             android:id="@+id/share_icon"
