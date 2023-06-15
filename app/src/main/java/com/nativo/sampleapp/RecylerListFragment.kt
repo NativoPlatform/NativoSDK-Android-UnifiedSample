@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.nativo.sampleapp.databinding.FragmentRecylerListBinding
+import com.nativo.sampleapp.util.Reloadable
 
 
-class RecylerListFragment : Fragment() {
+class RecylerListFragment : Fragment(), Reloadable {
 
     private lateinit var binding: FragmentRecylerListBinding
 
@@ -31,6 +32,11 @@ class RecylerListFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
+    }
+
+    override fun reload() {
+        val reloadable = binding.recyclerList.adapter as? Reloadable
+        reloadable?.reload()
     }
 
 }

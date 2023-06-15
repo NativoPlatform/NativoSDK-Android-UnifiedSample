@@ -44,28 +44,31 @@ class AdTypesFragment : Fragment(), Reloadable, NtvSectionAdapter {
             NativoSDK.initSectionWithAdapter(this, videoSectionUrl, it)
             NativoSDK.initSectionWithAdapter(this, storySectionUrl, it)
             NativoSDK.initSectionWithAdapter(this, stdDisplaySectionUrl, it)
-
-            NativoSDK.prefetchAdForSection(articleSectionUrl, 0, binding.adsScrollView)
-            NativoSDK.prefetchAdForSection(articleSectionUrl, 1, binding.adsScrollView, mapOf("ntv_a" to "525631", "ntv_pl" to "1211528"))
-            NativoSDK.prefetchAdForSection(articleSectionUrl, 2, binding.adsScrollView, mapOf("ntv_a" to "530424", "ntv_pl" to "1211528"))
-
-            NativoSDK.prefetchAdForSection(displaySectionUrl, 0, binding.adsScrollView, mapOf("ntv_a" to "534894", "ntv_pl" to "1211528"))
-            NativoSDK.prefetchAdForSection(displaySectionUrl, 1, binding.adsScrollView)
-            NativoSDK.prefetchAdForSection(displaySectionUrl, 2, binding.adsScrollView)
-
-            NativoSDK.prefetchAdForSection(videoSectionUrl, 0, binding.adsScrollView, mapOf("ntv_a" to "553602", "ntv_pl" to "1211528"))
-            NativoSDK.prefetchAdForSection(videoSectionUrl, 1, binding.adsScrollView, mapOf("ntv_a" to "553601", "ntv_pl" to "1211528"))
-            NativoSDK.prefetchAdForSection(videoSectionUrl, 2, binding.adsScrollView, mapOf("ntv_a" to "554152", "ntv_pl" to "1211528"))
-
-            NativoSDK.prefetchAdForSection(storySectionUrl, 0, binding.adsScrollView, mapOf("ntv_a" to "463280", "ntv_pl" to "1211528"))
-            NativoSDK.prefetchAdForSection(storySectionUrl, 1, binding.adsScrollView, mapOf("ntv_a" to "445021", "ntv_pl" to "1211528"))
-            NativoSDK.prefetchAdForSection(storySectionUrl, 2, binding.adsScrollView, mapOf("ntv_a" to "526013", "ntv_pl" to "1211528"))
-
-            NativoSDK.prefetchAdForSection(stdDisplaySectionUrl, 0, binding.adsScrollView, mapOf("ntv_a" to "553749", "ntv_pl" to "1211528"))
-            NativoSDK.prefetchAdForSection(stdDisplaySectionUrl, 1, binding.adsScrollView)
+            prefetchAds()
         }
 
         return binding.root
+    }
+
+    fun prefetchAds() {
+        NativoSDK.prefetchAdForSection(articleSectionUrl, 0, binding.adsScrollView)
+        NativoSDK.prefetchAdForSection(articleSectionUrl, 1, binding.adsScrollView, mapOf("ntv_a" to "525631", "ntv_pl" to "1211528"))
+        NativoSDK.prefetchAdForSection(articleSectionUrl, 2, binding.adsScrollView, mapOf("ntv_a" to "530424", "ntv_pl" to "1211528"))
+
+        NativoSDK.prefetchAdForSection(displaySectionUrl, 0, binding.adsScrollView, mapOf("ntv_a" to "534894", "ntv_pl" to "1211528"))
+        NativoSDK.prefetchAdForSection(displaySectionUrl, 1, binding.adsScrollView)
+        NativoSDK.prefetchAdForSection(displaySectionUrl, 2, binding.adsScrollView)
+
+        NativoSDK.prefetchAdForSection(videoSectionUrl, 0, binding.adsScrollView, mapOf("ntv_a" to "553602", "ntv_pl" to "1211528"))
+        NativoSDK.prefetchAdForSection(videoSectionUrl, 1, binding.adsScrollView, mapOf("ntv_a" to "553601", "ntv_pl" to "1211528"))
+        NativoSDK.prefetchAdForSection(videoSectionUrl, 2, binding.adsScrollView, mapOf("ntv_a" to "554152", "ntv_pl" to "1211528"))
+
+        NativoSDK.prefetchAdForSection(storySectionUrl, 0, binding.adsScrollView, mapOf("ntv_a" to "463280", "ntv_pl" to "1211528"))
+        NativoSDK.prefetchAdForSection(storySectionUrl, 1, binding.adsScrollView, mapOf("ntv_a" to "445021", "ntv_pl" to "1211528"))
+        NativoSDK.prefetchAdForSection(storySectionUrl, 2, binding.adsScrollView, mapOf("ntv_a" to "526013", "ntv_pl" to "1211528"))
+
+        NativoSDK.prefetchAdForSection(stdDisplaySectionUrl, 0, binding.adsScrollView, mapOf("ntv_a" to "553749", "ntv_pl" to "1211528"))
+        NativoSDK.prefetchAdForSection(stdDisplaySectionUrl, 1, binding.adsScrollView)
     }
 
     override fun reload() {
@@ -75,10 +78,7 @@ class AdTypesFragment : Fragment(), Reloadable, NtvSectionAdapter {
         NativoSDK.clearAds(videoSectionUrl)
         NativoSDK.clearAds(storySectionUrl)
         NativoSDK.clearAds(stdDisplaySectionUrl)
-        //NativoSDK.initSectionWithAdapter(this, nativoSection, context)
-
-//        NativoSDK.placeAdInView(adView, binding.listArticleLayout, articleSectionUrl, 0)
-
+        prefetchAds()
     }
 
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {

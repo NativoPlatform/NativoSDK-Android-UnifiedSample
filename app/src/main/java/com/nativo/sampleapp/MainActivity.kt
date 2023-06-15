@@ -17,6 +17,7 @@ import com.nativo.sampleapp.NativoAds.NativeAd
 import com.nativo.sampleapp.NativoAds.NativeVideoAd
 import com.nativo.sampleapp.NativoAds.StandardDisplayAd
 import com.nativo.sampleapp.databinding.ActivityMainBinding
+import com.nativo.sampleapp.util.Reloadable
 import net.nativo.sdk.NativoSDK
 
 class MainActivity : AppCompatActivity() {
@@ -81,7 +82,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun reloadAds() {
-//        val fragment = binding.pager.adapter?.
-//        fragment.reloadAds()
+        val currentItem = binding.pager.currentItem
+        val fragment = supportFragmentManager.fragments[currentItem]
+        if (fragment is Reloadable)
+            fragment.reload()
     }
 }
