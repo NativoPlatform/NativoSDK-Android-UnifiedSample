@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nativo.sampleapp.ViewHolders.ArticleViewHolder
 import com.nativo.sampleapp.util.AppConstants
 import com.nativo.sampleapp.util.AppConstants.NtvTAG
+import com.nativo.sampleapp.util.Reloadable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.NtvAdData
 import net.nativo.sdk.NtvSectionAdapter
@@ -20,27 +24,34 @@ import net.nativo.sdk.injectable.NtvInjectableType
 
 const val ITEM_TYPE_ARTICLE = 0
 const val ITEM_TYPE_NATIVO = 1
-const val ITEM_COUNT = 18
+const val ITEM_COUNT = 20
 
-class RecyclerViewAdapter(private val context: Context, private val recyclerView: RecyclerView) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(), NtvSectionAdapter {
+class RecyclerViewAdapter(private val context: Context, private val recyclerView: RecyclerView, val nativoSection : String) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), NtvSectionAdapter, Reloadable {
 
     private val articleList: ArrayList<String> = ArrayList()
     private var needsReload = true
 
     init {
+        createDataSet()
         // This initializes the NativoSDK and starts prefetching ads for your section URL
-        NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
+        NativoSDK.initSectionWithAdapter(this, nativoSection, context)
         // Enable this since we have placeholders for Nativo in our data set
         NativoSDK.enablePlaceholderMode(true)
     }
 
-
-    fun reloadDataSet() {
+    override fun reload() {
         Log.d("NativoApp", "Reloading dataset")
-        NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
-        NativoSDK.prefetchAdForSection(AppConstants.SECTION_URL)
         needsReload = true
+        createDataSet()
+        NativoSDK.clearAds(nativoSection)
+        NativoSDK.initSectionWithAdapter(this, nativoSection, context)
+        NativoSDK.prefetchAdForSection(nativoSection)
+    }
+
+    // Helper method to determine which indexes should be Nativo ads
+    private fun shouldPlaceNativoAdAtIndex(i: Int): Boolean {
+        return i % 3 == 1
     }
 
     /**
@@ -48,8 +59,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
      * Wait until we have response from Nativo before creating
      */
     @SuppressLint("NotifyDataSetChanged")
-    private fun createArticlesDataSet() {
-        needsReload = false
+    fun createDataSet() {
         articleList.clear()
         // Create artificial datasource with both article and Nativo ad placeholders
         var articleNum = 0
@@ -66,11 +76,6 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
         }
         Log.i("Ntv", "Created new Dataset: $articleList")
         notifyDataSetChanged()
-    }
-
-    // Helper method to determine which indexes should be Nativo ads
-    private fun shouldPlaceNativoAdAtIndex(i: Int): Boolean {
-        return i % 3 == 1
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -100,7 +105,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
             // Call Nativo placeAdInView using NativoViewHolder.itemView
             val success = NativoSDK.placeAdInView(holder.itemView,
                                                   recyclerView,
-                                                  AppConstants.SECTION_URL,
+                                                  nativoSection,
                                                   position,
                                            null)
         } else if (holder is ArticleViewHolder) {
@@ -116,31 +121,21 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
         return position.toLong()
     }
 
-
     /**
      * Nativo Section Adapter Interface
      */
 
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {
         Log.d(NtvTAG, "Did receive ad: $didGetFill")
-
-        // Wait until we have the first response from Nativo to create articleList
-        if (needsReload) {
-            createArticlesDataSet()
-        }
     }
 
     override fun didAssignAdToLocation(location: Int, adData: NtvAdData, inSection: String, container: ViewGroup) {
         Log.d(NtvTAG, "didAssignAdToLocation: $location")
+        notifyItemChanged(location)
     }
 
     override fun didFailAd(inSection: String, atLocation: Int?, inView: View?, container: ViewGroup?, error: Throwable?) {
         Log.d(NtvTAG, "onFail at location: $atLocation Error: ${error?.message}")
-
-        // Add this here in case Nativo fails, we still create our article list
-        if (articleList.size == 0) {
-            createArticlesDataSet()
-        }
     }
 
     override fun didPlaceAdInView(view: View, adData: NtvAdData, injectable: NtvInjectable, atLocation: Int, inSection: String, container: ViewGroup) {
@@ -166,4 +161,5 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     ): Class<T>? {
         return null
     }
+
 }
