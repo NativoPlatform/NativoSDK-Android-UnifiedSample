@@ -68,11 +68,6 @@ class AdTypesFragment : Fragment(), Reloadable, NtvSectionAdapter {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
     override fun reload() {
         Log.d("NativoApp", "Reloading dataset")
         NativoSDK.clearAds(articleSectionUrl)
@@ -142,6 +137,11 @@ class AdTypesFragment : Fragment(), Reloadable, NtvSectionAdapter {
 
     override fun didFailAd(inSection: String, atLocation: Int?, inView: View?, container: ViewGroup?, error: Throwable?) {
         Log.d(AppConstants.NtvTAG, "onFail at location: $atLocation Error: ${error?.message}")
+        if (inSection == stdDisplaySectionUrl) {
+            when (atLocation) {
+                0 -> binding.stdDisplayHeader.visibility = View.GONE
+            }
+        }
     }
 
     override fun didPlaceAdInView(view: View, adData: NtvAdData, injectable: NtvInjectable, atLocation: Int, inSection: String, container: ViewGroup) {

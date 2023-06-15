@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.nativo.sampleapp.databinding.FragmentRecylerListBinding
 
 
@@ -23,10 +25,12 @@ class RecylerListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.recyclerList.apply {
             adapter = RecyclerViewAdapter(context, this, "http://www.nativo.com/demoapp")
             layoutManager = LinearLayoutManager(context)
         }
+
     }
 
 }

@@ -1,13 +1,18 @@
 package com.nativo.sampleapp
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBar.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.nativo.sampleapp.NativoAds.NativeAd
 import com.nativo.sampleapp.NativoAds.NativeVideoAd
 import com.nativo.sampleapp.NativoAds.StandardDisplayAd
@@ -26,6 +31,12 @@ class MainActivity : AppCompatActivity() {
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         binding.pager.adapter = pagerAdapter
 
+        TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "App Feed"
+                else -> "Ad Types"
+            }
+        }.attach()
 
         supportActionBar?.let {
             it.setLogo(R.drawable.favicon)
