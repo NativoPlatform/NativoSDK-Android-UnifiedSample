@@ -22,8 +22,8 @@
             android:paddingStart="32dp"
             android:paddingTop="12dp"
             android:text="Native Article"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textColor="#000000"
+            android:textSize="24sp" />
 
         <FrameLayout
             android:id="@+id/article_container1"
@@ -47,10 +47,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:paddingStart="32dp"
-            android:paddingTop="12dp"
+            android:paddingTop="20dp"
             android:text="Native Display"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="24sp"
             android:typeface="normal" />
 
         <FrameLayout
@@ -74,10 +74,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:paddingStart="32dp"
-            android:paddingTop="12dp"
+            android:paddingTop="20dp"
             android:text="Native Video"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textColor="#000000"
+            android:textSize="24sp" />
 
         <FrameLayout
             android:id="@+id/video_container1"
@@ -100,10 +100,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:paddingStart="32dp"
-            android:paddingTop="12dp"
+            android:paddingTop="20dp"
             android:text="Story"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textColor="#000000"
+            android:textSize="24sp" />
 
         <FrameLayout
             android:id="@+id/story_container1"
@@ -127,10 +127,10 @@
             android:elegantTextHeight="true"
             android:fontFamily="sans-serif-light"
             android:paddingStart="32dp"
-            android:paddingTop="12dp"
+            android:paddingTop="20dp"
             android:text="Standard Display"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textColor="#000000"
+            android:textSize="24sp" />
 
         <FrameLayout
             android:id="@+id/std_display_container1"
