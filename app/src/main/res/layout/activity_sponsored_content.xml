@@ -39,9 +39,10 @@
                 android:layout_below="@+id/sponsored_tag"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:fontFamily="sans-serif-black"
                 android:gravity="start"
-                android:textColor="@color/black"
-                android:textSize="24sp"
+                android:textColor="#202060"
+                android:textSize="48sp"
                 tools:text="Title" />
 
             <TextView
