@@ -41,6 +41,11 @@ class SingleViewFragment : Fragment(), NtvSectionAdapter {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        NativoSDK.enablePlaceholderMode(true)
+    }
+
     /**
      * Nativo Section Adapter Interface
      */

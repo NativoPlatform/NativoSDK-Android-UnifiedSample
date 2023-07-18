@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.nativo.sampleapp.ViewAdapter.GridViewAdapter
 import com.nativo.sampleapp.databinding.FragmentGridBinding
+import com.nativo.sampleapp.util.AppConstants
+import net.nativo.sdk.NativoSDK
 
 class GridFragment : Fragment() {
 
@@ -26,5 +28,10 @@ class GridFragment : Fragment() {
         binding.gridView.apply {
             adapter = GridViewAdapter(context, this)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        NativoSDK.enablePlaceholderMode(false)
     }
 }

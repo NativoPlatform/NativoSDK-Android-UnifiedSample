@@ -51,8 +51,10 @@ class ListViewAdapter(
 
     init {
         // Nativo init
+        NativoSDK.clearAds(AppConstants.SECTION_URL, listView)
         NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
 
+        // Create article list
         for (i in 0..ITEM_COUNT) {
             sudoArticleList.add("Article $i")
         }
@@ -135,7 +137,6 @@ class ListViewAdapter(
     ) {
         Log.d(NtvTAG, "didAssignAdToLocation: $location")
         sudoArticleList.add(location, "Nativo $location")
-        notifyDataSetChanged()
     }
 
     override fun didPlaceAdInView(

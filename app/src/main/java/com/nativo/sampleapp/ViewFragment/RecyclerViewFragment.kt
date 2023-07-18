@@ -33,6 +33,11 @@ class RecyclerViewFragment : Fragment(), Reloadable {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        NativoSDK.enablePlaceholderMode(true)
+    }
+
     override fun reload() {
         val adapter = binding.recyclerListView.adapter as RecyclerViewAdapter
         NativoSDK.clearAds(AppConstants.SECTION_URL)

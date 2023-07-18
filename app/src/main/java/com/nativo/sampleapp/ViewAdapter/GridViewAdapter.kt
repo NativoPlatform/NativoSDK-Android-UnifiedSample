@@ -51,7 +51,9 @@ class GridViewAdapter(
 
     init {
         // Nativo init
+        NativoSDK.clearAds(AppConstants.SECTION_URL, gridView)
         NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
+
 
         for (i in 0..(ITEM_COUNT + nativoAdIndexes.size)) {
             sudoArticleList.add("Article $i")
@@ -105,11 +107,10 @@ class GridViewAdapter(
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {
         Log.d(NtvTAG, "Did receive ad: $didGetFill")
 
+        // Reload after initial request
         if (didGetFill && initialNativoRequest) {
-            Log.w(NtvTAG, "Needs Reload Everything")
             notifyDataSetChanged()
         }
-
         initialNativoRequest = false
     }
 
@@ -120,7 +121,9 @@ class GridViewAdapter(
         container: ViewGroup
     ) {
         Log.d(NtvTAG, "didAssignAdToLocation: $location")
-        notifyDataSetChanged()
+
+        // Add Nativo Placeholder to article list
+        sudoArticleList.add(location, "Nativo Placeholder")
     }
 
     override fun didPlaceAdInView(
@@ -144,8 +147,8 @@ class GridViewAdapter(
         Log.d(NtvTAG, "onFail at location: $atLocation Error: $error")
         if (atLocation != null) {
             Log.w(NtvTAG, "Removing Nativo Ad!")
+            nativoAdIndexes.remove(atLocation)
             sudoArticleList.removeAt(atLocation)
-            nativoAdIndexes.remove(atLocation);
             notifyDataSetChanged()
         }
     }

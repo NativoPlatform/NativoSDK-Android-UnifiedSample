@@ -28,7 +28,6 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), NtvSectionAdapter {
 
     private val articleList: ArrayList<String> = ArrayList()
-    private var nativoNeedsReload = false
 
     private var onClickListener = View.OnClickListener {
         it.context.startActivity(
@@ -44,7 +43,7 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
         NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
         // Enable this since we have placeholders for Nativo in our data set
         NativoSDK.enablePlaceholderMode(true)
-        //NativoSDK.enableTestAdvertisements()
+        NativoSDK.enableTestAdvertisements()
     }
 
     /**
@@ -144,11 +143,6 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
             Log.w(NtvTAG,"Removing Nativo Ad!")
             articleList.removeAt(atLocation)
             notifyItemRemoved(atLocation)
-        }
-
-        // Add this here in case Nativo fails, we still create our article list
-        if (articleList.size == 0) {
-            createArticlesDataSet()
         }
     }
 
