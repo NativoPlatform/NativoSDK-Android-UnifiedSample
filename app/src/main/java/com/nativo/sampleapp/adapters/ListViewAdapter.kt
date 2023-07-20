@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewAdapter
+package com.nativo.sampleapp.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context

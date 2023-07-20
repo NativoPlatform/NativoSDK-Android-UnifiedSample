@@ -10,16 +10,15 @@ import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import com.nativo.sampleapp.NativoAds.NativeAd
-import com.nativo.sampleapp.NativoAds.NativeVideoAd
-import com.nativo.sampleapp.NativoAds.StandardDisplayAd
+import com.nativo.sampleapp.ad_injectables.NativeAd
+import com.nativo.sampleapp.ad_injectables.NativeVideoAd
+import com.nativo.sampleapp.ad_injectables.StandardDisplayAd
 import com.nativo.sampleapp.R
-import com.nativo.sampleapp.ViewFragment.*
+import com.nativo.sampleapp.fragments.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import com.nativo.sampleapp.util.Reloadable
 import net.nativo.sdk.NativoSDK
-import net.nativo.sdk.NtvTestAdType
 
 class MainActivity : AppCompatActivity() {
 

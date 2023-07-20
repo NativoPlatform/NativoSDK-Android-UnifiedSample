@@ -1,13 +1,12 @@
-package com.nativo.sampleapp.ViewFragment
+package com.nativo.sampleapp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.nativo.sampleapp.ViewAdapter.GridViewAdapter
+import com.nativo.sampleapp.adapters.GridViewAdapter
 import com.nativo.sampleapp.databinding.FragmentGridBinding
-import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
 
 class GridFragment : Fragment() {

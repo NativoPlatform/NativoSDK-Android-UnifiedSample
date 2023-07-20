@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewFragment
+package com.nativo.sampleapp.fragments
 
 import android.content.Intent
 import android.net.Uri

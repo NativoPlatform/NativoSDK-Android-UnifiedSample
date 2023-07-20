@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewFragment
+package com.nativo.sampleapp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.nativo.sampleapp.ViewAdapter.RecyclerViewAdapter
+import com.nativo.sampleapp.adapters.RecyclerViewAdapter
 import com.nativo.sampleapp.databinding.FragmentRecyclerListViewBinding
 import com.nativo.sampleapp.util.AppConstants
 import com.nativo.sampleapp.util.Reloadable

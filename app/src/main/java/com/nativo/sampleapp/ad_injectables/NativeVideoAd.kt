@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.NativoAds
+package com.nativo.sampleapp.ad_injectables
 
 import android.content.Context
 import android.graphics.Color
