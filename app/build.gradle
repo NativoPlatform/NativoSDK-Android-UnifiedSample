@@ -67,17 +67,15 @@ dependencies {
 
 
     // Kotlin Core
-    def ktorVersion = "1.6.7"
-    def statelyVersion = "1.2.1"
-    def coroutinesVersion = "1.6.1-native-mt"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
+    def ktorVersion = "2.3.2"
+    def statelyVersion = "2.0.0-rc1"
+    def coroutinesVersion = "1.7.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     implementation "io.ktor:ktor-client-android:$ktorVersion"
-    implementation "io.ktor:ktor-client-serialization:$ktorVersion"
-    implementation "co.touchlab:stately-common:$statelyVersion"
-    implementation "co.touchlab:stately-concurrency:$statelyVersion"
-    implementation "co.touchlab:stately-isolate:$statelyVersion"
-    implementation "co.touchlab:stately-iso-collections:$statelyVersion"
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("co.touchlab:stately-concurrency:$statelyVersion")
+    implementation("co.touchlab:stately-concurrent-collections:$statelyVersion")
     // Getting advertiser id
 //    implementation("androidx.ads:ads-identifier:1.0.0-alpha04")
 //    implementation("com.google.guava:guava:31.0.1-android")
