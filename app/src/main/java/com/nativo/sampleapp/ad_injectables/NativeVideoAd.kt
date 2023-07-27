@@ -63,32 +63,37 @@ class NativeVideoAd : NtvVideoAdInjectable {
 
     //Log.d(TAG, "onVideoProgress: " + progress);
     override val videoEventListener: VideoEventListener = object : VideoEventListener {
-            override fun onVideoStateChange(state: VideoState, player: VideoPlayer) {
-                if (state === VideoState.Init) {
-                    player.setResizeMode(VideoResizeMode.Fit)
-                }
-            }
 
-            override fun onVideoProgress(progress: Long, player: VideoPlayer) {
-                //Log.d(TAG, "onVideoProgress: " + progress);
-            }
+        override fun onVideoLoaded(player: VideoPlayer) {
+            Log.d(TAG, "onVideoLoaded: ")
+        }
 
-            override fun onVideoError(error: VideoPlaybackError, player: VideoPlayer) {
-                Log.d(TAG, "onVideoError: $error")
-            }
-
-            override fun onVideoFullscreen(player: VideoPlayer) {
-                Log.d(TAG, "onVideoFullscreen: ")
-            }
-
-            override fun onVideoExitFullscreen(player: VideoPlayer) {
-                Log.d(TAG, "onVideoExitFullscreen: ")
-            }
-
-            override fun onVideoLearnMore(player: VideoPlayer) {
-                Log.d(TAG, "onVideoLearnMore: ")
+        override fun onVideoStateChange(state: VideoState, player: VideoPlayer) {
+            if (state === VideoState.Init) {
+                player.setResizeMode(VideoResizeMode.Fit)
             }
         }
+
+        override fun onVideoProgress(progress: Long, player: VideoPlayer) {
+            //Log.d(TAG, "onVideoProgress: " + progress);
+        }
+
+        override fun onVideoError(error: VideoPlaybackError, player: VideoPlayer) {
+            Log.d(TAG, "onVideoError: $error")
+        }
+
+        override fun onVideoFullscreen(player: VideoPlayer) {
+            Log.d(TAG, "onVideoFullscreen: ")
+        }
+
+        override fun onVideoExitFullscreen(player: VideoPlayer) {
+            Log.d(TAG, "onVideoExitFullscreen: ")
+        }
+
+        override fun onVideoLearnMore(player: VideoPlayer) {
+            Log.d(TAG, "onVideoLearnMore: ")
+        }
+    }
 
     companion object {
         private val TAG = NativeVideoAd::class.java.name
