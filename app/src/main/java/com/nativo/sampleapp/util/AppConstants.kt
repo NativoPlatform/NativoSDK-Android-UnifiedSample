@@ -4,7 +4,7 @@ package com.nativo.sampleapp.util
  * Contains constant variables
  */
 object AppConstants {
-    const val SECTION_URL = "http://www.nativo.com/demoapp/" //"http://www.nativo.net/test/"
+    const val SECTION_URL = "http://www.nativo.net/test/"
     const val DFP_SECTION_URL = "http://www.nativo.net/mobiledfptest"
     const val MOAP_SECTION_URL = "http://www.nativo.net/moap?ntv_pl=1099995"
     const val PUBLISHER_URL = "http://dsp.test-sites.internal.nativo.net/external/mobile_web.html"

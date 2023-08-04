@@ -63,32 +63,32 @@ class NativeVideoAd : NtvVideoAdInjectable {
 
     //Log.d(TAG, "onVideoProgress: " + progress);
     override val videoEventListener: VideoEventListener = object : VideoEventListener {
-            override fun onVideoStateChange(state: VideoState, player: VideoPlayer) {
-                if (state === VideoState.Init) {
-                    player.setResizeMode(VideoResizeMode.Fit)
-                }
-            }
 
-            override fun onVideoProgress(progress: Long, player: VideoPlayer) {
-                //Log.d(TAG, "onVideoProgress: " + progress);
-            }
-
-            override fun onVideoError(error: VideoPlaybackError, player: VideoPlayer) {
-                Log.d(TAG, "onVideoError: $error")
-            }
-
-            override fun onVideoFullscreen(player: VideoPlayer) {
-                Log.d(TAG, "onVideoFullscreen: ")
-            }
-
-            override fun onVideoExitFullscreen(player: VideoPlayer) {
-                Log.d(TAG, "onVideoExitFullscreen: ")
-            }
-
-            override fun onVideoLearnMore(player: VideoPlayer) {
-                Log.d(TAG, "onVideoLearnMore: ")
-            }
+        override fun onVideoLoaded(player: VideoPlayer) {
+            player.setResizeMode(VideoResizeMode.Fit)
+            Log.d(TAG, "onVideoLoaded: ")
         }
+
+        override fun onVideoStateChange(state: VideoState, player: VideoPlayer) {}
+
+        override fun onVideoProgress(progress: Long, player: VideoPlayer) {}
+
+        override fun onVideoError(error: VideoPlaybackError, player: VideoPlayer) {
+            Log.d(TAG, "onVideoError: $error")
+        }
+
+        override fun onVideoFullscreen(player: VideoPlayer) {
+            Log.d(TAG, "onVideoFullscreen: ")
+        }
+
+        override fun onVideoExitFullscreen(player: VideoPlayer) {
+            Log.d(TAG, "onVideoExitFullscreen: ")
+        }
+
+        override fun onVideoLearnMore(player: VideoPlayer) {
+            Log.d(TAG, "onVideoLearnMore: ")
+        }
+    }
 
     companion object {
         private val TAG = NativeVideoAd::class.java.name
