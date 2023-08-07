@@ -50,10 +50,10 @@ class NativeVideoAd : NtvVideoAdInjectable {
     }
 
     override val videoEventListener: VideoEventListener = object : VideoEventListener {
+        override fun onVideoLoaded(player: VideoPlayer) {
+            player.setResizeMode(VideoResizeMode.Fit)
+        }
         override fun onVideoStateChange(state: VideoState, player: VideoPlayer) {
-            if (state == VideoState.Init) {
-                player.setResizeMode(VideoResizeMode.Fit)
-            }
         }
 
         override fun onVideoProgress(progress: Long, player: VideoPlayer) {
