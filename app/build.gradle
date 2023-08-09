@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 32
+    compileSdk 32
     defaultConfig {
         applicationId "com.nativo.sampleapp"
         minSdkVersion 21
