@@ -108,8 +108,6 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
                                                   nativoSection,
                                                   position,
                                            null)
-        } else if (holder is ArticleViewHolder) {
-
         }
     }
 
