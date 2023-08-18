@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewFragment
+package com.nativo.sampleapp.fragments
 
 import android.content.Intent
 import android.net.Uri
@@ -18,7 +18,7 @@ import net.nativo.sdk.injectable.NtvInjectableType
 
 class SingleViewFragment : Fragment(), NtvSectionAdapter {
 
-    private val singleViewSectionUrl = AppConstants.SECTION_URL+"?singleview"
+    private val sectionUrl = AppConstants.SECTION_URL+"?singleview"
     private lateinit var binding: FragmentSingleViewBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,13 +32,18 @@ class SingleViewFragment : Fragment(), NtvSectionAdapter {
         super.onViewCreated(view, savedInstanceState)
 
         // This initializes the NativoSDK and starts prefetching ads for your section URL
-        NativoSDK.initSectionWithAdapter(this, singleViewSectionUrl, this.requireContext())
+        NativoSDK.initSectionWithAdapter(this, sectionUrl, this.requireContext())
 
         // To load a new ad we simply clear ads and then make a prefetch request
         binding.loadAd.setOnClickListener {
-            NativoSDK.clearAds(singleViewSectionUrl, binding.root)
-            NativoSDK.prefetchAdForSection(singleViewSectionUrl)
+            NativoSDK.clearAds(sectionUrl, binding.root)
+            NativoSDK.prefetchAdForSection(sectionUrl)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        NativoSDK.enablePlaceholderMode(true)
     }
 
     /**
@@ -47,7 +52,7 @@ class SingleViewFragment : Fragment(), NtvSectionAdapter {
 
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {
         if (didGetFill) {
-            NativoSDK.placeAdInView(binding.articleContainer, binding.root, singleViewSectionUrl, 0)
+            NativoSDK.placeAdInView(binding.articleContainer, binding.root, sectionUrl, 0)
         }
     }
 

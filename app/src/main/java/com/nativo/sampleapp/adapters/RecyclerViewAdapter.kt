@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewAdapter
+package com.nativo.sampleapp.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,13 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nativo.sampleapp.R
-import com.nativo.sampleapp.ViewHolders.ArticleViewHolder
+import com.nativo.sampleapp.view_holders.ArticleViewHolder
 import com.nativo.sampleapp.util.AppConstants
 import com.nativo.sampleapp.util.AppConstants.NtvTAG
 import net.nativo.sdk.NativoSDK
 import net.nativo.sdk.NtvAdData
 import net.nativo.sdk.NtvSectionAdapter
-import net.nativo.sdk.NtvTestAdType
 import net.nativo.sdk.injectable.NtvInjectable
 import net.nativo.sdk.injectable.NtvInjectableType
 
@@ -28,7 +27,6 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), NtvSectionAdapter {
 
     private val articleList: ArrayList<String> = ArrayList()
-    private var nativoNeedsReload = false
 
     private var onClickListener = View.OnClickListener {
         it.context.startActivity(
@@ -40,11 +38,10 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     }
 
     init {
-        // This initializes the NativoSDK and starts prefetching ads for your section URL
-        NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
         // Enable this since we have placeholders for Nativo in our data set
         NativoSDK.enablePlaceholderMode(true)
-        //NativoSDK.enableTestAdvertisements()
+        // This initializes the NativoSDK and starts prefetching ads for your section URL
+        NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
     }
 
     /**
@@ -144,11 +141,6 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
             Log.w(NtvTAG,"Removing Nativo Ad!")
             articleList.removeAt(atLocation)
             notifyItemRemoved(atLocation)
-        }
-
-        // Add this here in case Nativo fails, we still create our article list
-        if (articleList.size == 0) {
-            createArticlesDataSet()
         }
     }
 

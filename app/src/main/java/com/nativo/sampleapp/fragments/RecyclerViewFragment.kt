@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewFragment
+package com.nativo.sampleapp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.nativo.sampleapp.ViewAdapter.RecyclerViewAdapter
+import com.nativo.sampleapp.adapters.RecyclerViewAdapter
 import com.nativo.sampleapp.databinding.FragmentRecyclerListViewBinding
+import com.nativo.sampleapp.util.AppConstants
+import com.nativo.sampleapp.util.Reloadable
+import net.nativo.sdk.NativoSDK
 
-class RecyclerViewFragment : Fragment() {
+class RecyclerViewFragment : Fragment(), Reloadable {
 
     private lateinit var binding: FragmentRecyclerListViewBinding
 
@@ -30,8 +33,15 @@ class RecyclerViewFragment : Fragment() {
         }
     }
 
-    // calling clear ads in section when your app transitions to new activity or fragment
-    override fun onPause() {
-        super.onPause()
+    override fun onResume() {
+        super.onResume()
+        NativoSDK.enablePlaceholderMode(true)
+    }
+
+    override fun reload() {
+        val adapter = binding.recyclerListView.adapter as RecyclerViewAdapter
+        NativoSDK.clearAds(AppConstants.SECTION_URL)
+        NativoSDK.prefetchAdForSection(AppConstants.SECTION_URL)
+        adapter.notifyDataSetChanged()
     }
 }

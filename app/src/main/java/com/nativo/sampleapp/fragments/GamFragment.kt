@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewFragment
+package com.nativo.sampleapp.fragments
 
 import android.content.Intent
 import android.net.Uri
@@ -10,8 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.doubleclick.PublisherAdRequest
-import com.google.android.gms.ads.doubleclick.PublisherAdView
+import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import com.nativo.sampleapp.databinding.FragmentDfpBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
@@ -41,7 +40,7 @@ class GamFragment : Fragment(), NtvSectionAdapter {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        NativoSDK.enableGAMwithVersion("7.1.2")
+        NativoSDK.enableGAMwithVersion("8.8.8")
         NativoSDK.initSectionWithAdapter(this, AppConstants.GAM_SECTION_URL, this.requireContext())
         loadGAMAd()
 
@@ -58,7 +57,7 @@ class GamFragment : Fragment(), NtvSectionAdapter {
         binding.adHolder.visibility = View.VISIBLE
 
         // Create an ad request.
-        val adRequest = PublisherAdRequest.Builder()
+        val adRequest = AdManagerAdRequest.Builder()
             .addCustomTargeting("ntvPlacement", "1092187").build()
 
         // Create callback listener for GAM
@@ -76,11 +75,6 @@ class GamFragment : Fragment(), NtvSectionAdapter {
                     binding.publisherAdView.visibility = View.VISIBLE
                     Log.d("GAMExample", "Did receive DFP banner ad")
                 }
-            }
-
-            override fun onAdFailedToLoad(errorCode: Int) {
-                // Code to be executed when an ad request fails.
-                Log.d("GAMExample", "onAdFailedToLoad: errorCode: $errorCode")
             }
         }
         // Load the request

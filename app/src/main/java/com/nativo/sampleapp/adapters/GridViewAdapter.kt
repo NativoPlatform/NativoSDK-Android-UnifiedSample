@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewAdapter
+package com.nativo.sampleapp.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -49,9 +49,11 @@ class GridViewAdapter(
         )
     }
 
+    val sectionUrl = AppConstants.SECTION_URL + "?name=grid"
+
     init {
         // Nativo init
-        NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
+        NativoSDK.initSectionWithAdapter(this, sectionUrl, context)
 
         for (i in 0..(ITEM_COUNT + nativoAdIndexes.size)) {
             sudoArticleList.add("Article $i")
@@ -75,7 +77,7 @@ class GridViewAdapter(
         if (nativoAdIndexes.contains(index)) {
             // We need a blank view for Nativo ads.
             cellView = if (view !is NativoLayout) NativoLayout(context) else view
-            NativoSDK.placeAdInView(cellView, gridView, AppConstants.SECTION_URL, index, null)
+            NativoSDK.placeAdInView(cellView, gridView, sectionUrl, index, null)
         } else if (view == null || view is NativoLayout) {
             // Create new publisher article view
             cellView = LayoutInflater.from(context).inflate(R.layout.publisher_article, viewGroup, false)
@@ -105,11 +107,10 @@ class GridViewAdapter(
     override fun didReceiveAd(didGetFill: Boolean, inSection: String) {
         Log.d(NtvTAG, "Did receive ad: $didGetFill")
 
+        // Reload after initial request
         if (didGetFill && initialNativoRequest) {
-            Log.w(NtvTAG, "Needs Reload Everything")
             notifyDataSetChanged()
         }
-
         initialNativoRequest = false
     }
 
@@ -120,7 +121,9 @@ class GridViewAdapter(
         container: ViewGroup
     ) {
         Log.d(NtvTAG, "didAssignAdToLocation: $location")
-        notifyDataSetChanged()
+
+        // Add Nativo Placeholder to article list
+        sudoArticleList.add(location, "Nativo Placeholder")
     }
 
     override fun didPlaceAdInView(
@@ -144,8 +147,8 @@ class GridViewAdapter(
         Log.d(NtvTAG, "onFail at location: $atLocation Error: $error")
         if (atLocation != null) {
             Log.w(NtvTAG, "Removing Nativo Ad!")
+            nativoAdIndexes.remove(atLocation)
             sudoArticleList.removeAt(atLocation)
-            nativoAdIndexes.remove(atLocation);
             notifyDataSetChanged()
         }
     }

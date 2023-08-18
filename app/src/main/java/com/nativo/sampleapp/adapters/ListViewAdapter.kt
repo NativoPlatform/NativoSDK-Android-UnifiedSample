@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewAdapter
+package com.nativo.sampleapp.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -49,10 +49,13 @@ class ListViewAdapter(
         )
     }
 
+    val sectionUrl = AppConstants.SECTION_URL + "?name=list"
+
     init {
         // Nativo init
-        NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
+        NativoSDK.initSectionWithAdapter(this, sectionUrl, context)
 
+        // Create article list
         for (i in 0..ITEM_COUNT) {
             sudoArticleList.add("Article $i")
         }
@@ -76,7 +79,7 @@ class ListViewAdapter(
         // Create Nativo ad
         if (isNativoRow(index)) { // Check if index should be a Nativo ad slot
             itemView = if (view !is NativoLayout) NativoLayout(context) else view
-            val nativoSuccess = NativoSDK.placeAdInView(itemView, listView, AppConstants.SECTION_URL, index, null)
+            val nativoSuccess = NativoSDK.placeAdInView(itemView, listView, sectionUrl, index, null)
 
             // In this example we need to check if Nativo was successful before returning the view.
             // Otherwise we may end up with a blank ad unit if an ad fails.
@@ -135,7 +138,6 @@ class ListViewAdapter(
     ) {
         Log.d(NtvTAG, "didAssignAdToLocation: $location")
         sudoArticleList.add(location, "Nativo $location")
-        notifyDataSetChanged()
     }
 
     override fun didPlaceAdInView(

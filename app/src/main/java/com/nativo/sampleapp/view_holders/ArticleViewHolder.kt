@@ -1,4 +1,4 @@
-package com.nativo.sampleapp.ViewHolders
+package com.nativo.sampleapp.view_holders
 
 import android.annotation.SuppressLint
 import android.content.Intent
