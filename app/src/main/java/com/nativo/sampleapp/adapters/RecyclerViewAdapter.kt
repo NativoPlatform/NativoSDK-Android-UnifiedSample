@@ -40,7 +40,6 @@ class RecyclerViewAdapter(private val context: Context, private val recyclerView
     init {
         // Enable this since we have placeholders for Nativo in our data set
         NativoSDK.enablePlaceholderMode(true)
-        NativoSDK.enableTestAdvertisements()
         // This initializes the NativoSDK and starts prefetching ads for your section URL
         NativoSDK.initSectionWithAdapter(this, AppConstants.SECTION_URL, context)
     }

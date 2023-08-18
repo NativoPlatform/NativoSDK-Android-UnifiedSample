@@ -69,6 +69,7 @@ class NativeVideoAd : NtvVideoAdInjectable {
         }
 
         override fun onVideoStateChange(state: VideoState, player: VideoPlayer) {
+
         }
 
         override fun onVideoProgress(progress: Long, player: VideoPlayer) {
