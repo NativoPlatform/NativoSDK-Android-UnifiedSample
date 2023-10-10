@@ -37,7 +37,8 @@ class SingleViewFragment : Fragment(), NtvSectionAdapter {
         // To load a new ad we simply clear ads and then make a prefetch request
         binding.loadAd.setOnClickListener {
             NativoSDK.clearAds(sectionUrl, binding.root)
-            NativoSDK.prefetchAdForSection(sectionUrl)
+            // Key-Value pair example
+            NativoSDK.prefetchAdForSection(sectionUrl, 3, view, mapOf("ntv_kv" to "gender*female;interests*home,travel,cars"))
         }
     }
 
