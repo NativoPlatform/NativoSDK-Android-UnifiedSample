@@ -38,7 +38,7 @@ class SingleViewFragment : Fragment(), NtvSectionAdapter {
         binding.loadAd.setOnClickListener {
             NativoSDK.clearAds(sectionUrl, binding.root)
             // Key-Value pair example
-            NativoSDK.prefetchAdForSection(sectionUrl, 3, view, mapOf("ntv_kv" to "gender*female;interests*home,travel,cars"))
+            NativoSDK.prefetchAdForSection(sectionUrl)
         }
     }
 

@@ -3,6 +3,7 @@ package com.nativo.sampleapp.ad_injectables
 import android.content.Context
 import android.graphics.Color
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import android.widget.TextView
@@ -23,6 +24,7 @@ class NativeAd : NtvNativeAdInjectable {
     override lateinit var previewImageView: ImageView
     override var previewTextLabel: TextView? = null
     override val shouldPrependAuthorByline: Boolean = true
+    override val isiContentView: FrameLayout? = null
 
     // Misc
     private var sponsoredTag: TextView? = null

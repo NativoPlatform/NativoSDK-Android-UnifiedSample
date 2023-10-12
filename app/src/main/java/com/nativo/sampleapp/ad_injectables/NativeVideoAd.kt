@@ -26,6 +26,8 @@ class NativeVideoAd : NtvVideoAdInjectable {
     override lateinit var previewTextLabel: TextView
     override lateinit var authorImageView: ImageView
     override lateinit var dateLabel: TextView
+    override lateinit var isiContentView: FrameLayout
+
 
     private var cardView: CardView? = null
 
@@ -46,6 +48,7 @@ class NativeVideoAd : NtvVideoAdInjectable {
         authorImageView = v.findViewById(R.id.article_author_image)
         dateLabel = v.findViewById(R.id.article_date)
         cardView = v.findViewById(R.id.video_constraint_layout)
+        isiContentView = v.findViewById(R.id.isi_container)
     }
 
     override fun displaySponsoredIndicators(isSponsored: Boolean) {

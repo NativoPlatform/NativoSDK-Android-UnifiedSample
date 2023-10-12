@@ -6,7 +6,7 @@ android {
     compileSdk 33
     defaultConfig {
         applicationId "com.nativo.sampleapp"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
@@ -35,7 +35,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation 'net.nativo.sdk:nativo-sdk:7.1.0'
+    implementation 'net.nativo.sdk:nativo-sdk:7.2.0-SNAPSHOT'
     implementation 'com.google.android.gms:play-services-ads:21.3.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
