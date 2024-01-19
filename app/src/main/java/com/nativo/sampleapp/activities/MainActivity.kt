@@ -17,6 +17,7 @@ import com.nativo.sampleapp.ViewFragment.*
 import com.nativo.sampleapp.databinding.ActivityMainBinding
 import com.nativo.sampleapp.util.AppConstants
 import net.nativo.sdk.NativoSDK
+import net.nativo.sdk.NtvTestAdType
 
 /**
  * Various of Fragment Types
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         NativoSDK.registerClassForStandardDisplayAd(StandardDisplayAd::class.java)
 
         // Force specific ad types if needed
-        //NativoSDK.enableTestAdvertisements()
+        NativoSDK.enableTestAdvertisements(NtvTestAdType.STORY)
         NativoSDK.enableDevLogs()
     }
 

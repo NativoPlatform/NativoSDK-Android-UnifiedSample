@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import android.view.View
+import android.webkit.WebView
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -26,6 +27,7 @@ class NativeVideoAd : NtvVideoAdInjectable {
     override lateinit var previewTextLabel: TextView
     override lateinit var authorImageView: ImageView
     override lateinit var dateLabel: TextView
+    override lateinit var isiContentView: FrameLayout
 
     private var cardView: CardView? = null
 
@@ -46,6 +48,7 @@ class NativeVideoAd : NtvVideoAdInjectable {
         authorImageView = v.findViewById(R.id.article_author_image)
         dateLabel = v.findViewById(R.id.article_date)
         cardView = v.findViewById(R.id.video_constraint_layout)
+        isiContentView = v.findViewById(R.id.isi_container)
     }
 
     override fun displaySponsoredIndicators(isSponsored: Boolean) {
@@ -63,32 +66,34 @@ class NativeVideoAd : NtvVideoAdInjectable {
 
     //Log.d(TAG, "onVideoProgress: " + progress);
     override val videoEventListener: VideoEventListener = object : VideoEventListener {
-            override fun onVideoStateChange(state: VideoState, player: VideoPlayer) {
-                if (state === VideoState.Init) {
-                    player.setResizeMode(VideoResizeMode.Fit)
-                }
-            }
+        override fun onVideoLoaded(player: VideoPlayer) {
 
-            override fun onVideoProgress(progress: Long, player: VideoPlayer) {
-                //Log.d(TAG, "onVideoProgress: " + progress);
-            }
-
-            override fun onVideoError(error: VideoPlaybackError, player: VideoPlayer) {
-                Log.d(TAG, "onVideoError: $error")
-            }
-
-            override fun onVideoFullscreen(player: VideoPlayer) {
-                Log.d(TAG, "onVideoFullscreen: ")
-            }
-
-            override fun onVideoExitFullscreen(player: VideoPlayer) {
-                Log.d(TAG, "onVideoExitFullscreen: ")
-            }
-
-            override fun onVideoLearnMore(player: VideoPlayer) {
-                Log.d(TAG, "onVideoLearnMore: ")
-            }
         }
+
+        override fun onVideoStateChange(state: VideoState, player: VideoPlayer) {
+
+        }
+
+        override fun onVideoProgress(progress: Long, player: VideoPlayer) {
+            //Log.d(TAG, "onVideoProgress: " + progress);
+        }
+
+        override fun onVideoError(error: VideoPlaybackError, player: VideoPlayer) {
+            Log.d(TAG, "onVideoError: $error")
+        }
+
+        override fun onVideoFullscreen(player: VideoPlayer) {
+            Log.d(TAG, "onVideoFullscreen: ")
+        }
+
+        override fun onVideoExitFullscreen(player: VideoPlayer) {
+            Log.d(TAG, "onVideoExitFullscreen: ")
+        }
+
+        override fun onVideoLearnMore(player: VideoPlayer) {
+            Log.d(TAG, "onVideoLearnMore: ")
+        }
+    }
 
     companion object {
         private val TAG = NativeVideoAd::class.java.name
