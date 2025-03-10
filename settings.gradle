@@ -3,6 +3,9 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven {
+            url "https://nativo.jfrog.io/nativo/libs-release/"
+        }
     }
 }
 dependencyResolutionManagement {

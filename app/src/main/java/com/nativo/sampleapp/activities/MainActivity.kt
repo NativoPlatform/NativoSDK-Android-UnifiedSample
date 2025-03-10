@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         NativoSDK.registerClassForStandardDisplayAd(StandardDisplayAd::class.java)
 
         // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements(NtvTestAdType.STORY)
+        NativoSDK.enableTestAdvertisements()
         NativoSDK.enableDevLogs()
     }
 
