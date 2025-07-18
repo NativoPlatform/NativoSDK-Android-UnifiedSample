@@ -1,12 +1,15 @@
 package com.nativo.sampleapp.ViewAdapter
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nativo.sampleapp.R
 import com.nativo.sampleapp.ViewHolders.ArticleViewHolder
@@ -73,6 +76,7 @@ class RecyclerViewAdapter(context: Context, recyclerView: RecyclerView) :
         }
         return viewHolder;
     }*/
+
     // Item View Type constants
     val ITEM_TYPE_ARTICLE = 0
     val ITEM_TYPE_NATIVO = 1
@@ -213,6 +217,14 @@ class RecyclerViewAdapter(context: Context, recyclerView: RecyclerView) :
         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 
+//    override fun fragmentManagerForFullScreenPresentation(
+//        inSection: String,
+//        fromView: View
+//    ): FragmentManager? {
+//        val fragActivity = context.findFragmentActivity()
+//        return fragActivity?.supportFragmentManager
+//    }
+
     override fun <T : NtvInjectable> registerInjectableClassForTemplateType(
         injectableType: NtvInjectableType,
         atLocation: Int?,
@@ -221,4 +233,13 @@ class RecyclerViewAdapter(context: Context, recyclerView: RecyclerView) :
         return null
     }
 
+}
+
+fun Context.findFragmentActivity(): FragmentActivity? {
+    var ctx = this
+    while (ctx is ContextWrapper) {
+        if (ctx is FragmentActivity) return ctx
+        ctx = ctx.baseContext
+    }
+    return null
 }

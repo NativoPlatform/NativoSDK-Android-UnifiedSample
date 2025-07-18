@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         nativoInit()
 
@@ -69,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         NativoSDK.registerClassForStandardDisplayAd(StandardDisplayAd::class.java)
 
         // Force specific ad types if needed
-        NativoSDK.enableTestAdvertisements()
+        NativoSDK.enableTestAdvertisements(NtvTestAdType.VIDEO_CLICK_TO_PLAY)
         NativoSDK.enableDevLogs()
     }
 

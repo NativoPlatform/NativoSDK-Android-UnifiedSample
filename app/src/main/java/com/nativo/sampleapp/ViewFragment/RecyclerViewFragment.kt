@@ -32,7 +32,6 @@ class RecyclerViewFragment: Fragment(), Reloadable {
             layoutManager = LinearLayoutManager(context)
             adapter = RecyclerViewAdapter(context, this)
         }
-
     }
 
 

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdSize;
@@ -137,6 +138,10 @@ public class GAMFragment extends Fragment implements NtvSectionAdapter {
     @Override
     public void needsDisplayClickOutURL(@NonNull String url, @NonNull String inSection, @NonNull ViewGroup container) {
 
+    }
+    @Override
+    public FragmentManager fragmentManagerForFullScreenPresentation(@NonNull String inSection, @NonNull View fromView) {
+        return null;
     }
 
     @Nullable
